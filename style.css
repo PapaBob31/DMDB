@@ -1,0 +1,106 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	position: relative;
+	margin: 0 0 0 15%;
+	padding: 0;
+	font-family: Segoe UI, sans-serif;
+	background: rgb(34, 34, 38);
+}
+
+a {
+	color: rgb(200, 200, 200);
+	background: rgb(245, 93, 66);
+}
+
+#menu {
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: flex;
+	width: 15%;
+	height: 100vh;
+	justify-content: space-between;
+	flex-direction: column;
+	z-index: 5;
+	background: rgb(55, 55, 55);
+	padding: 10px;
+	min-width: 200px;
+}
+
+#menu a {
+	border-radius: 5px;
+	padding: 5px;
+	text-decoration: none;
+}
+
+#genres a {
+	display: block;
+	margin-top: 10px;
+	text-decoration: none;
+}
+
+#genres div { 
+	transform: scaleY(0);
+}
+
+#search-bar {
+	width: 40%;
+	position: absolute;
+	right: 5%;
+	top: 5px;
+	background: rgb(55, 55, 55);
+	height: 35px;
+	padding: 5px;
+	border-radius: 10px;
+	outline: none;
+	border: none;
+}
+
+#Trending-movie {
+	position: absolute;
+	top: 48px;
+	left: 5%;
+	width: 90%;
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+}
+
+#Trending-movie img {
+	width: 100%;
+	max-height: 500px;
+}
+
+#details {
+	padding: 10px;
+	color: white;
+	position: absolute;
+	right: 0;
+	top: 0;
+	height: 100%;
+	max-width: 30%;
+	overflow-x: hidden;
+	background-image: linear-gradient(to left, rgb(70, 70, 70, 0.8) 60%, rgba(70, 70, 70, 0));
+}
+
+#details img {
+	width: 100%;
+	max-height: 200px;
+}
+
+#details div {
+	opacity: 1;
+}
+
+#movie-name {
+	font-weight: 500;
+	margin-top: 0;
+}
+
+#ratings-nd-reviews {
+	display: flex;
+	justify-content: space-between;
+}
