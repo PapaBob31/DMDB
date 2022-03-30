@@ -5,45 +5,59 @@
 body {
 	position: relative;
 	margin: 0 0 0 15%;
+	width: 85%;
 	padding: 0;
 	font-family: Segoe UI, sans-serif;
-	background: rgb(34, 34, 38);
+	background: rgb(40, 40, 40);
 }
 
-a {
-	color: rgb(200, 200, 200);
-	background: rgb(245, 93, 66);
-}
-
-#menu {
+#menu-bar {
 	position: fixed;
 	top: 0;
 	left: 0;
-	display: flex;
 	width: 15%;
 	height: 100vh;
-	justify-content: space-between;
-	flex-direction: column;
 	z-index: 5;
 	background: rgb(55, 55, 55);
 	padding: 10px;
 	min-width: 200px;
+	box-shadow: 10px 0px 5px rgb(45, 45, 45);
 }
 
-#menu a {
+#menu-options {
+	height: 60%;
+	display: flex;
+	justify-content: space-between;
+	flex-direction: column;
+}
+
+#menu-options a {
 	border-radius: 5px;
 	padding: 5px;
 	text-decoration: none;
+	color: rgb(200, 200, 200);
 }
 
-#genres a {
+#selected-option {
+	background: rgba(245, 93, 66, 0.8);
+}
+
+#genres{
 	display: block;
 	margin-top: 10px;
 	text-decoration: none;
 }
 
-#genres div { 
+#genres { 
 	transform: scaleY(0);
+}
+
+#site-name {
+	position: absolute;
+	left: 4%;
+	top: 5px;
+	margin: 0;
+	color: white;
 }
 
 #search-bar {
@@ -60,13 +74,26 @@ a {
 }
 
 #Trending-movie {
-	position: absolute;
+	position: relative;
 	top: 48px;
 	left: 5%;
 	width: 90%;
 	overflow: hidden;
 	margin: 0;
 	padding: 0;
+	max-height: 500px;
+	overflow: none;
+}
+
+#trending-txt {
+	position: absolute;
+	top: 20px;
+	left: 5%;
+	font-size: 1.3em;
+	color: white;
+	background: rgba(245, 93, 66, 0.3);
+	padding: 5px;
+	border-radius: 10px;
 }
 
 #Trending-movie img {
@@ -76,7 +103,7 @@ a {
 
 #details {
 	padding: 10px;
-	color: white;
+	color: rgb(225, 225, 225);
 	position: absolute;
 	right: 0;
 	top: 0;
@@ -103,4 +130,73 @@ a {
 #ratings-nd-reviews {
 	display: flex;
 	justify-content: space-between;
+}
+
+#movies {
+	width: 100%;
+	margin-top: 50px;
+	margin-bottom: ;
+}
+
+#movies .sections {
+	margin-bottom: 20px;
+}
+
+#section-names {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	padding-left: 10%;
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+
+#section-names span {
+	position: relative;
+	margin: 0 4% 0 0;
+	color: rgb(200, 200, 200);
+	transition: 0.5s;
+}
+
+#section-names span:hover {
+	font-size: 1.7em;
+	cursor: pointer;
+}
+
+#current-section {
+	font-weight: 500;
+	font-size: 1.7em;
+	color: rgb(200, 200, 200);
+}
+
+#current-section span {
+	position: absolute;
+	width: 100%;
+	top: 93%;
+	left: 0;
+	height: 5px;
+	border-radius: 3px;
+	background: rgba(245, 93, 66, 0.8);
+}
+
+#top-picks-section {
+	width: 100%;
+	display: flex;
+	overflow: hidden;
+	padding-left: 5%;
+}
+
+#top-picks-section .movie-container {
+	color: white;
+	flex-grow: 0;
+	width: 15%;
+	min-width: 200px;
+	background: rgb(55, 55, 55);
+	padding: 5px;
+	margin-right: 4%;
+}
+
+#top-picks-section img {
+	width: 100%;
+	max-height: 250px;
 }
