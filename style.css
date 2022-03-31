@@ -4,8 +4,8 @@
 
 body {
 	position: relative;
-	margin: 0 0 0 15%;
-	width: 85%;
+	margin: 0 23% 0 15%;
+	width: 62%;
 	padding: 0;
 	font-family: Segoe UI, sans-serif;
 	background: rgb(40, 40, 40);
@@ -71,6 +71,7 @@ body {
 	border-radius: 10px;
 	outline: none;
 	border: none;
+	color: rgb(220, 220, 220);
 }
 
 #Trending-movie {
@@ -81,7 +82,6 @@ body {
 	overflow: hidden;
 	margin: 0;
 	padding: 0;
-	max-height: 500px;
 	overflow: none;
 }
 
@@ -98,7 +98,7 @@ body {
 
 #Trending-movie img {
 	width: 100%;
-	max-height: 500px;
+	height: 100%;
 }
 
 #details {
@@ -138,65 +138,187 @@ body {
 	margin-bottom: ;
 }
 
-#movies .sections {
-	margin-bottom: 20px;
+#movies img {
+	width: 100%;
+	max-height: 250px;
+	border-radius: 5px;
 }
 
 #section-names {
 	width: 100%;
 	display: flex;
 	align-items: center;
-	padding-left: 10%;
+	padding-left: 5%;
 	margin-top: 20px;
 	margin-bottom: 10px;
 }
 
-#section-names span {
+#section-names div {
 	position: relative;
 	margin: 0 4% 0 0;
 	color: rgb(200, 200, 200);
 	transition: 0.5s;
 }
 
-#section-names span:hover {
-	font-size: 1.7em;
+#section-names div:hover {
+	font-size: 1.6em;
 	cursor: pointer;
 }
 
 #current-section {
 	font-weight: 500;
-	font-size: 1.7em;
+	font-size: 1.6em;
 	color: rgb(200, 200, 200);
 }
 
 #current-section span {
 	position: absolute;
 	width: 100%;
-	top: 93%;
+	top: 94%;
 	left: 0;
-	height: 5px;
+	height: 3px;
 	border-radius: 3px;
 	background: rgba(245, 93, 66, 0.8);
 }
 
-#top-picks-section {
+
+#top-picks h3{
+	color: white;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	font-weight: 400;
+	margin-left: 5%;
+}
+
+.sub-sections {
 	width: 100%;
 	display: flex;
 	overflow: hidden;
 	padding-left: 5%;
+	margin-bottom: 10px;
 }
 
-#top-picks-section .movie-container {
-	color: white;
+.movie-container {
+	color: rgb(220, 220, 220);
 	flex-grow: 0;
-	width: 15%;
-	min-width: 200px;
-	background: rgb(55, 55, 55);
+	flex-shrink: 0;
+	height: 250px;
+	width: 200px;
 	padding: 5px;
 	margin-right: 4%;
 }
 
-#top-picks-section img {
+#little-details {
+	font-size: 0.9em;
+	color: rgb(180, 180, 180);
+}
+
+#little-details span {
+	color: rgba(245, 93, 66, 0.8);
+}
+
+#recent-releases {
 	width: 100%;
-	max-height: 250px;
+	overflow: hidden;
+	padding: 0 2% 0 5%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+#recent-releases {
+	display: none;
+}
+
+#coming-soon { 
+	width: 100%;
+	overflow: hidden;
+	padding: 0 2% 0 5%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+
+#coming-soon {
+	display: none;
+}
+
+#clicked-movie-details {
+	position: fixed;
+	top: 15px;
+	right: 10px;
+	height: 95vh;
+	margin-left: 20px;
+	width: 22%;
+	border-radius: 10px;
+	background: rgb(55, 55, 55);
+	padding: 5px;
+	color: rgb(220, 220, 220);
+}
+
+#clicked-movie-details a {
+	color: rgb(220, 220, 220);
+	text-decoration: none;
+}
+
+#clicked-movie-details img {
+	width: 100%;
+	min-height: 50%;
+	border-radius: 10px 10px 0 0;
+}
+
+#clicked-movie-details h2{
+	font-weight: 500;
+	margin: 0;
+}
+
+#clicked-movie-details h3 {
+	margin: 0;
+	font-weight: 400;
+}
+
+#clicked-movie-txt {
+	height: 65%;
+	transform: translateY(-25%);
+	background: linear-gradient(to bottom, rgba(55, 55, 55, 0.4) 30%, rgba(55, 55, 55));
+}
+
+#name-nd-genres {
+	text-align: center;
+}
+
+#name-nd-genres span {
+	display: inline-block;
+	margin: 10px 0;
+	background: rgba(245, 93, 66, 0.8);
+	padding: 5px;
+	border-radius: 5px;
+}
+
+#clicked-movie-ratings {
+	margin-top: 10px;
+	width: 100%;
+	display: flex;
+	justify-content: space-evenly;
+	text-align: center;
+	border-top: 1px solid rgb(150, 150, 150);
+	border-bottom: 1px solid rgb(150, 150, 150);
+	padding: 5px 0;
+}
+
+#plot {
+	margin-top: 10px;
+}
+
+#plot h3 {
+	font-weight: 500;
+}
+
+#trailer-link {
+	display: inline-block;
+	padding: 5px;
+	background: rgba(245, 93, 66, 0.8);
+	border-radius: 5px;
+	margin: 10px 0 0 55%;
 }
