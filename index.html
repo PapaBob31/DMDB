@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta name="theme-color" content="#000000">
 	<title></title>
 	<link rel="stylesheet" href="style.css">
 </head>
@@ -34,25 +35,75 @@
 	</div>
 	<h2 id="site-name">MOBILE CINEMA</h2>
 	<input type="text" id="search-bar">
-	<div id="Trending-movie">
-		<div id="trending-txt">Trending Now</div>
-		<img src="portfolio11.jpg">
-		<div id= "details">
-			<h1 id="movie-name">SACRED BIBLE</h1>
-			<div><img src="shoe 2.jpg"></div>
-			<div id="Rated">Rated PG 13</div>
-			<div id="run-time">Run Time: </div>
-			<div id="ratings-nd-reviews">
-				<div>RottenTomatoes: </div>
-				<div>IMDB: </div>
-			</div>
-		</div>	
+	<div id="trending-movies-container">
+		<span id="move-left"><</span>
+		<span id="move-right">></span>
+		<div id="trending-movie">
+			<div id="trending-txt">Trending Now</div>
+			<img src="portfolio11.jpg">
+			<div id= "details">
+				<h1 id="movie-name">HOLY BIBLE</h1>
+				<div class="rated-nd-run-time">
+					<div id="run-time">Run Time: </div>
+					<div id="certification">Rated PG 13</div>
+				</div>
+				<div><img src="shoe 2.jpg"></div>
+				<div id="genres">
+					<span></span><span></span><span></span>
+				</div>
+				<div id="ratings-nd-reviews">
+					<div>RottenTomatoes: </div>
+					<div>IMDB: </div>
+				</div>
+				<div id="overview"></div>
+			</div>	
+		</div>
+		<div id="trending-movie">
+			<div id="trending-txt">Trending Now</div>
+			<img src="portfolio11.jpg">
+			<div id= "details">
+				<h1 id="movie-name">SACRED BIBLE</h1>
+				<div class="rated-nd-run-time">
+					<div id="certification">Rated PG 13</div>
+					<div id="run-time">Run Time: </div>
+				</div>
+				<div><img src="shoe 2.jpg"></div>
+				<div id="genres">
+					<span></span><span></span><span></span>
+				</div>
+				<div id="ratings-nd-reviews">
+					<div>RottenTomatoes: </div>
+					<div>IMDB: </div>
+				</div>
+				<div id="overview"></div>
+			</div>	
+		</div>
+		<div id="trending-movie">
+			<div id="trending-txt">Trending Now</div>
+			<img src="portfolio11.jpg">
+			<div id= "details">
+				<h1 id="movie-name">NOT SACRED BIBLE</h1>
+				<div class="rated-nd-run-time">
+					<div id="run-time">Run Time: </div>
+					<div id="certification">Rated PG 13</div>
+				</div>
+				<div><img src="shoe 2.jpg"></div>
+				<div id="genres">
+					<span></span><span></span><span></span>
+				</div>
+				<div id="ratings-nd-reviews">
+					<div>RottenTomatoes: </div>
+					<div>IMDB: </div>
+				</div>
+				<div id="overview"></div>
+			</div>	
+		</div>
 	</div>
 	<div id="movies">
 		<div id="section-names">
 			<div id="current-section">Top picks<span></span></div>
-			<div>Recently released<span></span></div>
-			<div>Coming soon<span></span></div>
+			<div>Recent<span></span></div>
+			<div>Upcoming<span></span></div>
 		</div>
 		<div id="top-picks" class="sections">
 			<h3>Movies ></h3>
@@ -208,6 +259,7 @@
 		</div>
 	</div>
 	<div id="clicked-movie-details">
+		<span id="close-btn">close</span>
 		<img src="shoe 2.jpg">
 		<div id="clicked-movie-txt">
 			<div id="name-nd-genres">

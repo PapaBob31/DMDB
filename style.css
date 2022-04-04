@@ -4,9 +4,9 @@
 
 body {
 	position: relative;
-	margin: 0 23% 0 15%;
-	width: 62%;
-	padding: 0;
+	margin: 0 0 0 15%;
+	width: 85%;
+	padding: 0 1%;
 	font-family: Segoe UI, sans-serif;
 	background: rgb(40, 40, 40);
 }
@@ -74,7 +74,8 @@ body {
 	color: rgb(220, 220, 220);
 }
 
-#Trending-movie {
+#trending-movies-container {
+	display: flex;
 	position: relative;
 	top: 48px;
 	left: 5%;
@@ -82,7 +83,50 @@ body {
 	overflow: hidden;
 	margin: 0;
 	padding: 0;
-	overflow: none;
+}
+
+#move-left {
+	position: absolute;
+	font-size: 5em;
+	top: 43%;
+	left: 0;
+	z-index: 4;
+	padding: 0 5px;
+	line-height: 70px;
+	color: rgb(220, 220, 220);
+	transition: 0.5s;
+	cursor: pointer;	
+}
+
+#move-right {
+	position: absolute;
+	font-size: 5em;
+	top: 43%;
+	right: 0;
+	z-index: 8;
+	padding: 0 5px;
+	line-height: 70px;
+	color: rgb(220, 220, 220);
+	transition: 0.5s;
+	cursor: pointer;
+}
+
+#move-left:hover {
+	background: rgba(245, 93, 66, 0.8);
+}
+
+#move-right:hover {
+	background: rgba(245, 93, 66, 0.8);
+}
+
+#trending-movie {
+	position: relative;
+	flex-grow: 0;
+	flex-shrink: 0;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	transition: 0.5s;
 }
 
 #trending-txt {
@@ -96,9 +140,10 @@ body {
 	border-radius: 10px;
 }
 
-#Trending-movie img {
+#trending-movie img {
+	display: block;
 	width: 100%;
-	height: 100%;
+	max-height: 560px;
 }
 
 #details {
@@ -125,11 +170,18 @@ body {
 #movie-name {
 	font-weight: 500;
 	margin-top: 0;
+	text-align: left;
+}
+
+#rated-nd-run-time {
+	display: flex;
+	padding-right: 10px;
+	justify-content: space-between;
 }
 
 #ratings-nd-reviews {
 	display: flex;
-	justify-content: space-between;
+	justify-content: space-evenly;
 }
 
 #movies {
@@ -161,7 +213,7 @@ body {
 }
 
 #section-names div:hover {
-	font-size: 1.6em;
+	font-size: 1.5em;
 	cursor: pointer;
 }
 
@@ -173,28 +225,33 @@ body {
 
 #current-section span {
 	position: absolute;
-	width: 100%;
+	width: 35%;
 	top: 94%;
-	left: 0;
+	left: 25%;
+	right: -25%;
 	height: 3px;
 	border-radius: 3px;
 	background: rgba(245, 93, 66, 0.8);
 }
 
+.sections {
+	padding: 0 5%;
+	width: 100%;
+	overflow-x: hidden;
+	/*padding: 0 5% 0 5%;*/
+}
 
 #top-picks h3{
 	color: white;
 	margin-top: 5px;
 	margin-bottom: 10px;
 	font-weight: 400;
-	margin-left: 5%;
 }
 
 .sub-sections {
 	width: 100%;
 	display: flex;
-	overflow: hidden;
-	padding-left: 5%;
+	overflow-x: hidden;
 	margin-bottom: 10px;
 }
 
@@ -203,9 +260,14 @@ body {
 	flex-grow: 0;
 	flex-shrink: 0;
 	height: 250px;
-	width: 200px;
+	width: 19%;
 	padding: 5px;
-	margin-right: 4%;
+	margin-right: 1%;
+}
+
+#recent-releases, #coming-soon  {
+	display: none;
+	flex-wrap: wrap;
 }
 
 #little-details {
@@ -217,37 +279,10 @@ body {
 	color: rgba(245, 93, 66, 0.8);
 }
 
-#recent-releases {
-	width: 100%;
-	overflow: hidden;
-	padding: 0 2% 0 5%;
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-between;
-}
-
-#recent-releases {
-	display: none;
-}
-
-#coming-soon { 
-	width: 100%;
-	overflow: hidden;
-	padding: 0 2% 0 5%;
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-between;
-}
-
-
-#coming-soon {
-	display: none;
-}
-
 #clicked-movie-details {
 	position: fixed;
 	top: 15px;
-	right: 10px;
+	right: -23%;
 	height: 95vh;
 	margin-left: 20px;
 	width: 22%;
@@ -255,6 +290,7 @@ body {
 	background: rgb(55, 55, 55);
 	padding: 5px;
 	color: rgb(220, 220, 220);
+	transition: 0.5s;
 }
 
 #clicked-movie-details a {
@@ -321,4 +357,13 @@ body {
 	background: rgba(245, 93, 66, 0.8);
 	border-radius: 5px;
 	margin: 10px 0 0 55%;
+}
+
+#close-btn {
+	position: absolute;
+	background: black;
+	color: white;
+	top: 10px;
+	left: 10px;
+	padding: 5px;
 }
