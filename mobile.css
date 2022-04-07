@@ -1,0 +1,30 @@
+@media (max-width: 1000px) {
+	body {
+		width: 100%;
+		margin: 0;
+	}
+
+	#mobile-menu {
+		display: block;
+	}
+
+	#close-menu {
+		display: block;
+	}
+
+	#menu-bar {
+		left: -100%;
+	}
+
+	#details {
+		display: none;
+	}
+
+}
+
+
+@media (max-width: 500px) {
+	#details {
+		display: none;
+	}
+}
