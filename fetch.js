@@ -16,22 +16,19 @@ function showMenu() {
 
 function hideMenu() {
 	if (menuOnscreen) {
-		menuBar.style.left = "-100%"
+		menuBar.style.left = `-${menuBar.offsetWidth+10}px`
 		menuOnscreen = false
 	}
 }
 
 let genresLink = document.getElementById("genres-link")
 let genresContainer = document.getElementById("genres")
-let genres = genresContainer.querySelector("div")
 
 function showGenres() {
 	genresContainer.style.left = '0'
-	genres.style.transform = 'scaleY(100%)'
 }
 
 function hideGenres() {
-	genres.style.transform = 'scaleY(0)'
 	genresContainer.style.left = '-100%'
 }
 
@@ -118,7 +115,6 @@ function getTrendingMoviesDetails(mediaList) {
 }
 
 function updateTrendingMovies(details, i) {
-	console.log(details[i])
 	mediaName = trendingMovies[i].querySelector("#media-name")
 	poster  = trendingMovies[i].querySelector("img")
 	genres = trendingMovies[i].querySelector("#trending-genres")
@@ -164,8 +160,8 @@ function trimText(text) {
 }
 
 fetch(`https://api.themoviedb.org/3/trending/all/day?api_key=${key}`)
-	.then(response => response.json())
-	.then(response => {getTrendingMovies(response.results); getTrendingMoviesDetails(media)})
+.then(response => response.json())
+.then(response => {storeResult("trending", response); getTrendingMovies(response.results); getTrendingMoviesDetails(media)})
 
 let sectionNamesContainer = document.getElementById("section-names")
 let sectionNames = Array.from(sectionNamesContainer.querySelectorAll("div"))
@@ -194,7 +190,6 @@ function changeSection() {
 	}
 }
 
-
 closeBtn = document.getElementById("close-btn")
 clickedMovieDetails = document.getElementById("clicked-movie-details")
 movies = document.querySelectorAll(".movie-container")
@@ -215,143 +210,89 @@ closeBtn.addEventListener("click", closeFullDetails)
 
 topPicks = document.getElementById("top-picks")
 
-movieGenres = [] 
-tvGenres = []
+let movieGenres = [] 
+let tvGenres = []
 
-// fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${key}&language=en-US`)
-// .then(res => res.json())
-// .then(res => {movieGenres=res; console.log(movieGenres)})
+function storeResult(data_name, data) {
+	sessionStorage.setItem(data_name, JSON.stringify(data))
+}
 
-// fetch(`https://api.themoviedb.org/3/genre/tv/list?api_key=${key}&language=en-US`)
-// .then(res => res.json())
-// .then(res => {tvGenres=res; console.log(tvGenres)})
+fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${key}&language=en-US`)
+.then(res => res.json())
+.then(res => {movieGenres=res; storeResult("movieGenres", movieGenres); fetchMovies()})
 
-// fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${key}&page=1`)
-// .then(res => res.json())
-// .then(res => displayResponse(res, "movie", "top-movies"))
+fetch(`https://api.themoviedb.org/3/genre/tv/list?api_key=${key}&language=en-US`)
+.then(res => res.json())
+.then(res => {tvGenres=res; storeResult("seriesGenres", tvGenres); fetchTvSeries()})
 
-// fetch(`https://api.themoviedb.org/3/tv/popular?api_key=${key}&page=1`)
-// .then(res => res.json())
-// .then(res => displayResponse(res, "tv", "top-tv"))
+function fetchMovies() {
+	fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${key}&page=1`)
+	.then(res => res.json())
+	.then(res => {displayResponse(res, "movie", "top-movies"); storeResult("top-movies", res.results)})
 
-// // fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${key}&language=en-US&page=1&region=US`)
-// // .then(res => res.json())
-// // .then(res => console.log(res))
+	fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${key}&language=en-US&page=1&region=US`)
+	.then(res => res.json())
+	.then(res => {displayResponse(res, "movie", "recent-releases"); storeResult("recent-movies", res.results)})
 
-// fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${key}&language=en-US&page=1&region=US`)
-// .then(res => res.json())
-// .then(res => displayResponse(res, "movie", "recent-releases"))
+	fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${key}&language=en-US&page=1&region=US`)
+	.then(res => res.json())
+	.then(res => {displayResponse(res, "movie", "coming-soon"); storeResult("upcoming-movies", res.results)})
+}
 
-// fetch(`https://api.themoviedb.org/3/tv/on_the_air?api_key=${key}&language=en-US&page=1&region=US`)
-// .then(res => res.json())
-// .then(res => displayResponse(res, "tv", "recent-releases"))
+function fetchTvSeries() {
+	fetch(`https://api.themoviedb.org/3/tv/popular?api_key=${key}&page=1`)
+	.then(res => res.json())
+	.then(res => {displayResponse(res, "tv", "top-series"); storeResult("top-tv", res.results)})
 
-// fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${key}&language=en-US&page=1&region=US`)
-// .then(res => res.json())
-// .then(res => displayResponse(res, "movie", "coming-soon"))
+	fetch(`https://api.themoviedb.org/3/tv/on_the_air?api_key=${key}&language=en-US&page=1&region=US`)
+	.then(res => res.json())
+	.then(res => {displayResponse(res, "tv", "recent-releases"); storeResult("recent-series", res.results)})
+
+}
 
 function displayResponse(response, responseType, parentId) {
 	for (let i = 0; i < response.results.length; i++) {
+		film = response.results[i]
 		let mediaContainer = document.createElement("div")
 		let poster = document.createElement("img")
 		let name = document.createElement("div")
 		let littleDetails = document.createElement("div")
 		let releaseYear = document.createElement("span")
+		let mediaGenres = document.createElement("div")
 		let genresList = []
-		let mediaGenres = " | "
 		mediaContainer.className = "media-container"
 		name.id = "name"
 		littleDetails.id = "little-details"
-		poster.src = poster.src = `https://image.tmdb.org/t/p/w500${response.results[i].poster_path}`
+		poster.src = poster.src = `https://image.tmdb.org/t/p/w342${film.poster_path}`
 		if (responseType == "movie") {
-			name.textContent = response.results[i].title
+			name.textContent = film.title
 			genresList = movieGenres.genres
-			releaseYear.textContent = response.results[i].release_date.slice(0, 4)
+			releaseYear.textContent = film.release_date.slice(0, 4)
 		}else if (responseType == "tv") {
-			name.textContent = response.results[i].name
+			name.textContent = film.name
 			genresList = tvGenres.genres
-			releaseYear.textContent = response.results[i].first_air_date.slice(0, 4)
+			releaseYear.textContent = "Since " +  film.first_air_date.slice(0, 4)
 		}
-		for (let n=0; n < response.results[i].genre_ids.length; n++) {
+		mediaGenres.textContent = " | "
+		for (let n=0; n < film.genre_ids.length; n++) {
 			for (let e=0; e < genresList.length; e++) {
-				if (response.results[i].genre_ids[n] == genresList[e].id) {
-					if (response.results[i].genre_ids[n] != response.results[i].genre_ids[-1]) {
-						mediaGenres += genresList[e].name + ', '
+				if (film.genre_ids[n] == genresList[e].id) {
+					if (film.genre_ids[n] != film.genre_ids[film.genre_ids.length-1]) {
+						mediaGenres.textContent += genresList[e].name + ', '
 						break
 					}else {
-						mediaGenres += genresList[e].name
+						mediaGenres.textContent += genresList[e].name
 						break
 					}
 				}
 			} 
 		}
 		let parentContainer = document.getElementById(parentId)
-		let genres = document.createTextNode(mediaGenres)
 		littleDetails.appendChild(releaseYear)
-		littleDetails.appendChild(genres)
+		littleDetails.appendChild(mediaGenres)
 		mediaContainer.appendChild(poster)
 		mediaContainer.appendChild(name)
 		mediaContainer.appendChild(littleDetails)
 		parentContainer.appendChild(mediaContainer)
 	}
 }
-
-
-// https://api.themoviedb.org/3/tv/{tv_id}?api_key=${key}&language=en-US130392
-
-
-//search-syntax: https://api.themoviedb.org/3/search/movie?api_key=${key}&query=deadpool&page=1
-//img-syntax: 'https://image.tmdb.org/t/p/w500/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg'
-
-// 41:
-// iso_3166_1: "US"
-// release_dates: Array(3)
-// 0: {certification: 'PG', iso_639_1: '', note: '', release_date: '2013-03-22T00:00:00.000Z', type: 3}
-// 1: {certification: 'PG', iso_639_1: '', note: 'DVD, Blu-ray', release_date: '2013-10-01T00:00:00.000Z', type: 5}
-// 2: {certification: 'PG', iso_639_1: '', note: '4K UHD', release_date: '2020-11-17T00:00:00.000Z', type: 5}
-
-
-
-// <div id="clicked-movie-details">
-// 		<span id="close-btn">close</span>
-// 		<img src="shoe 2.jpg">
-// 		<div id="clicked-movie-txt">
-// 			<div id="name-nd-genres">
-// 				<h2>Tired Shoe</h2>
-// 				<span>Sport</span>
-// 				<span>Adventure</span>
-// 				<span>Calories</span>
-// 			</div>
-// 			<div>Run-Time: </div>
-// 			<div>Release Date: </div>
-// 			<div id="clicked-movie-ratings">
-// 				<div>
-// 					<h2>90%</h2>
-// 					Rotten Tomatoes
-// 				</div>
-// 				<div>
-// 					<h2>8.1</h2>
-// 					IMDB
-// 				</div>
-// 			</div>
-// 			<div id="plot">
-// 				<h3>Plot :</h3>
-// 				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-// 				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-// 				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-// 				consequat.
-// 			</div>
-// 			<a href="#" id="trailer-link">Watch Trailer</a>
-// 		</div>
-// 	</div>
-
-
-// fetch('https://data-imdb1.p.rapidapi.com/titles/search/keyword/deadpool', {
-// 	method: 'GET',
-// 	headers: {
-// 		'X-RapidAPI-Host': 'data-imdb1.p.rapidapi.com',
-//     	'X-RapidAPI-Key': '2d39e8dc5dmshb63147aa42b6c97p127e1bjsnf94f3a9f0c41'
-// 	}
-// })
-// 	.then(res => res.json())
-// 	.then(res => console.log(res))

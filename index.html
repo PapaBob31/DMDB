@@ -4,18 +4,27 @@
 	<title></title>
 	<link rel="stylesheet" href="style.css">
 	<link rel="stylesheet" href="mobile.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
 	<meta name="theme-color" content="#000000">
 	<meta name="viewport" content="width=device-width">
 </head>
 <body>
-	<h2 id="site-name">MOBILE CINEMA</h2>
-	<span id="mobile-menu">MENU</span>
+	<div id="site-header">
+		<span class="material-icons-outlined" id="mobile-menu">menu</span>
+		<h2 id="site-name">MOBILE CINEMA</h2>
+		<form id="search-bar-container" action="search.html">
+			<input type="text" id="search-bar" placeholder="Search..">
+			<button type="submit" id="search-icon" class="material-icons-outlined">search</button>
+			<div><!-- <span class="material-icons-outlined">history</span> --></div>
+		</form>
+	</div>
 	<div id="menu-bar">
 		<div id="menu-options">
-			<span id="close-menu">close</span>
-			<a href="#" id="selected-option">HOME</a>
-			<a href="movies.html" target="_blank">MOVIES</a>
-			<a href="tv series\tv.html" target="_blank">TV SERIES</a>
+			<span class="material-icons-outlined" id="close-menu">close</span>
+			<a href="index.html" id="selected-option">HOME</a>
+			<a href="movies\movies.html">MOVIES</a>
+			<a href="tv series\tv.html">TV SERIES</a>
 			<a href="#">SAVED</a>
 			<a href="#">HELP AND COMPLAINTS</a>
 			<a href="">SETTINGS</a>
@@ -23,7 +32,10 @@
 		</div>
 		<div id="genres">
 			<div>
-				<h2><span id="back-arrow"><- </span>GENRES</h2>
+				<h2>
+					<span class="material-icons-round" id="back-arrow">arrow_back</span>
+					GENRES
+				</h2>
 				<a href="#">Comedy</a>
 				<a href="#">Sci-fi</a>
 				<a href="#">Horror</a>
@@ -42,7 +54,6 @@
 			</div>
 		</div>
 	</div>
-	<input type="text" id="search-bar">
 	<div id="trending-movies-container">
 		<span id="move-left"><</span>
 		<span id="move-right">></span>
@@ -107,7 +118,7 @@
 					<div id="little-details"><span>2022</span> | Adventure, Horror, Animation</div> -->
 			</div>
 			<h3>Streaming/Tv</h3>
-			<div id="top-tv" class="sub-sections">
+			<div id="top-series" class="sub-sections">
 				<!-- <div class="media-container">
 					<img src="shoe 2.jpg">
 					<div>Death to the Scourge</div>
@@ -163,5 +174,7 @@
 		</div>
 	</div>
 	<script type="text/javascript" src="fetch.js"></script>
+	<script type="text/javascript" src="search.js"></script>
+	<!-- <script type="text/javascript" src="menu.js"></script> -->
 </body>
 </html>

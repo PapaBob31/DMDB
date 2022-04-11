@@ -11,3 +11,34 @@ body {
 	background: rgb(40, 40, 40);
 	font-size: 0.9em;
 }
+
+#filter {
+	position: absolute;
+	left: 25%;
+	top: 10px;
+	margin: 0;
+	border-radius: 5px;
+	padding: 5px;
+	color: rgb(220, 220, 220);
+	background: rgb(55, 55, 55);
+}
+
+#filter h3 {
+	margin: 0;
+}
+
+#filter div {
+	
+}
+
+#movies-container {
+	margin-top: 30px;
+	padding: 0 5%;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+#movies-container .media-container {
+	margin-top: 20px;
+	width: 19%;
+}

@@ -1,13 +1,30 @@
-* {
-	box-sizing: border-box;
+
+#filter {
+	position: absolute;
+	left: 25%;
+	top: 10px;
+	margin: 0;
+	padding: 5px;
+	color: rgb(220, 220, 220);
+	background: rgb(80, 80, 80);
 }
 
-body {
-	position: relative;
-	margin: 0 0 0 15%;
-	width: 85%;
-	padding: 0 1%;
-	font-family: Segoe UI, sans-serif;
-	background: rgb(40, 40, 40);
-	font-size: 0.9em;
+#filter h3 {
+	margin: 0;
+}
+
+#filter div {
+	transform: scaleY(0);
+}
+
+#series-container {
+	margin-top: 30px;
+	padding: 0 5%;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+#series-container .media-container {
+	margin-top: 20px;
+	width: 19%;
 }

@@ -1,4 +1,11 @@
-@media (max-width: 1000px) {
+@media screen and (min-width: 1001px) {
+	body {
+		width: unset;
+		margin-left: 200px;
+	}
+} 
+
+@media screen and (max-width: 1000px) {
 	body {
 		width: 100%;
 		margin: 0;
@@ -20,11 +27,28 @@
 		display: none;
 	}
 
+	.media-container {
+		width: 21%;
+	}
+
+	#recent-releases .media-container {
+		width: 21%;
+	}
+
+	#coming-soon .media-container {
+		width: 21%;
+	}
+
 }
 
-
-@media (max-width: 500px) {
+@media screen and (max-width: 500px) {
 	#details {
 		display: none;
+	}
+}
+
+@media screen and (max-height: 550px) {
+	#menu-options {
+		height: 100%;
 	}
 }
