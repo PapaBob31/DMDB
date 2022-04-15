@@ -2,8 +2,8 @@
 <html>
 <head>
 	<title></title>
-	<link rel="stylesheet" href="style.css">
 	<link rel="stylesheet" href="mobile.css">
+	<link rel="stylesheet" href="style.css">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
 	<meta name="theme-color" content="#000000">
@@ -57,46 +57,6 @@
 	<div id="trending-movies-container">
 		<span id="move-left"><</span>
 		<span id="move-right">></span>
-		<div id="trending-movie">
-			<div id="trending-txt">Trending Now</div>
-			<img src="portfolio11.jpg">
-			<div id= "details">
-				<h1 id="media-name">HOLY BIBLE</h1>
-				<div id="media-type-nd-release-date"></div>
-				<iframe src=""></iframe>
-				<div id="trending-genres">
-				</div>
-				<div id="overview">
-				</div>
-				<a id="full-details">Full details</a>
-			</div>	
-		</div>
-		<div id="trending-movie">
-			<div id="trending-txt">Trending Now</div>
-			<img src="portfolio11.jpg">
-			<div id= "details">
-				<h1 id="media-name">SACRED BIBLE</h1>
-				<div id="media-type-nd-release-date"></div>
-				<iframe src=""></iframe>
-				<div id="trending-genres">
-				</div>
-				<div id="overview"></div>
-				<a id="full-details">Full details</a>
-			</div>	
-		</div>
-		<div id="trending-movie">
-			<div id="trending-txt">Trending Now</div>
-			<img src="portfolio11.jpg">
-			<div id= "details">
-				<h1 id="media-name">NOT SACRED BIBLE</h1>
-				<div id="media-type-nd-release-date"></div>
-				<iframe src=""></iframe>
-				<div id="trending-genres">
-				</div>
-				<div id="overview"></div>
-				<a id="full-details">Full details</a>
-			</div>	
-		</div>
 	</div>
 	<div id="bottom-status">
 		<div id="current"></div>
@@ -128,53 +88,52 @@
 			<div id="Trailers" class="sub-sections">
 			</div>
 		</div>
-		<div id="recent-releases" class="sections">
+		<div id="recent-shows" class="sections">
 			<!-- <div class="media-container">
 				<img src="shoe 2.jpg">
 				<div>Death to the Scourge</div>
 			</div>-->
 		</div>
-		<div id="coming-soon" class="sections">
+		<div id="upcoming" class="sections">
 			<!-- <div class="media-container">
 				<img src="shoe 2.jpg">
 				<div>Death to the Scourge</div>
 			</div>-->
 		</div>
 	</div>
-	<div id="clicked-movie-details">
-		<span id="close-btn">close</span>
-		<img src="shoe 2.jpg">
-		<div id="clicked-movie-txt">
-			<div id="name-nd-genres">
-				<h2>Tired Shoe</h2>
-				<span>Sport</span>
-				<span>Adventure</span>
-				<span>Calories</span>
-			</div>
-			<div>Run-Time: </div>
-			<div>Release Date: </div>
-			<div id="clicked-movie-ratings">
-				<div>
-					<h2>90%</h2>
-					Rotten Tomatoes
-				</div>
-				<div>
-					<h2>8.1</h2>
-					IMDB
-				</div>
-			</div>
-			<div id="plot">
-				<h3>Plot :</h3>
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-				consequat.
-			</div>
-			<a href="#" id="trailer-link">Watch Trailer</a>
+	<template>
+		<div class="media-container">
+			<div class="skeleton poster-img"></div>
+			<div class="skeleton skeleton-text"></div>
+			<div class="skeleton skeleton-text"></div>
+			<div class="skeleton skeleton-text"></div>
 		</div>
-	</div>
+		<div class="trending-movie trending-movie-skeleton">
+			<div class="trending-txt">Trending Now</div>
+			<div class= "details">
+				<h1 class="media-name"></h1>
+				<div class="media-type-nd-release-date"></div>
+				<iframe src=""></iframe>
+				<div class="trending-genres">
+					<span></span>
+					<span></span>
+					<span></span>
+				</div>
+				<div class="overview">
+					<div class="overview-first-element"></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<span></span>
+				</div>
+				<!-- <a class="full-details">Full details</a> -->
+			</div>	
+		</div>
+	</template>
 	<script type="text/javascript" src="fetch.js"></script>
-	<script type="text/javascript" src="search.js"></script>
+	<!-- <script type="text/javascript" src="search.js"></script> -->
 	<!-- <script type="text/javascript" src="menu.js"></script> -->
 </body>
 </html>

@@ -24,7 +24,8 @@ body {
 	position: fixed;
 	top: 0;
 	left: 0;
-	width: 100%;
+	width: 85%;
+	margin-left: 15%;
 	padding: 5px 5%;
 	background: inherit;
 	display: flex;
@@ -173,6 +174,107 @@ body {
 	cursor: pointer;
 }
 
+.skeleton {
+	position: relative;
+	animation: skeleton-load 1s ease-in-out infinite alternate;
+}
+
+.skeleton-text {
+	background-color: rgb(75, 75, 75);
+	height: 10px;
+	border-radius: 3px;
+	margin: 0 5px 0.5rem 5px;
+}
+
+.skeleton-text:first-child {
+	width: 85%;
+}
+
+.skeleton-text:nth-child(2) {
+	width: 96%;
+}
+
+.skeleton-text:last-child {
+	width: 50%;
+}
+
+/*@keyframes skeleton-load {
+	0% {
+		background-color: rgb(75, 75, 75);
+	}
+
+	100% {
+		background-color: rgb(65, 65, 65);
+	}
+}*/
+
+.trending-movie-skeleton {
+	width: 100%;
+	height: 500px;
+	animation: trendy-movies-loading 1s ease-in-out infinite alternate;
+}
+
+.trending-movie-skeleton div {
+	border-radius: 5px;
+}
+
+.trending-movie-skeleton .media-name {
+	width: 40%;
+	height: 20px;
+	margin-bottom: 10px;
+	border-radius: 5px;
+	background-color: rgb(75, 75, 75);
+}
+
+.trending-movie-skeleton .media-type-nd-release-date {
+	width: 100%;
+	height: 10px;
+	background-color: rgb(75, 75, 75);
+}
+
+.trending-movie-skeleton iframe {
+	background-color: rgb(75, 75, 75);
+}
+
+.trending-genres span {
+	display: inline-block;
+	height: 30px;
+	width: 20%;
+	margin-right: 10px;
+	background-color: rgb(75, 75, 75);
+	border-radius: 5px;
+}
+
+.overview div {
+	width: 100%;
+	height: 10px;
+	margin-bottom: 5px;
+	background-color: rgb(75, 75, 75);
+}
+
+.overview-first-element {
+	margin-top: 10px;
+}
+
+.overview span {
+	display: inline-block;
+	width: 45%;
+	height: 10px;
+	margin-bottom: 5px;
+	border-radius: 5px;
+	background-color: rgb(75, 75, 75);
+}
+
+/*@keyframes trendy-movies-loading {
+	from {
+		background-color: rgb(75, 75, 75);
+	}
+
+	to {
+		background-color: rgb(65, 65, 65);
+	}
+}*/
+
 #trending-movies-container {
 	margin-top: 60px;
 	display: flex;
@@ -180,6 +282,7 @@ body {
 	width: 100%;
 	overflow: hidden;
 	padding: 0;
+	border-radius: 10px
 }
 
 #move-left {
@@ -214,17 +317,20 @@ body {
 	background: rgba(245, 93, 66, 0.8);
 }
 
-#trending-movie {
+.trending-movie {
+	display: block;
 	position: relative;
 	flex-grow: 0;
 	flex-shrink: 0;
 	margin: 0;
 	padding: 0;
 	width: 100%;
+	height: 560px;
 	transition: 0.5s;
+	background-size: cover;
 }
 
-#trending-txt {
+.trending-txt {
 	position: absolute;
 	top: 20px;
 	left: 5%;
@@ -236,13 +342,7 @@ body {
 	z-index: 3;
 }
 
-#trending-movie img {
-	display: block;
-	width: 100%;
-	max-height: 560px;
-}
-
-#details {
+.details {
 	padding: 5px 10px;
 	color: rgb(230, 230, 230);
 	position: absolute;
@@ -251,36 +351,38 @@ body {
 	height: 100%;
 	max-width: 30%;
 	overflow-x: hidden;
-	background-image: linear-gradient(to left, rgb(10, 10, 10, 0.2) 60%, rgba(10, 10, 10, 0.1));
+	background-image: linear-gradient(to left, rgba(10, 10, 10, 0.2) 60%, rgba(10, 10, 10, 0.1));
+	border-radius: 0 10px 10px 0;
 }
 
-#details iframe {
+.details iframe {
 	width: 100%;
 	max-height: 200px;
 	border: none;
 }
 
-#media-name {
+.media-name {
 	font-weight: 500;
 	margin-top: 0;
 	margin-bottom: 5px;
 	text-align: left;
 }
 
-#media-type-nd-release-date {
+.media-type-nd-release-date {
 	display: flex;
 	margin-bottom: 10px;
 }
 
-#media-type-nd-release-date div {
+.media-type-nd-release-date div {
 	margin-right: 15px;
 }
-#trending-genres {
+
+.trending-genres {
 	display: flex;
 	flex-wrap: wrap;
 }
 
-#trending-genres div {
+.trending-genres div {
 	margin-top: 5px;
 	font-weight: 400;
 	color: rgb(220, 220, 220);
@@ -290,7 +392,7 @@ body {
 	margin-right: 5px;
 }
 
-#full-details {
+.full-details {
 	display: block;
 	width: 40%;
 	text-align: center;
@@ -346,6 +448,8 @@ body {
 }
 
 #movies {
+	position: sticky;
+	top: 50px;
 	width: 100%;
 }
 
@@ -399,6 +503,7 @@ body {
 	align-items: flex-start;
 	overflow-x: auto;
 	margin-bottom: 10px;
+	padding-bottom: 10px;
 }
 
 .sub-sections::-webkit-scrollbar {
@@ -415,6 +520,7 @@ body {
 }
 
 .media-container {
+	background-color: rgb(60, 60, 60);
 	color: rgb(220, 220, 220);
 	flex-grow: 0;
 	flex-shrink: 0;
@@ -422,29 +528,32 @@ body {
 	width: 18%;
 	min-width: 150px;
 	margin-right: 3%;
-	background: linear-gradient(to bottom, rgb(40, 40, 40) 10%, rgb(60, 60, 60));
-	border-radius: 0 0 10px 10px;
+	border-radius: 10px;
 }
 
-.media-container img {
+.poster-img {
 	width: 100%;
-	max-height: 250px;
 	border-radius: 10px 10px 0 0;
-	/*box-shadow: 7px 7px 4px rgb(25, 25, 25);*/
+	height: 250px;
+	background-color: rgb(75, 75, 75); 
+	background-size: cover;
+	margin-bottom: 5px;
+	border: none;
 }
 
-#recent-releases, #coming-soon{
+
+#recent-shows, #upcoming {
 	display: none;
 	flex-wrap: wrap;
 	align-items: flex-start;
 }
 
-#recent-releases .media-container {
+#recent-shows .media-container {
 	margin-top: 20px;
 	width: 19%;
 }
 
-#coming-soon .media-container {
+#upcoming .media-container {
 	margin-top: 20px;
 	width: 19%;
 }
@@ -452,11 +561,14 @@ body {
 #name {
 	padding: 0 5px;
 	font-weight: 500;
+	background: rgb(60, 60, 60);
 }
 
 #little-details {
 	font-size: 0.9em;
 	color: rgb(180, 180, 180);
+	background: rgb(60, 60, 60);
+	border-radius: 0 0 10px 10px;
 	padding: 5px;
 }
 
@@ -468,91 +580,3 @@ body {
 	display: inline;
 }
 
-#clicked-movie-details {
-	position: fixed;
-	top: 15px;
-	right: -23%;
-	height: 95vh;
-	margin-left: 20px;
-	width: 22%;
-	border-radius: 0 0 10px 10px;
-	background: rgb(55, 55, 55);
-	color: rgb(220, 220, 220);
-	transition: 0.5s;
-}
-
-#clicked-movie-details a {
-	color: rgb(220, 220, 220);
-	text-decoration: none;
-}
-
-#clicked-movie-details img {
-	width: 100%;
-	min-height: 50%;
-}
-
-#clicked-movie-details h2{
-	font-weight: 500;
-	margin: 0;
-}
-
-#clicked-movie-details h3 {
-	margin: 0;
-	font-weight: 400;
-}
-
-#clicked-movie-txt {
-	padding: 5px;
-	height: 65%;
-	transform: translateY(-25%);
-	background: linear-gradient(to bottom, rgba(55, 55, 55, 0.4) 30%, rgba(55, 55, 55));
-}
-
-#name-nd-genres {
-	text-align: center;
-}
-
-#name-nd-genres span {
-	display: inline-block;
-	margin: 10px 0;
-	background: rgba(245, 93, 66, 0.8);
-	padding: 5px;
-	border-radius: 5px;
-}
-
-#clicked-movie-ratings {
-	margin-top: 10px;
-	width: 100%;
-	display: flex;
-	justify-content: space-evenly;
-	text-align: center;
-	border-top: 1px solid rgb(150, 150, 150);
-	border-bottom: 1px solid rgb(150, 150, 150);
-	padding: 5px 0;
-}
-
-#plot {
-	margin-top: 10px;
-}
-
-#plot h3 {
-	font-weight: 500;
-}
-
-#trailer-link {
-	display: inline-block;
-	padding: 5px;
-	background: rgba(245, 93, 66, 0.8);
-	border-radius: 5px;
-	margin: 10px 0 0 55%;
-}
-
-#close-btn {
-	position: absolute;
-	background: black;
-	color: white;
-	top: 10px;
-	left: 10px;
-	padding: 5px;
-	hover: pointer;
-}
