@@ -9,7 +9,15 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
 </head>
 <body>
-	<h2 id="site-name">MOBILE CINEMA</h2>
+	<div id="site-header">
+		<span class="material-icons-outlined" id="mobile-menu">menu</span>
+		<h2 id="site-name">MOBILE CINEMA</h2>
+		<form id="search-bar-container" action="search.html">
+			<input type="text" id="search-bar" placeholder="Search..">
+			<button type="submit" id="search-icon" class="material-icons-outlined">search</button>
+			<div><!-- <span class="material-icons-outlined">history</span> --></div>
+		</form>
+	</div>
 	<div id="filter">
 		<h3>Filter Tv-series: All</h3>
 		<!-- <div>All</div>
@@ -50,8 +58,15 @@
 			</div>
 		</div>
 	</div>
-	<input type="text" id="search-bar">
 	<div id="series-container"></div>
+	<template>
+		<div class="media-container">
+			<div class="skeleton poster-img"></div>
+			<div class="skeleton skeleton-text"></div>
+			<div class="skeleton skeleton-text"></div>
+			<div class="skeleton skeleton-text"></div>
+		</div>
+	</template>
 	<script type="text/javascript" src="tv.js"></script>
 </body>
 </html>

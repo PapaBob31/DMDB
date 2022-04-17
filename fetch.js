@@ -33,18 +33,20 @@ function hideGenres() {
 	genresContainer.style.left = '-100%'
 }
 
-function skeletonLoader(parentId, templateChild, no) {
+function skeletonLoader(parentId, templateChild, no, max_no) {
 	let parentContainer = document.getElementById(parentId)
+	if (max_no) {
+		console.log(max_no)
+		if (max_no - parentContainer.children.length < 20){
+			no = max_no - parentContainer.children.length
+		}
+	}
 	for (let i=0; i<no; i++) {
 		let skeleton = document.querySelector("template").content[templateChild].cloneNode(true)
 		parentContainer.appendChild(skeleton)
 	}
 }
 
-skeletonLoader("top-movies", "firstElementChild", 20)
-skeletonLoader("top-series", "firstElementChild", 20)
-skeletonLoader("upcoming", "firstElementChild", 20)
-skeletonLoader("recent-shows", "firstElementChild", 40)
 skeletonLoader("trending-movies-container", "lastElementChild", 3)
 
 let vel = 0
@@ -82,18 +84,21 @@ function moveImagesRight() {
 navLeft.addEventListener("click", moveImagesLeft)
 navRight.addEventListener("click", moveImagesRight)
 
-let trendingMoviesContainer = document.getElementById("trending-movies-container")
 let trendingMovies = document.querySelectorAll(".trending-movie")
 let media = []
 let trendingMoviesDetails = []
 let key = "b44b2b9e1045ae57b5c211d94cc010d9"
 
-function getTrendingMovies(list) {
+// fetch(`https://api.themoviedb.org/3/trending/all/day?api_key=${key}`)
+// .then(response => response.json())
+// .then(response => {storeResult("trending", response); filterTrendingMovies(response.results); getTrendingMoviesDetails(media)})
+
+function filterTrendingMovies(list) {
 	let index = 0;
 	let releaseDate = undefined
-	for (let i = 0; i < list.length; i++) {
+	for (let i = 0, l=list.length; i < l; i++) {
 		let medium = {}
-		if (index < (trendingMovies.length)) {
+		if (index < trendingMovies.length) {
 			if (list[i].vote_average >= 7.8) {
 				if (list[i].hasOwnProperty("first_air_date")) {
 					releaseDate = list[i].first_air_date
@@ -120,23 +125,22 @@ function getTrendingMovies(list) {
 function getTrendingMoviesDetails(mediaList) {
 	let movieNo = 0
 	for (let i=0; i<mediaList.length; i++) {
-		fetch(`https://api.themoviedb.org/3/${mediaList[i].type}/${mediaList[i].id}?api_key=${key}&language=en-US&append_to_response=videos,release_dates`)
+		fetch(`https://api.themoviedb.org/3/${mediaList[i].type}/${mediaList[i].id}?api_key=${key}&language=en-US&append_to_response=videos`)
 		.then(response => response.json())
 		.then(response => {trendingMoviesDetails.push(response); updateTrendingMovies(trendingMoviesDetails, movieNo); movieNo += 1})
 	}
 }
 
-
 function updateTrendingMovies(details, i) {
-	posterLink = `https://image.tmdb.org/t/p/w1280${details[i].backdrop_path}`
+	let posterLink = `https://image.tmdb.org/t/p/w1280${details[i].backdrop_path}`
 	trendingMovies[i].style.backgroundImage = `url('${posterLink}')`
-	mediaName = trendingMovies[i].querySelector(".media-name")
-	genres = trendingMovies[i].querySelector(".trending-genres")
-	trailer = trendingMovies[i].querySelector("iframe")
-	overview = trendingMovies[i].querySelector(".overview")
-	releaseDateandType = trendingMovies[i].querySelector(".media-type-nd-release-date")
-	releaseDate = document.createElement("div")
-	mediaType = document.createElement("div")
+	let mediaName = trendingMovies[i].querySelector(".media-name")
+	let genres = trendingMovies[i].querySelector(".trending-genres")
+	let trailer = trendingMovies[i].querySelector("iframe")
+	let overview = trendingMovies[i].querySelector(".overview")
+	let releaseDateandType = trendingMovies[i].querySelector(".media-type-nd-release-date")
+	let releaseDate = document.createElement("div")
+	let mediaType = document.createElement("div")
 	if (details[i].original_name) {
 		mediaName.textContent = details[i].name
 		releaseDate.textContent = `first episode date: ${details[i].first_air_date}`
@@ -174,10 +178,6 @@ function trimText(text) {
 	}else return text
 }
 
-// fetch(`https://api.themoviedb.org/3/trending/all/day?api_key=${key}`)
-// .then(response => response.json())
-// .then(response => {storeResult("trending", response); getTrendingMovies(response.results); getTrendingMoviesDetails(media)})
-
 let sectionNamesContainer = document.getElementById("section-names")
 let sectionNames = Array.from(sectionNamesContainer.querySelectorAll("div"))
 let sections = document.querySelectorAll('.sections')
@@ -207,11 +207,20 @@ function changeSection() {
 
 let movieGenres = [] 
 let tvGenres = []
-let practice = []
-let recentShows = [{currentIndex: 1, type: "movie", targetContainerId: "recent-shows"}]
-let topMovies = [{currentIndex: 1, type: "movie", targetContainerId: "top-movies"}]
-let topTv = [{currentIndex: 1, type: "tv", targetContainerId: "top-series"}]
-let upcomingMovies = [{currentIndex: 1, type: "movie", targetContainerId: "upcoming"}]
+let recentShows = [{currentIndex: 1, type: "both", targetContainerId: "recent-shows", moviesCurrentPage: 1,
+					seriesCurrentPage: 1, series_max_length: undefined, movies_max_length: undefined,
+					seriesLastPage: false, moviesLastPage: false}]
+let topMovies = [{currentIndex: 1, type: "movie", targetContainerId: "top-movies",
+				  currentPage: 1, endOfPages: false, max_length: undefined}]
+let topTv = [{currentIndex: 1, type: "tv", targetContainerId: "top-series",
+			  currentPage: 1, endOfPages: false, max_length: undefined}]
+let upcomingMovies = [{currentIndex: 1, type: "movie", targetContainerId: "upcoming",
+					   currentPage: 1, endOfPages: false, max_length: undefined}]
+
+skeletonLoader("top-movies", "firstElementChild", 20)
+skeletonLoader("top-series", "firstElementChild", 20)
+skeletonLoader("upcoming", "firstElementChild", 20)
+skeletonLoader("recent-shows", "firstElementChild", 40)
 
 function storeResult(data_name, data) {
 	sessionStorage.setItem(data_name, JSON.stringify(data))
@@ -219,47 +228,90 @@ function storeResult(data_name, data) {
 
 fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${key}&language=en-US`)
 .then(res => res.json())
-.then(res => {movieGenres=res; storeResult("movieGenres", movieGenres); fetchMovies(); fetchRecentShows()})
+.then(res => {
+	movieGenres=res; storeResult("movieGenres", movieGenres); fetchtopMovies(); fetchRecentMovies(recentShows.moviesCurrentPage);
+	fetchUpcomingMovies(upcomingMovies[0].currentPage);
+})
+
 
 fetch(`https://api.themoviedb.org/3/genre/tv/list?api_key=${key}&language=en-US`)
 .then(res => res.json())
-.then(res => {tvGenres=res; storeResult("seriesGenres", tvGenres); fetchTvSeries(); fetchRecentShows()})
+.then(res => {tvGenres=res; storeResult("seriesGenres", tvGenres); fetchTopTvSeries(); fetchRecentSeries(recentShows.seriesCurrentPage)})
 
-
-function fetchMovies() {
+function fetchtopMovies() {
 	fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${key}&page=1`)
 	.then(res => res.json())
-	.then(res => {res.results.forEach(result => topMovies.push(result)); storeResult("top-movies", topMovies); observeChildren("top-movies")})
-
-	fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${key}&language=en-US&page=1&region=US`)
-	.then(res => res.json())
-	.then(res => {res.results.forEach(result => upcomingMovies.push(result)); storeResult("upcoming-movies", upcomingMovies); observeChildren("upcoming")})
+	.then(res => {
+		res.results.forEach(result => topMovies.push(result)); storeResult("top-movies", topMovies); observeChildren("top-movies", res.results.length)
+	})
 }
-// displayResponse(res, "movie", "top-movies")
-function fetchTvSeries() {
+
+function fetchUpcomingMovies(page) {
+	if (!upcomingMovies.endOfPages) {
+		fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${key}&language=en-US&page=${page}&region=US`)
+		.then(res => res.json())
+		.then(res => {
+			upcomingMovies[0].max_length = res.total_results;
+			res.results.forEach(result => upcomingMovies.push(result)); 
+			storeResult("upcoming-movies", upcomingMovies); 
+			observeChildren("upcoming", res.results.length)
+			if (page == res.total_pages) {
+				upcomingMovies.endOfPages = true
+			}
+		})
+	}
+}
+
+function fetchTopTvSeries() {
 	fetch(`https://api.themoviedb.org/3/tv/popular?api_key=${key}&page=1`)
 	.then(res => res.json())
-	.then(res => {res.results.forEach(result => topTv.push(result)); storeResult("top-tv", topTv); observeChildren("top-series")})
+	.then(res => {res.results.forEach(result => topTv.push(result)); storeResult("top-tv", topTv); observeChildren("top-series", res.results.length)})
 }
 
 let fetchedRecentSeries = false
 let fetchedRecentMovies = false
 let alreadyLoaded = false
+let recent_no = 0
 
-function fetchRecentShows() {
-	fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${key}&language=en-US&page=1&region=US`)
-	.then(res => res.json())
-	.then(res => {res.results.forEach(result => recentShows.push(result)); storeResult("recent-shows", recentShows); fetchedRecentSeries=true; check()})
-	
-	fetch(`https://api.themoviedb.org/3/tv/on_the_air?api_key=${key}&language=en-US&page=1&region=US`)
-	.then(res => res.json())
-	.then(res => {res.results.forEach(result => recentShows.push(result)); storeResult("recent-shows", recentShows); fetchedRecentMovies=true; check()})
+function fetchRecentMovies(page) {
+	if (!recentShows.moviesLastPage) {
+		fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${key}&language=en-US&page=${page}&region=US`)
+		.then(res => res.json())
+		.then(res => {
+			recentShows[0].movies_max_length = res.total_results
+			recent_no += res.results.length;
+			recentShows.movies_max_length = res.total_results;
+			res.results.forEach(result => recentShows.push(result));
+			storeResult("recent-shows", recentShows); fetchedRecentMovies=true; check()
+			if (page == res.total_pages) {
+				recentShows.moviesLastPage = true
+			}
+		})
+	}
+}
+
+function fetchRecentSeries(page) {
+	if (!recentShows.seriesLastPage) {
+		fetch(`https://api.themoviedb.org/3/tv/on_the_air?api_key=${key}&language=en-US&page=${page}&region=US`)
+		.then(res => res.json())
+		.then(res => {
+			recentShows[0].series_max_length = res.total_results
+			recent_no += res.results.length;
+			recentShows.series_max_length = res.total_results;
+			res.results.forEach(result => recentShows.push(result));
+			storeResult("recent-shows", recentShows); fetchedRecentSeries=true; check()
+			if (page == res.total_pages) {
+				recentShows.seriesLastPage = true
+			}
+		})
+
+	}
 }
 
 function check() {
 	if (!alreadyLoaded) {
 		if (fetchedRecentSeries && fetchedRecentMovies) {
-			observeChildren("recent-shows")
+			observeChildren("recent-shows", recent_no)
 			alreadyLoaded = true
 		}
 	}
@@ -273,11 +325,12 @@ let scrollObserver = new IntersectionObserver(entries => {
 	})
 }, {threshold: 0.25})
 
-function observeChildren(parentId) {
+function observeChildren(parentId, no) {
 	let parentContainer = document.getElementById(parentId)
+	let iterator = (parentContainer.children.length)-no
 	let mediaContainers = parentContainer.querySelectorAll(".media-container")
 	let film = undefined
-	for (let i = 0; i < mediaContainers.length; i++) {
+	for (let i = iterator; i < parentContainer.children.length; i++) {
 		film = mediaContainers[i]
 		scrollObserver.observe(film)
 	}
@@ -288,18 +341,18 @@ function show(element) {
 	scrollObserver.unobserve(element)
 	if (element.parentNode.id == "top-movies"){
 		dataList = topMovies
-	}else if(element.parentNode.id == "top-series"){
+	}else if (element.parentNode.id == "top-series"){
 		dataList = topTv
-	}else if(element.parentNode.id = "upcoming"){
+	}else if (element.parentNode.id == "upcoming"){
 		dataList = upcomingMovies
-	}
+	}else {dataList = recentShows}
 	let parentContainer = document.getElementById(dataList[0].targetContainerId)
 	let mediaContainers = parentContainer.querySelectorAll(".media-container")
 	let currentIndex = dataList[0].currentIndex
 	let mediaData = dataList[currentIndex]
 	let poster = mediaContainers[currentIndex - 1].querySelector(".poster-img")
 	url = `https://image.tmdb.org/t/p/w342${mediaData.poster_path}`
-	poster.style.backgroundImage = `url('${url}')`
+	poster.style.backgroundImage = `url('${url}'), url('load_error.jpeg')`
 	poster.classList.remove("skeleton")
 	let name = document.createElement("div")
 	let littleDetails = document.createElement("div")
@@ -318,14 +371,14 @@ function show(element) {
 		genresList = tvGenres.genres
 		releaseYear.textContent = "Since " + mediaData.first_air_date.slice(0, 4)
 	}else {
-		if (mediaData.media_type == "movie") {
+		if (mediaData.hasOwnProperty("release_date")) {
 			name.textContent = mediaData.title
 			genresList = movieGenres.genres
 			releaseYear.textContent = mediaData.release_date.slice(0, 4)
 		}else {
 			name.textContent = mediaData.name
 			genresList = tvGenres.genres
-			releaseYear.textContent = "Since " + mediaData.first_air_date.slice(0, 4)	
+			releaseYear.textContent = "Since " + mediaData.first_air_date.slice(0, 4)
 		}
 	}
 	mediaGenres.textContent = " | "
@@ -349,5 +402,21 @@ function show(element) {
 	}
 	mediaContainers[currentIndex - 1].appendChild(name)
 	mediaContainers[currentIndex - 1].appendChild(littleDetails)
+	if (dataList[0].currentIndex == (dataList.length-1)/2) {
+		if (dataList[0].targetContainerId == "upcoming") {
+			dataList[0].currentPage += 1
+			skeletonLoader("upcoming", "firstElementChild", 20, dataList[0].max_length)
+			fetchUpcomingMovies(dataList[0].currentPage)
+		}
+		if (dataList[0].targetContainerId == "recent-shows") {
+			dataList[0].moviesCurrentPage += 1
+			dataList[0].seriesCurrentPage += 1
+			alreadyLoaded = false
+			skeletonLoader("recent-shows", "firstElementChild", 20, dataList[0].movies_max_length)
+			skeletonLoader("recent-shows", "firstElementChild", 20, dataList[0].series_max_length)
+			fetchRecentMovies(dataList[0].moviesCurrentPage)
+			fetchRecentSeries(dataList[0].seriesCurrentPage)
+		}
+	}
 	dataList[0].currentIndex += 1
 }

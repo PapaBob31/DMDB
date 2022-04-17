@@ -25,6 +25,16 @@ function loadData() {
 	}
 }
 
+function skeletonLoader(parentId, templateChild, no) {
+	let parentContainer = document.getElementById(parentId)
+	for (let i=0; i<no; i++) {
+		let skeleton = document.querySelector("template").content[templateChild].cloneNode(true)
+		parentContainer.appendChild(skeleton)
+	}
+}
+skeletonLoader("movies-container", "firstElementChild", 40)
+
+
 function displayMovies(moviesList) {
 	for (let i=0; i<moviesList.length; i++) {
 		let movie = document.createElement("div")

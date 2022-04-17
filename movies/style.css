@@ -33,9 +33,9 @@ body {
 
 #movies-container {
 	margin-top: 30px;
-	padding: 0 5%;
 	display: flex;
 	flex-wrap: wrap;
+	justify-content: space-between;
 }
 
 #movies-container .media-container {

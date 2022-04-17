@@ -7,12 +7,13 @@ html {
 }
 
 body {
+	--main-bg-color: rgb(40, 40, 40);
 	position: relative;
 	margin: 0 0 0 15%;
 	width: 85%;
 	padding: 0 5%;
 	font-family: Segoe UI, sans-serif;
-	background: rgb(40, 40, 40);
+	background: var(--main-bg-color);
 	font-size: 0.9em;
 }
 
@@ -25,6 +26,7 @@ body {
 	top: 0;
 	left: 0;
 	width: 85%;
+	height: 40px;
 	margin-left: 15%;
 	padding: 5px 5%;
 	background: inherit;
@@ -175,43 +177,44 @@ body {
 }
 
 .skeleton {
+	--skeleton-bg-color: rgb(65, 65, 65);
 	position: relative;
 	animation: skeleton-load 1s ease-in-out infinite alternate;
 }
 
 .skeleton-text {
-	background-color: rgb(75, 75, 75);
+	background-color: var(--skeleton-bg-color);
 	height: 10px;
 	border-radius: 3px;
-	margin: 0 5px 0.5rem 5px;
+	margin: 5px;
 }
 
-.skeleton-text:first-child {
-	width: 85%;
-}
-
-.skeleton-text:nth-child(2) {
-	width: 96%;
+.skeleton-text {
+	margin-top: 5px;
+	width: 95%;
 }
 
 .skeleton-text:last-child {
 	width: 50%;
+	margin-bottom: 10px;
 }
 
-/*@keyframes skeleton-load {
+@keyframes skeleton-load {
 	0% {
-		background-color: rgb(75, 75, 75);
+		background-color: var(--skeleton-bg-color);
 	}
 
 	100% {
-		background-color: rgb(65, 65, 65);
+		background-color: rgb(55, 55, 55);
 	}
-}*/
+}
 
 .trending-movie-skeleton {
+	--skeleton-bg-color: rgb(65, 65, 65);
 	width: 100%;
 	height: 500px;
 	animation: trendy-movies-loading 1s ease-in-out infinite alternate;
+	background-color: rgb(50, 50, 50);
 }
 
 .trending-movie-skeleton div {
@@ -223,17 +226,17 @@ body {
 	height: 20px;
 	margin-bottom: 10px;
 	border-radius: 5px;
-	background-color: rgb(75, 75, 75);
+	background-color: var(--skeleton-bg-color);
 }
 
 .trending-movie-skeleton .media-type-nd-release-date {
 	width: 100%;
 	height: 10px;
-	background-color: rgb(75, 75, 75);
+	background-color: var(--skeleton-bg-color);
 }
 
 .trending-movie-skeleton iframe {
-	background-color: rgb(75, 75, 75);
+	background-color: var(--skeleton-bg-color);
 }
 
 .trending-genres span {
@@ -241,7 +244,7 @@ body {
 	height: 30px;
 	width: 20%;
 	margin-right: 10px;
-	background-color: rgb(75, 75, 75);
+	background-color: var(--skeleton-bg-color);
 	border-radius: 5px;
 }
 
@@ -249,7 +252,7 @@ body {
 	width: 100%;
 	height: 10px;
 	margin-bottom: 5px;
-	background-color: rgb(75, 75, 75);
+	background-color: var(--skeleton-bg-color);
 }
 
 .overview-first-element {
@@ -262,18 +265,18 @@ body {
 	height: 10px;
 	margin-bottom: 5px;
 	border-radius: 5px;
-	background-color: rgb(75, 75, 75);
+	background-color: var(--skeleton-bg-color);
 }
 
-/*@keyframes trendy-movies-loading {
+@keyframes trendy-movies-loading {
 	from {
-		background-color: rgb(75, 75, 75);
+		background-color: rgb(50, 50, 50);
 	}
 
 	to {
-		background-color: rgb(65, 65, 65);
+		background-color: var(--skeleton-bg-color);
 	}
-}*/
+}
 
 #trending-movies-container {
 	margin-top: 60px;
@@ -448,16 +451,18 @@ body {
 }
 
 #movies {
-	position: sticky;
-	top: 50px;
 	width: 100%;
 }
 
 #section-names {
 	width: 100%;
+	padding: 0 0 5px;
 	display: flex;
 	align-items: center;
-	margin: 10px 0;
+	position: sticky;
+	top: 40px;
+	z-index: 2;
+	background: var(--main-bg-color);
 }
 
 #section-names div {
@@ -511,7 +516,7 @@ body {
 }
 
 .sub-sections::-webkit-scrollbar-track {
-	background: rgb(40, 40, 40);
+	background: var(--main-bg-color);
 }
 
 .sub-sections::-webkit-scrollbar-thumb {
@@ -520,32 +525,34 @@ body {
 }
 
 .media-container {
-	background-color: rgb(60, 60, 60);
+	background-color: rgb(50, 50, 50);
 	color: rgb(220, 220, 220);
 	flex-grow: 0;
 	flex-shrink: 0;
 	max-height: 350px;
-	width: 18%;
+	width: 19%;
 	min-width: 150px;
-	margin-right: 3%;
 	border-radius: 10px;
+}
+
+.sub-sections .media-container {
+	margin-right: 2%;
 }
 
 .poster-img {
 	width: 100%;
 	border-radius: 10px 10px 0 0;
 	height: 250px;
-	background-color: rgb(75, 75, 75); 
-	background-size: cover;
-	margin-bottom: 5px;
+	background-color: rgb(65, 65, 65); 
+	background-size: 100% 100%;
 	border: none;
 }
-
 
 #recent-shows, #upcoming {
 	display: none;
 	flex-wrap: wrap;
 	align-items: flex-start;
+	justify-content: space-between;
 }
 
 #recent-shows .media-container {
