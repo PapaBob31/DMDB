@@ -12,18 +12,16 @@
 	<div id="site-header">
 		<span class="material-icons-outlined" id="mobile-menu">menu</span>
 		<h2 id="site-name">MOBILE CINEMA</h2>
+		<select id="filter">
+			<option value="popular">Popular</option>
+			<option value="currently-airing">On air</option>
+			<option value="top-rated">Top rated</option>
+		</select>
 		<form id="search-bar-container" action="search.html">
 			<input type="text" id="search-bar" placeholder="Search..">
 			<button type="submit" id="search-icon" class="material-icons-outlined">search</button>
 			<div><!-- <span class="material-icons-outlined">history</span> --></div>
 		</form>
-	</div>
-	<div id="filter">
-		<h3>Filter Tv-series: All</h3>
-		<!-- <div>All</div>
-		<div>Popular</div>
-		<div>Trending</div>
-		<div>TOp rated</div> -->
 	</div>
 	<span id="mobile-menu">MENU</span>
 	<div id="menu-bar">
@@ -39,7 +37,10 @@
 		</div>
 		<div id="genres">
 			<div>
-				<h2><span id="back-arrow"><- </span>GENRES</h2>
+				<h2>
+					<span class="material-icons-round" id="back-arrow">arrow_back</span>
+					GENRES
+				</h2>
 				<a href="#">Comedy</a>
 				<a href="#">Sci-fi</a>
 				<a href="#">Horror</a>
@@ -67,6 +68,7 @@
 			<div class="skeleton skeleton-text"></div>
 		</div>
 	</template>
+	<script type="text/javascript" src="..\menu.js"></script>
 	<script type="text/javascript" src="tv.js"></script>
 </body>
 </html>

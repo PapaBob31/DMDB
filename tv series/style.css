@@ -1,27 +1,19 @@
-
-/*#filter {
-	position: absolute;
-	left: 25%;
-	top: 10px;
-	margin: 0;
+#filter {
+	background: rgb(60, 60, 60);
+	width: 120px;
 	padding: 5px;
+	outline: none;
+	border: none;
+	z-index: 10;
 	color: rgb(220, 220, 220);
-	background: rgb(80, 80, 80);
 }
-
-#filter h3 {
-	margin: 0;
-}
-
-#filter div {
-	transform: scaleY(0);
-}*/
 
 #series-container {
-	margin-top: 10px;
+	margin-top: 50px;
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
+	align-items: flex-start;
 }
 
 #series-container .media-container {

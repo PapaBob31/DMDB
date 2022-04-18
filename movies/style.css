@@ -1,44 +1,22 @@
-* {
-	box-sizing: border-box;
-}
-
-body {
-	position: relative;
-	margin: 0 0 0 15%;
-	width: 85%;
-	padding: 0 1%;
-	font-family: Segoe UI, sans-serif;
-	background: rgb(40, 40, 40);
-	font-size: 0.9em;
-}
-
 #filter {
-	position: absolute;
-	left: 25%;
-	top: 10px;
-	margin: 0;
-	border-radius: 5px;
+	background: rgb(60, 60, 60);
+	width: 120px;
 	padding: 5px;
+	outline: none;
+	border: none;
+	z-index: 10;
 	color: rgb(220, 220, 220);
-	background: rgb(55, 55, 55);
-}
-
-#filter h3 {
-	margin: 0;
-}
-
-#filter div {
-	
 }
 
 #movies-container {
-	margin-top: 30px;
+	margin-top: 50px;
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
+	align-items: flex-start;
 }
 
 #movies-container .media-container {
-	margin-top: 20px;
+	margin-bottom: 20px;
 	width: 19%;
 }
