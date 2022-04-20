@@ -1,18 +1,38 @@
+window.onbeforeunload = function() {window.scrollTo(0, 0)}
+
 let key = "b44b2b9e1045ae57b5c211d94cc010d9"
 let seriesContainer = document.getElementById("series-container")
 let genresList = []
 
-function skeletonLoader(parentId, templateChild, no, max_no) {
+function skeletonLoader(parentId, templateChild, max_no) {
 	let parentContainer = document.getElementById(parentId)
+	let reachedEndOfContainer = false
+	let no = 20
+	let dummyContainersNo = undefined
+	let skeletonFragment = new DocumentFragment()
 	if (max_no) {
-		if (max_no - parentContainer.children.length < 20){
+		if (max_no - parentContainer.children.length < 20) {
 			no = max_no - parentContainer.children.length
+			reachedEndOfContainer = true 
 		}
 	}
 	for (let i=0; i<no; i++) {
 		let skeleton = document.querySelector("template").content[templateChild].cloneNode(true)
-		parentContainer.appendChild(skeleton)
+		skeletonFragment.appendChild(skeleton)
 	}
+	if (reachedEndOfContainer) {
+		let theEnd = document.querySelector("template").content.children[1].cloneNode(true)
+		skeletonFragment.appendChild(theEnd)
+		if ((no%5 != 0) && parentContainer.display.type == "flex") {
+			dummyContainersNo = no%5
+			for(let k=0; k<dummyContainersNo; k++) {
+				let dummyContainer = document.createElement("div")
+				dummyContainer.classList.add("media-container")
+				skeletonFragment.appendChild(dummyContainer)
+			}
+		}
+	}
+	parentContainer.appendChild(skeletonFragment)
 }
 
 skeletonLoader("series-container", "firstElementChild", 20)
@@ -131,7 +151,7 @@ function show(element) {
 	mediaContainers[currentIndex - 1].appendChild(littleDetails)
 	if (dataList[0].currentIndex == (dataList.length-1)/2) {
 		dataList[0].currentPage += 1
-		skeletonLoader("series-container", "firstElementChild", 20, dataList[0].max_length)
+		skeletonLoader("series-container", "firstElementChild", dataList[0].max_length)
 		if (currentValue == "popular") {
 			fetchPopularSeries(dataList[0].currentPage)
 		}else if (currentValue == "currently-airing") {

@@ -1,15 +1,34 @@
-function skeletonLoader(parentId, templateChild, no, max_no) {
+window.onbeforeunload = function() {window.scrollTo(0, 0)}
+
+function skeletonLoader(parentId, templateChild, max_no) {
 	let parentContainer = document.getElementById(parentId)
+	let reachedEndOfContainer = true
+	let no = 8
+	let dummyContainersNo = undefined
+	let skeletonFragment = new DocumentFragment()
 	if (max_no) {
-		if (max_no - parentContainer.children.length < 20){
+		if (max_no - parentContainer.children.length < 20) {
 			no = max_no - parentContainer.children.length
-			showEndOfPage(parentId)
+			reachedEndOfContainer = true 
 		}
 	}
 	for (let i=0; i<no; i++) {
 		let skeleton = document.querySelector("template").content[templateChild].cloneNode(true)
-		parentContainer.appendChild(skeleton)
+		skeletonFragment.appendChild(skeleton)
 	}
+	if (reachedEndOfContainer) {
+		let theEnd = document.querySelector("template").content.children[1].cloneNode(true)
+		skeletonFragment.appendChild(theEnd)
+		if (no%5 != 0) {
+			dummyContainersNo = no%5
+			for(let k=0; k<dummyContainersNo; k++) {
+				let dummyContainer = document.createElement("div")
+				dummyContainer.classList.add("media-container")
+				skeletonFragment.appendChild(dummyContainer)
+			}
+		}
+	}
+	parentContainer.appendChild(skeletonFragment)
 }
 
 skeletonLoader("trending-movies-container", "lastElementChild", 3)
@@ -181,16 +200,10 @@ let topTv = [{currentIndex: 1, type: "tv", targetContainerId: "top-series",
 let upcomingMovies = [{currentIndex: 1, type: "movie", targetContainerId: "upcoming",
 					   currentPage: 1, endOfPages: false, max_length: undefined}]
 
-function showEndOfPage(parentId) {
-	let parentContainer = document.getElementById(parentId)
-	let theEnd = document.querySelector("template").content.children[1].cloneNode(true)
-	parentContainer.appendChild(theEnd)
-}
-
-skeletonLoader("top-movies", "firstElementChild", 20)
-skeletonLoader("top-series", "firstElementChild", 20)
-skeletonLoader("upcoming", "firstElementChild", 20)
-skeletonLoader("recent-shows", "firstElementChild", 40)
+skeletonLoader("top-movies", "firstElementChild")
+skeletonLoader("top-series", "firstElementChild")
+skeletonLoader("upcoming", "firstElementChild")
+skeletonLoader("recent-shows", "firstElementChild")
 
 fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${key}&language=en-US`)
 .then(res => res.json())
@@ -377,8 +390,8 @@ function show(element) {
 			dataList[0].moviesCurrentPage += 1
 			dataList[0].seriesCurrentPage += 1
 			alreadyLoaded = false
-			skeletonLoader("recent-shows", "firstElementChild", 20, dataList[0].movies_max_length)
-			skeletonLoader("recent-shows", "firstElementChild", 20, dataList[0].series_max_length)
+			skeletonLoader("recent-shows", "firstElementChild", dataList[0].movies_max_length)
+			skeletonLoader("recent-shows", "firstElementChild", dataList[0].series_max_length)
 			fetchRecentMovies(dataList[0].moviesCurrentPage)
 			fetchRecentSeries(dataList[0].seriesCurrentPage)
 		}

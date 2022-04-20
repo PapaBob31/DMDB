@@ -18,4 +18,73 @@
 
 #series-container .media-container {
 	margin-bottom: 20px;
+	width: 19%;
+}
+
+@media screen and (max-width: 1000px) {
+	body {
+		width: 100%;
+		margin: 0;
+	}
+
+	#site-header {
+		width: 100%;
+		margin-left: 0;
+	}
+
+	#mobile-menu {
+		display: block;
+	}
+
+	#close-menu {
+		display: block;
+	}
+
+	#menu-bar {
+		left: -100%;
+	}
+
+	#details {
+		display: none;
+	}
+
+	#series-container .media-container {
+		width: 19%;
+	}
+
+}
+
+@media screen and (max-width: 660px) {
+    #series-container .media-container {
+		width: 45%;
+	}
+
+}
+
+@media screen and (max-width: 500px) {
+	#details {
+		display: none;
+	}
+
+	#series-container .media-container {
+		width: 48%;
+	}
+}
+
+@media screen and (max-width: 450px) {
+	#recent-shows, #upcoming {
+		display: block;
+	}
+
+	#series-container .media-container {
+		width: 90%;
+		margin: 20px auto 0;
+	}
+}
+
+
+@media screen and (max-height: 550px) {
+	#menu-options {
+		height: 100%;
+	}
 }

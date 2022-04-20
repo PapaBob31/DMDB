@@ -32,3 +32,17 @@ function showGenres() {
 function hideGenres() {
 	genresContainer.style.left = '-100%'
 }
+
+window.addEventListener('resize', removeInlineStyles)
+
+function removeInlineStyles() {
+	if (window.innerWidth > 1000) {
+		menuBar.removeAttribute('style')
+	}
+}
+
+function expandMobileSearchBar() {
+	if (window.innerWidth <= 700) {
+		;
+	}
+}

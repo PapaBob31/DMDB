@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
-	<link rel="stylesheet" href="mobile.css">
-	<link rel="stylesheet" href="style.css">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
 	<meta name="theme-color" content="rgb(40, 40, 40)">
 	<meta name="viewport" content="width=device-width">
+	<title></title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="mobile.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
 </head>
 <body>
 	<div id="site-header">
-		<span class="material-icons-outlined" id="mobile-menu">menu</span>
-		<h2 id="site-name">MOBILE CINEMA</h2>
+		<div style="display: flex">
+			<span class="material-icons-outlined" id="mobile-menu">menu</span>
+			<h2 id="site-name">MOBILE CINEMA</h2>
+		</div>
 		<form id="search-bar-container" action="search.html">
 			<input type="text" id="search-bar" placeholder="Search..">
 			<button type="submit" id="search-icon" class="material-icons-outlined">search</button>
+			<span class="material-icons-outlined" id="close-search-bar">close</span>
 			<div><!-- <span class="material-icons-outlined">history</span> --></div>
 		</form>
 	</div>
@@ -89,8 +92,8 @@
 			<div class="skeleton skeleton-text"></div>
 			<div class="skeleton skeleton-text"></div>
 		</div>
-		<div class="media-container">
-			<h2>THE END</h2>
+		<div class="media-container ending">
+			<h2>Looks like you've reached the end of the page</h2>
 		</div>
 		<div class="trending-movie trending-movie-skeleton">
 			<div class="trending-txt">Trending Now</div>

@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
 	<title>movies</title>
-	<link rel="stylesheet" href="..\mobile.css">
 	<link rel="stylesheet" href="style.css">
 	<link rel="stylesheet" href="..\style.css">
+	<link rel="stylesheet" href="..\mobile.css">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
 </head>
 <body>
 	<div id="site-header">
-		<span class="material-icons-outlined" id="mobile-menu">menu</span>
-		<h2 id="site-name">MOBILE CINEMA</h2>
+		<div style="display: flex">
+			<span class="material-icons-outlined" id="mobile-menu">menu</span>
+			<h2 id="site-name">MOBILE CINEMA</h2>
+		</div>
 		<select id="filter">
 			<option value="popular">Popular</option>
 			<option value="in-cinemas">In Cinemas</option>
@@ -20,9 +24,9 @@
 		<form id="search-bar-container" action="search.html">
 			<input type="text" id="search-bar" placeholder="Search..">
 			<button type="submit" id="search-icon" class="material-icons-outlined">search</button>
+			<span class="material-icons-outlined" id="close-search-bar">close</span>
 		</form>
 	</div>
-	<span id="mobile-menu">MENU</span>
 	<div id="menu-bar">
 		<div id="menu-options">
 			<span id="close-menu">close</span>
