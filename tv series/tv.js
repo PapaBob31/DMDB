@@ -107,6 +107,10 @@ let scrollObserver = new IntersectionObserver(entries => {
 	})
 }, {threshold: 0.25})
 
+let moviePoster = document.createElement("img")
+moviePoster.style.width = "100%"
+moviePoster.classList.add("poster-img")
+let movieDetails = new DocumentFragment()
 
 function show(element) {
 	let dataList = tvList
@@ -116,14 +120,13 @@ function show(element) {
 	let currentIndex = dataList[0].currentIndex
 	let mediaData = dataList[currentIndex]
 	let poster = mediaContainers[currentIndex - 1].querySelector(".poster-img")
-	url = `https://image.tmdb.org/t/p/w342${mediaData.poster_path}`
-	poster.style.backgroundImage = `url('${url}'), url('../load_error.jpeg')`
+	moviePoster.src = `https://image.tmdb.org/t/p/w342${mediaData.poster_path}`
 	poster.classList.remove("skeleton")
 	let name = document.createElement("div")
 	let littleDetails = document.createElement("div")
 	let releaseYear = document.createElement("span")
 	let mediaGenres = document.createElement("div")
-	let skeletonTexts = mediaContainers[currentIndex - 1].querySelectorAll(".skeleton-text")
+	let skeletonTexts = mediaContainers[currentIndex - 1].querySelectorAll(".skeleton")
 	name.id = "name"
 	littleDetails.id = "little-details" 
 	name.textContent = mediaData.name
@@ -147,8 +150,11 @@ function show(element) {
 	for (let l=0; l<skeletonTexts.length; l++) {
 		mediaContainers[currentIndex - 1].removeChild(skeletonTexts[l])
 	}
-	mediaContainers[currentIndex - 1].appendChild(name)
-	mediaContainers[currentIndex - 1].appendChild(littleDetails)
+	mediaContainers[currentIndex - 1].removeChild(poster)
+	movieDetails.appendChild(moviePoster.cloneNode(true))
+	movieDetails.appendChild(name)
+	movieDetails.appendChild(littleDetails)
+	mediaContainers[currentIndex - 1].appendChild(movieDetails)
 	if (dataList[0].currentIndex == (dataList.length-1)/2) {
 		dataList[0].currentPage += 1
 		skeletonLoader("series-container", "firstElementChild", dataList[0].max_length)

@@ -47,39 +47,125 @@
 }
 
 @media screen and (max-width: 700px) {
-	#search-bar-container {
-		background: rgb(45, 45, 45);
+	#site-header {
+		padding: 0 5px;
+		height: 10vh;
+	}
+
+	#bottom-status {
+		display: flex;
+		justify-content: space-evenly;
+		width: 100%;
+		padding: 0 40%;
+		margin: 0 0 20px;
+	}
+
+	#bottom-status div {
+		max-width: 30px;
+		height: 3px;
+	}
+
+	#trending-movies-container {
+		margin: 10vh 0 0;
+		width: 100%;
+		border-radius: 0;
+		padding: 15px 0;
+	}
+
+	#move-left, #move-right {
+		display: none;
+	}
+
+	.media-type-nd-release-date {
+		margin-bottom: 0;
+	}
+
+	.media-name {
+		font-size: 1.5em;
+	}
+
+	.details {
 		position: absolute;
+		height: 50px;
+		bottom: 0;
+		width: 100%;
+		border-radius: 0;
+		background: linear-gradient(to bottom, rgba(15, 15, 15, 0.2),  rgb(15, 15, 15) 20%);
+		overflow: hidden;
+	}
+
+	.overview {
+		display: none;
+	}
+
+	.trending-genres {
+		display: none;
+	}
+
+	.links-inside-trending-container {
+		display: none;
+		margin-top: -20px;
+		font-size: 1.1em;
+		padding: 6px 5px;
+	}
+
+	#section-names {
+		padding: 0 15px;
+	}
+
+	.sub-sections-wrapper {
+		padding: 0 15px;
+	}
+
+	#menu-bar {
+		width: 40%;
+	}
+
+	#search-bar-container {
+		display: none;
+	}
+
+	#mobile-search-trigger {
+		display: inline-block;	
+		color: rgba(245, 93, 66, 0.8);
+		background-color: inherit;
+		border: none;
+		font-size: 1.5rem;
+	}
+
+	#mobile-search-bar-container {
+		background: rgb(45, 45, 45);
+		display: flex;
+		position: fixed;
 		z-index: 4;
 		width: 100%;
 		left: 0;
 		top: 0;
 		border-radius: none;
-		padding: 0 10px 5px;
+		padding: 5px 5px;
+		transition: 0.5s;
 	}
 
-	#mobile-search-icon {
+	#mobile-search-bar-container #search-icon {
 		display: inline-block;
+		border-radius: 5px 0 0 5px;
+		width: 5%;
+		color: rgb(200, 200, 200);
+		min-width: 30px;
 	}
 
-	#search-icon {
-		display: none;
-	}
-
-	#search-bar {
-		height: 30px;
+	#mobile-search-bar-container #search-bar {
+		height: 3vh;
 		padding: 0 25px 0 5px;
-		border-radius: 5px;
-		width: 100%;
+		border-radius: 0 5px 5px 0;
+		width: 90%;
 	}
 
 	#close-search-bar {
 		display: inline-block;
-	}
-
-	#site-header {
-		padding: 5px 5px;
-		z-index: 55;
+		color: rgb(200, 200, 200);
+		font-size: 1.2em;
+		text-align: center;
 	}
 }
 
@@ -95,6 +181,14 @@
 }
 
 @media screen and (max-width: 500px) {
+	/*.trending-movie {
+		height: 350px;
+	}*/
+
+	#top-picks h3:last-child {
+
+	}
+
 	#details {
 		display: none;
 	}
@@ -107,28 +201,52 @@
 		width: 48%;
 	}
 
+	#section-names div {
+		margin: 0 6% 0 0;
+	}
+
 }
 
 @media screen and (max-width: 450px) {
-	#recent-shows, #upcoming {
-		display: block;
+	.sub-sections .media-container {
+		margin-right: 4%;
+		width: 21%;
 	}
+}
 
+@media screen and (max-width: 400px) {
 	#recent-shows .media-container {
-		width: 90%;
-		margin: 20px auto 0;
+		width: 100%;
 	}
 
 	#upcoming .media-container {
-		width: 90%;
-		margin: 20px auto 0;
+		width: 100%;
 	}
 
+	.media-container img{
+		max-height: 450px;
+	}
+
+	#name {
+		font-size: 1.1em;
+		padding: 5px 5px 0;
+		font-weight: 500;
+	}
+
+	#little-details {
+		font-size: 1em;
+	}
 }
 
 
 @media screen and (max-height: 550px) {
 	#menu-options {
 		height: 100%;
+	}
+}
+
+@media screen and (min-height: 600px) {
+	#trending-movies-container {
+		max-height: 80vh;
 	}
 }

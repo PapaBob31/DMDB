@@ -4,9 +4,9 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
 	<title>tvs</title>
-	<link rel="stylesheet" href="style.css">
 	<link rel="stylesheet" href="..\style.css">
 	<link rel="stylesheet" href="..\mobile.css">
+	<link rel="stylesheet" href="style.css">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
 </head>
@@ -14,7 +14,8 @@
 	<div id="site-header">
 		<div style="display: flex">
 			<span class="material-icons-outlined" id="mobile-menu">menu</span>
-			<h2 id="site-name">MOBILE CINEMA</h2>
+			<h2 id="site-name">DMDB</h2>
+			<!-- <span id="page-name">Tv series</span> -->
 		</div>
 		<select id="filter">
 			<option value="popular">Popular</option>
@@ -22,15 +23,19 @@
 			<option value="top-rated">Top rated</option>
 		</select>
 		<form id="search-bar-container" action="search.html">
-			<input type="text" id="search-bar" placeholder="Search..">
 			<button type="submit" id="search-icon" class="material-icons-outlined">search</button>
-			<span class="material-icons-outlined" id="close-search-bar">close</span>
-			<div><!-- <span class="material-icons-outlined">history</span> --></div>
+			<input type="text" id="search-bar" placeholder="Search..">
 		</form>
+		<button type="submit" id="mobile-search-trigger" class="material-icons-outlined">search</button>
 	</div>
-		<div id="menu-bar">
+	<form id="mobile-search-bar-container" action="search.html">
+		<button type="submit" id="search-icon" class="material-icons-outlined">search</button>
+		<input type="text" id="search-bar" placeholder="Search..">
+		<span class="material-icons-outlined" id="close-search-bar">close</span>
+	</form>
+	<div id="menu-bar">
+		<span class="material-icons-outlined" id="close-menu">close</span>
 		<div id="menu-options">
-			<span id="close-menu">close</span>
 			<a href="..\index.html">HOME</a>
 			<a href="..\movies\movies.html">MOVIES</a>
 			<a href="tv.html" id="selected-option">TV SERIES</a>
@@ -39,37 +44,40 @@
 			<a href="">SETTINGS</a>
 			<a id="genres-link">GENRES</a>
 		</div>
-		<div id="genres">
-			<div>
-				<h2>
-					<span class="material-icons-round" id="back-arrow">arrow_back</span>
-					GENRES
-				</h2>
-				<a href="#">Comedy</a>
-				<a href="#">Sci-fi</a>
-				<a href="#">Horror</a>
-				<a href="#">Romance</a>
-				<a href="#">Action</a>
-				<a href="#">Thriller</a>
-				<a href="#">Drama</a>
-				<a href="#">Mystery</a>
-				<a href="#">Crime</a>
-				<a href="#">Animation</a>
-				<a href="#">Adventure</a>
-				<a href="#">Fantasy</a>
-				<a href="#">Comedy-Romance</a>
-				<a href="#">Action-Comedy</a>
-				<a href="#">Superhero</a>
-			</div>
+	<div id="genres">
+		<div>
+			<h2>
+				<span class="material-icons-round" id="back-arrow">arrow_back</span>
+				GENRES
+			</h2>
+			<a href="#">Comedy</a>
+			<a href="#">Sci-fi</a>
+			<a href="#">Horror</a>
+			<a href="#">Romance</a>
+			<a href="#">Action</a>
+			<a href="#">Thriller</a>
+			<a href="#">Drama</a>
+			<a href="#">Mystery</a>
+			<a href="#">Crime</a>
+			<a href="#">Animation</a>
+			<a href="#">Adventure</a>
+			<a href="#">Fantasy</a>
+			<a href="#">Comedy-Romance</a>
+			<a href="#">Action-Comedy</a>
+			<a href="#">Superhero</a>
 		</div>
+	</div>
 	</div>
 	<div id="series-container"></div>
 	<template>
 		<div class="media-container">
-			<div class="skeleton poster-img"></div>
-			<div class="skeleton skeleton-text"></div>
-			<div class="skeleton skeleton-text"></div>
-			<div class="skeleton skeleton-text"></div>
+			<div class="poster-img skeleton"></div>
+			<div class="skeleton"></div>
+			<div class="skeleton"></div>
+			<div class="skeleton"></div>
+		</div>
+		<div class="media-container ending">
+			<h2>Looks like you've reached the end of the page</h2>
 		</div>
 	</template>
 	<script type="text/javascript" src="..\menu.js"></script>

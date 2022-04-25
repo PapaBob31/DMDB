@@ -41,8 +41,25 @@ function removeInlineStyles() {
 	}
 }
 
-function expandMobileSearchBar() {
-	if (window.innerWidth <= 700) {
-		;
+let mobileSearchIcon = document.getElementById("mobile-search-trigger")
+let mobileSearchBar = document.getElementById("mobile-search-bar-container")
+let closeMobileSearchBtn = document.getElementById("close-search-bar")
+mobileSearchIcon.addEventListener("click", showMobileSearchBar)
+closeMobileSearchBtn.addEventListener("click", closeMobileSearchBar)
+
+let onScreen = false
+
+function showMobileSearchBar() {
+	if (!onScreen) {
+		mobileSearchBar.style.top = '5vh'
+		onScreen = true
+	}else {
+		mobileSearchBar.style.top = '0'
+		onScreen = false
 	}
+
+}
+
+function closeMobileSearchBar() {
+	mobileSearchBar.style.top = '-5px'
 }

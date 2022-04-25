@@ -6,13 +6,17 @@ html {
 	box-sizing: border-box;
 }
 
+html, body {
+	height: 100%;
+}
+
 body {
-	--main-bg-color: rgb(40, 40, 40);
+	--main-bg-color: rgb(12, 12, 12);
 	position: relative;
 	margin: 0 0 0 15%;
 	width: 85%;
-	padding: 0 5%;
-	font-family: Segoe UI, sans-serif;
+	padding: 0;
+	font-family: 'Roboto', 'Open Sans', Segoe UI, sans-serif;
 	background: var(--main-bg-color);
 	font-size: 0.9em;
 }
@@ -28,27 +32,18 @@ body {
 	width: 85%;
 	margin-left: 15%;
 	padding: 5px 5%;
-	background: rgb(45, 45, 45);
+	background: rgb(25, 25, 25);
 	display: flex;
 	justify-content: space-between;
-	align-items: flex-start;
-	z-index: 5;
+	align-items: center;
+	z-index: 6;
 }
 
 #site-name {
 	display: inline;
-	margin: 0;
-	color: white;
+	margin: 0 10px 0 0;
+	color: rgb(230, 230, 230);
     line-height: 18px;
-    font-size: 1.7em;
-}
-
-#mobile-search-icon {
-	display: none;	
-	color: rgb(200, 200, 200);
-	background-color: inherit;
-	border: none;
-	font-size: 1.5rem;
 }
 
 #search-bar-container {
@@ -56,13 +51,13 @@ body {
 	border-radius: 10px;
 	width: 40%;
 	padding: 3px;
-	background-color: rgb(55, 55, 55);
+	background-color: rgb(35, 35, 35);
 }
 
 #search-icon {
 	width: 10%;	
-	color: rgb(200, 200, 200);
-	background-color: rgb(55, 55, 55);
+	color: rgba(245, 93, 66, 0.8);
+	background-color: rgb(35, 35, 35);
 	border: none;
 	font-size: 1.5rem;
 }
@@ -73,29 +68,30 @@ body {
 	outline: none;
 	border: none;
 	color: rgb(200, 200, 200);
-	background-color: rgb(55, 55, 55);
+	background-color: rgb(35, 35, 35);
 	padding: 0;
-}
-
-#search-bar-container div {
-	height: 0;
-	border-radius: 0 5px 5px 0;
-	transition: 0.5s;
-	overflow: auto;
 }
 
 #close-search-bar {
 	display: none;
-	position: absolute;
-	top: 5px;
-	right: 18px;
-	color: rgb(200, 200, 200);
-	font-size: 1.1em;
 }
 
-#search-bar-container:focus-within div {
-	/*height: 50vh;
-*/}
+#mobile-search-trigger {
+	display: none;
+}
+
+#mobile-search-bar-container {
+	background: rgb(35, 35, 35);
+	display: flex;
+	position: fixed;
+	z-index: 4;
+	width: 100%;
+	left: 0;
+	top: -5px;
+	border-radius: none;
+	padding: 5px 5px;
+	transition: 0.5s;
+}
 
 #mobile-menu {
 	display: none;
@@ -118,15 +114,16 @@ body {
 	left: 0;
 	width: 15%;
 	height: 100%;
-	z-index: 6;
-	background: rgb(55, 55, 55);
+	z-index: 5;
+	background: rgb(25, 25, 25);
+	/*padding: 50px 10px 10px;*/
 	padding: 10px;
 	min-width: 200px;
-	box-shadow: 10px 0px 5px rgb(45, 45, 45);
 	transition: 0.6s;
 }
 
 #menu-options {
+	margin-top: 25px;
 	position: relative;
 	height: 60%;
 	display: flex;
@@ -156,7 +153,7 @@ body {
 	width: 100%;
 	height: 100vh;
 	z-index: 7;
-	background: rgb(55, 55, 55);
+	background: rgb(40, 40, 40);
 	transition: 0.5s;
 }
 
@@ -192,46 +189,44 @@ body {
 }
 
 .skeleton {
-	--skeleton-bg-color: rgb(65, 65, 65);
+	--skeleton-bg-color: rgb(27, 27, 27);
+	background-color: rgb(15, 15, 15);
 	position: relative;
 	animation: skeleton-load 1s ease-in-out infinite alternate;
 }
 
-.skeleton-text {
-	background-color: var(--skeleton-bg-color);
+.media-container .skeleton {
 	height: 10px;
 	border-radius: 3px;
 	margin: 5px;
 	width: 95%;
+	border-radius: 5px;
+	opacity: .6;
 }
 
-.skeleton-text:last-child {
+.skeleton:last-child {
 	width: 50%;
 	margin-bottom: 10px;
 }
 
 @keyframes skeleton-load {
 	0% {
-		background-color: var(--skeleton-bg-color);
+		background-color: rgb(15, 15, 15);
 	}
-
 	100% {
-		background-color: rgb(55, 55, 55);
+		background-color: rgb(20, 20, 20);
 	}
 }
 
-.trending-movie-skeleton {
-	--skeleton-bg-color: rgb(65, 65, 65);
-	width: 100%;
-	animation: trendy-movies-loading 1s ease-in-out infinite alternate;
-	background-color: rgb(50, 50, 50);
-}
-
-.trending-movie-skeleton div {
+.skeleton div {
 	border-radius: 5px;
 }
 
-.trending-movie-skeleton .media-name {
+.skeleton .details {
+	background: none;
+}
+
+.skeleton .media-name {
 	width: 40%;
 	height: 20px;
 	margin-bottom: 10px;
@@ -239,13 +234,9 @@ body {
 	background-color: var(--skeleton-bg-color);
 }
 
-.trending-movie-skeleton .media-type-nd-release-date {
+.skeleton .media-type-nd-release-date {
 	width: 100%;
 	height: 10px;
-	background-color: var(--skeleton-bg-color);
-}
-
-.trending-movie-skeleton iframe {
 	background-color: var(--skeleton-bg-color);
 }
 
@@ -278,21 +269,11 @@ body {
 	background-color: var(--skeleton-bg-color);
 }
 
-@keyframes trendy-movies-loading {
-	from {
-		background-color: rgb(50, 50, 50);
-	}
-
-	to {
-		background-color: var(--skeleton-bg-color);
-	}
-}
-
 #trending-movies-container {
-	margin-top: 60px;
+	margin: 60px 5% 0;
 	display: flex;
 	position: relative;
-	width: 100%;
+	width: 90%;
 	overflow: hidden;
 	padding: 0;
 	border-radius: 10px
@@ -331,15 +312,21 @@ body {
 }
 
 .trending-movie {
+	width: 100%;
+	height: 100%;
 	display: block;
 	position: relative;
 	flex-grow: 0;
 	flex-shrink: 0;
 	margin: 0;
 	padding: 0;
-	height: 560px;
 	transition: 0.5s;
-	background-size: cover;
+	background-size: 100% 100%;
+}
+
+.trending-movie img {
+	width: 100%;
+	height: 100%;
 }
 
 .trending-txt {
@@ -358,22 +345,17 @@ body {
 	padding: 5px 10px;
 	color: rgb(230, 230, 230);
 	position: absolute;
-	right: 0;
-	top: 0;
-	height: 100%;
-	max-width: 30%;
+	left: 0;
+	bottom: 0;
+	height: 55%;
+	width: 45%;
 	overflow-x: hidden;
-	background-image: linear-gradient(to left, rgba(10, 10, 10, 0.2) 60%, rgba(10, 10, 10, 0.1));
+	background: rgba(10, 10, 10, 0.3);
 	border-radius: 0 10px 10px 0;
 }
 
-.details iframe {
-	width: 100%;
-	max-height: 200px;
-	border: none;
-}
-
 .media-name {
+	width: 100%;
 	font-weight: 500;
 	margin-top: 0;
 	margin-bottom: 5px;
@@ -404,18 +386,21 @@ body {
 	margin-right: 5px;
 }
 
-.full-details {
-	display: block;
-	width: 40%;
+.links-inside-trending-container {
+	display: inline-block;
 	text-align: center;
-	font-size: 1.5em;
+	font-size: 1.3em;
 	text-decoration: none;
-	padding: 3px;
+	padding: 6px 5px;
 	border-radius: 5px;
-	margin-left: 50%;
 	margin-top: 10px;
+	margin-right: 20px;
 	color: rgb(220, 220, 220);
 	background: rgba(250, 80, 40, 0.7);
+}
+
+.material-symbols-rounded {
+	line-height: 0;
 }
 
 #ratings-nd-reviews {
@@ -443,8 +428,8 @@ body {
 	justify-content: space-evenly;
 	width: 10%;
 	min-width: 50px;
-	height: 5px;
-	margin: 10px auto;
+	height: 3px;
+	margin: 10px auto 20px;
 }
 
 #bottom-status div {
@@ -465,13 +450,13 @@ body {
 
 #section-names {
 	width: 100%;
-	padding: 0 0 5px;
+	padding: 0 5% 5px;
 	display: flex;
 	align-items: center;
 	position: sticky;
 	top: 40px;
 	z-index: 2;
-	background: var(--main-bg-color);
+	background: rgb(18, 18, 18);
 }
 
 #section-names div {
@@ -480,6 +465,7 @@ body {
 	color: rgb(200, 200, 200);
 	transition: 0.5s;
 	cursor: pointer;
+	padding: 5px 0;
 }
 
 #current-section {
@@ -506,9 +492,15 @@ body {
 
 #top-picks h3{
 	color: rgb(220, 220, 220);
-	margin-top: 5px;
-	margin-bottom: 10px;
 	font-weight: 500;
+	margin: 0;
+	padding: 5px 0 0;
+	background: rgb(18, 18, 18);
+}
+
+.sub-sections-wrapper {
+	padding: 0 5%;
+	background: rgb(18, 18, 18);
 }
 
 .sub-sections {
@@ -516,8 +508,7 @@ body {
 	display: flex;
 	align-items: flex-start;
 	overflow-x: auto;
-	margin-bottom: 10px;
-	padding-bottom: 10px;
+	padding: 10px 0;
 }
 
 .sub-sections::-webkit-scrollbar {
@@ -525,20 +516,20 @@ body {
 }
 
 .sub-sections::-webkit-scrollbar-track {
-	background: var(--main-bg-color);
+	background: rgb(20, 20, 20);
 }
 
 .sub-sections::-webkit-scrollbar-thumb {
-	background: rgb(80, 80, 80);
+	background: rgb(50, 50, 50);
 	border-radius: 3px;
 }
 
 .media-container {
-	background-color: rgb(50, 50, 50);
+	background-color: rgb(24, 24, 24);
 	color: rgb(220, 220, 220);
 	flex-grow: 0;
 	flex-shrink: 0;
-	max-height: 350px;
+	min-height: 250px;
 	min-width: 190px;
 	border-radius: 10px;
 }
@@ -549,10 +540,11 @@ body {
 }
 
 .poster-img {
+	display: block;
 	width: 100%;
 	border-radius: 10px 10px 0 0;
-	height: 250px;
-	background-color: rgb(65, 65, 65); 
+	min-height: 250px;
+	background: rgba(30, 30, 30, 0.6);
 	background-size: 100% 100%;
 	border: none;
 }
@@ -562,6 +554,8 @@ body {
 	flex-wrap: wrap;
 	align-items: flex-start;
 	justify-content: space-between;
+	padding: 0 5%;
+	background: rgb(18, 18, 18);
 }
 
 #recent-shows .media-container {
@@ -592,15 +586,16 @@ body {
 #name {
 	padding: 0 5px;
 	font-weight: 500;
-	background: rgb(60, 60, 60);
+	background: rgb(27, 27, 27);
 }
 
 #little-details {
 	font-size: 0.9em;
 	color: rgb(180, 180, 180);
-	background: rgb(60, 60, 60);
+	background: rgb(27, 27, 27);
 	border-radius: 0 0 10px 10px;
 	padding: 5px;
+	height: 40px;
 }
 
 #little-details span {

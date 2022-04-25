@@ -1,16 +1,22 @@
 window.onbeforeunload = function() {window.scrollTo(0, 0)}
 
+
+
+
+let trendingMoviesContainer = document.getElementById("trending-movies-container")
+// trendingMoviesContainer.style.height = '' + Math.round(trendingMoviesContainer.clientWidth/1.78) + 'px'
+
 function skeletonLoader(parentId, templateChild, max_no) {
 	let parentContainer = document.getElementById(parentId)
-	let reachedEndOfContainer = true
-	let no = 8
+	let reachedEndOfContainer = false
+	let no = 20
+	if (parentId == "recent-shows") no = 40
+	if (parentId == "trending-movies-container") no=3
 	let dummyContainersNo = undefined
 	let skeletonFragment = new DocumentFragment()
-	if (max_no) {
-		if (max_no - parentContainer.children.length < 20) {
-			no = max_no - parentContainer.children.length
-			reachedEndOfContainer = true 
-		}
+	if (max_no - parentContainer.children.length < 20) {
+		no = max_no - parentContainer.children.length
+		reachedEndOfContainer = true
 	}
 	for (let i=0; i<no; i++) {
 		let skeleton = document.querySelector("template").content[templateChild].cloneNode(true)
@@ -19,19 +25,24 @@ function skeletonLoader(parentId, templateChild, max_no) {
 	if (reachedEndOfContainer) {
 		let theEnd = document.querySelector("template").content.children[1].cloneNode(true)
 		skeletonFragment.appendChild(theEnd)
-		if (no%5 != 0) {
+		if (no>5) {
 			dummyContainersNo = no%5
-			for(let k=0; k<dummyContainersNo; k++) {
-				let dummyContainer = document.createElement("div")
-				dummyContainer.classList.add("media-container")
-				skeletonFragment.appendChild(dummyContainer)
-			}
+		}else {
+			dummyContainersNo = 5 - no 
 		}
+		dummyContainersNo -= 1
+		for (let k=0; k<dummyContainersNo; k++) {
+			let dummyContainer = document.createElement("div")
+			dummyContainer.style.minHeight = "0"
+			dummyContainer.classList.add("media-container")
+			skeletonFragment.appendChild(dummyContainer)
+		}
+		dummyContainersNo = undefined
 	}
 	parentContainer.appendChild(skeletonFragment)
 }
 
-skeletonLoader("trending-movies-container", "lastElementChild", 3)
+skeletonLoader("trending-movies-container", "lastElementChild")
 
 let vel = 0
 let navLeft = document.getElementById("move-left")
@@ -73,9 +84,9 @@ let media = []
 let trendingMoviesDetails = []
 let key = "b44b2b9e1045ae57b5c211d94cc010d9"
 
-// fetch(`https://api.themoviedb.org/3/trending/all/day?api_key=${key}`)
-// .then(response => response.json())
-// .then(response => {filterTrendingMovies(response.results); getTrendingMoviesDetails(media)})
+fetch(`https://api.themoviedb.org/3/trending/all/day?api_key=${key}`)
+.then(response => response.json())
+.then(response => {filterTrendingMovies(response.results); getTrendingMoviesDetails(media); console.log("who")})
 
 function filterTrendingMovies(list) {
 	let index = 0;
@@ -115,16 +126,21 @@ function getTrendingMoviesDetails(mediaList) {
 	}
 }
 
+let trendingMoviePoster = document.createElement("img")
+
 function updateTrendingMovies(details, i) {
 	let posterLink = `https://image.tmdb.org/t/p/w1280${details[i].backdrop_path}`
-	trendingMovies[i].style.backgroundImage = `url('${posterLink}')`
+	trendingMoviePoster.src = posterLink
 	let mediaName = trendingMovies[i].querySelector(".media-name")
 	let genres = trendingMovies[i].querySelector(".trending-genres")
-	let trailer = trendingMovies[i].querySelector("iframe")
+	let trailer = trendingMovies[i].querySelector("#trailer-link")
 	let overview = trendingMovies[i].querySelector(".overview")
 	let releaseDateandType = trendingMovies[i].querySelector(".media-type-nd-release-date")
 	let releaseDate = document.createElement("div")
 	let mediaType = document.createElement("div")
+	let mediaDetails = trendingMovies[i].querySelector(".details")
+	trendingMovies[i].insertBefore(trendingMoviePoster.cloneNode(true), mediaDetails)
+	if (i == 1) trendingMoviesContainer.style.height = "unset"
 	if (details[i].original_name) {
 		mediaName.textContent = details[i].name
 		releaseDate.textContent = `first episode date: ${details[i].first_air_date}`
@@ -140,7 +156,7 @@ function updateTrendingMovies(details, i) {
 	}
 	for (let v = 0; v < details[i].videos.results.length; v++) {
 		if (details[i].videos.results[v].name == "Official Trailer" || details[i].videos.results[v].name == "Main Trailer") {
-			trailer.src=`https://www.youtube.com/embed/${details[i].videos.results[v].key}`
+			trailer.href=`https://www.youtube.com/embed/${details[i].videos.results[v].key}`
 			break
 		}
 	}
@@ -152,7 +168,7 @@ function updateTrendingMovies(details, i) {
 	}
 	overview.innerHTML = ""
 	overview.textContent = trimText(details[i].overview)
-	trendingMovies[i].classList.remove("trending-movie-skeleton")
+	trendingMovies[i].classList.remove("skeleton")
 }
 
 function trimText(text) {
@@ -182,7 +198,9 @@ function changeSection() {
 	let oldIndex = sectionNames.indexOf(currentSection)
 	sections[oldIndex].style.display = 'none'
 	if (newIndex != 0) {
-		sections[newIndex].style.display = 'flex'
+		if (window.innerWidth > 400)
+			sections[newIndex].style.display = 'flex'
+		else sections[newIndex].style.display = 'block'
 	}else {
 		sections[newIndex].style.display = 'block'
 	}
@@ -229,7 +247,6 @@ function fetchUpcomingMovies(page) {
 		fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${key}&language=en-US&page=${page}&region=US`)
 		.then(res => res.json())
 		.then(res => {
-			console.log(res)
 			upcomingMovies[0].max_length = res.total_results;
 			res.results.forEach(result => upcomingMovies.push(result)); 
 			observeChildren("upcoming", res.results.length)
@@ -314,6 +331,11 @@ function observeChildren(parentId, no) {
 	}
 }
 
+let moviePoster = document.createElement("img")
+moviePoster.style.width = "100%"
+moviePoster.classList.add("poster-img")
+let movieDetails = new DocumentFragment()
+
 function show(element) {
 	let dataList = undefined
 	scrollObserver.unobserve(element)
@@ -329,8 +351,7 @@ function show(element) {
 	let currentIndex = dataList[0].currentIndex
 	let mediaData = dataList[currentIndex]
 	let poster = mediaContainers[currentIndex - 1].querySelector(".poster-img")
-	url = `https://image.tmdb.org/t/p/w342${mediaData.poster_path}`
-	poster.style.backgroundImage = `url('${url}'), url('load_error.jpeg')`
+	moviePoster.src = `https://image.tmdb.org/t/p/w342${mediaData.poster_path}`
 	poster.classList.remove("skeleton")
 	let name = document.createElement("div")
 	let littleDetails = document.createElement("div")
@@ -378,12 +399,16 @@ function show(element) {
 	for (let l=0; l<skeletonTexts.length; l++) {
 		mediaContainers[currentIndex - 1].removeChild(skeletonTexts[l])
 	}
-	mediaContainers[currentIndex - 1].appendChild(name)
-	mediaContainers[currentIndex - 1].appendChild(littleDetails)
-	if (dataList[0].currentIndex == (dataList.length-1)/2) {
+	mediaContainers[currentIndex - 1].removeChild(poster)
+	movieDetails.appendChild(moviePoster.cloneNode(true))
+	movieDetails.appendChild(name)
+	movieDetails.appendChild(littleDetails)
+	mediaContainers[currentIndex - 1].appendChild(movieDetails)
+
+	if (dataList[0].currentIndex == (dataList.length-11)) {
 		if (dataList[0].targetContainerId == "upcoming") {
 			dataList[0].currentPage += 1
-			skeletonLoader("upcoming", "firstElementChild", 20, dataList[0].max_length)
+			skeletonLoader("upcoming", "firstElementChild", dataList[0].max_length)
 			fetchUpcomingMovies(dataList[0].currentPage)
 		}
 		if (dataList[0].targetContainerId == "recent-shows") {
