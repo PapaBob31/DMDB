@@ -1,22 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
 	<title>Search</title>
-	<link rel="stylesheet" href="..\mobile.css">
-	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="..\menu.css">
 	<link rel="stylesheet" href="search.css">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
 	<div id="site-header">
-		<span class="material-icons-outlined" id="mobile-menu">menu</span>
-		<h2 id="site-name">MOBILE CINEMA</h2>
+		<div style="display: flex">
+			<span class="material-icons-outlined" id="mobile-menu">menu</span>
+			<h2 id="site-name">DMDB</h2>
+		</div>
 		<form id="search-bar-container" action="search.html">
+			<button type="submit" id="search-icon" class="material-icons-outlined">search</button>
 			<input type="text" id="search-bar" placeholder="Search..">
-			<button type="submit" id="search-icon"><span class="material-icons-outlined">search</span></button>
-			<div><!-- <span class="material-icons-outlined">history</span> --></div>
+			<span class="material-icons-outlined" id="close-search-bar">close</span>
 		</form>
+		<button id="mobile-search-trigger" class="material-icons-outlined">search</button>
 	</div>
 	<div id="menu-bar">
 		<div id="menu-options">
@@ -54,16 +62,8 @@
 		</div>
 	</div>
 	<h2 id="header-text">Search Results for: </h2>
-	<div id="search-results-container">
-		<div class="search-results">
-			<img src="shoe 2.jpg">
-			<div class="details">
-				<a href="#"><h2 class="result-name">Death to the Scourge</h2></a>
-				<div class="media-type">Movie</div>
-				<div>Release Date: 11-04-2022</div>
-			</div>
-		</div>
-	</div>	
+	<div id="search-results-container"></div>
 	<script type="text/javascript" src="search.js"></script> 
+	<script type="text/javascript" src="..\menu.js"></script>
 </body>
 </html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="theme-color" content="rgb(12, 12, 12)">
+	<meta name="viewport" content="width=device-width">
+	<link rel="stylesheet" href="..\menu.css">
+	<link rel="stylesheet" href="full_details.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+	<link href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Radio+Canada:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+	<div id="site-header">
+		<div style="display: flex">
+			<span class="material-icons-outlined" id="mobile-menu">menu</span>
+			<h2 id="site-name">DMDB</h2>
+		</div>
+		<form id="search-bar-container" action="search.html">
+			<button type="submit" id="search-icon" class="material-icons-outlined">search</button>
+			<input type="text" id="search-bar" placeholder="Search..">
+			<span class="material-icons-outlined" id="close-search-bar">close</span>
+		</form>
+		<button id="mobile-search-trigger" class="material-icons-outlined">search</button>
+	</div>
+	<div id="menu-bar">
+		<span class="material-icons-outlined" id="close-menu">close</span>
+		<div id="menu-options">
+			<a href="index.html">HOME</a>
+			<a href="movies\movies.html">MOVIES</a>
+			<a href="tv series\tv.html">TV SERIES</a>
+			<a href="#">SAVED</a>
+			<a href="#">HELP AND COMPLAINTS</a>
+			<a href="">SETTINGS</a>
+			<a id="genres-link">GENRES</a>
+		</div>
+		<div id="genres">
+			<div>
+				<h2>
+					<span class="material-icons-round" id="back-arrow">arrow_back</span>
+					GENRES
+				</h2>
+				<a href="#">Comedy</a>
+				<a href="#">Sci-fi</a>
+				<a href="#">Horror</a>
+				<a href="#">Romance</a>
+				<a href="#">Action</a>
+				<a href="#">Thriller</a>
+				<a href="#">Drama</a>
+				<a href="#">Mystery</a>
+				<a href="#">Crime</a>
+				<a href="#">Animation</a>
+				<a href="#">Adventure</a>
+				<a href="#">Fantasy</a>
+				<a href="#">Comedy-Romance</a>
+				<a href="#">Action-Comedy</a>
+				<a href="#">Superhero</a>
+			</div>
+		</div>
+	</div>
+	<div id="film-trailer-container">
+		<iframe></iframe>
+		<img src="floting astronaut.webp" id="film-trailer-poster">
+		<div class="material-symbols-rounded" id="play_link">play_circle</div>
+	</div> 
+	<div id="film-details-container">
+		<div id="name-nd-film-type-wrapper">
+			<h1 id="film-name">War is never far away</h1>
+			<span id="film-type">Movie</span>
+		</div>
+		<div id="user-reviews-nd-ratings-wrapper">
+			<div id="rrr">
+				<div class="details">Rated: 18+</div>
+				<div class="details">Release-date: 10-10-3010</div>
+				<div class="details">RunTime: 129mins</div>
+			</div>
+			<div id="user-reviews-nd-ratings">
+				<div>
+					<h2>83%</h2>
+					<span>My Rating</span>
+				</div>
+				<div>
+					<h2>890</h2>
+					<span>User reviews</span>
+				</div>
+				<div>
+					<h2>74</h2>
+					<span>Popularity</span>
+				</div>
+			</div>
+		</div>
+		<div id="film-genres">
+			<div>Action</div>
+			<div>Adenture</div>
+			<div>Horrow</div>
+			<div>Romance</div>
+		</div>
+		<div id="synopsis-nd-poster">
+			<img src="floting astronaut.webp" id="small-img">
+			<div id="synopsis">
+				<h2>Synopsis:</h2>
+				As the Avengers and their allies have continued to protect the world from threats too large for any one hero to handle, a new danger has emerged from the cosmic shadows: Thanos. A despot of intergalactic infamy, his goal is to collect all six Infinity Stones, artifacts of unimaginable power, and use them to inflict his twisted will on all of reality. Everything the Avengers have fought for has led up to this moment - the fate of Earth and existence itself has never been more uncertain.
+			</div>
+		</div>
+		<div id="section-name-container">
+			<div class="section-name" style="background-color: inherit;">Casts<span></span></div>
+		</div>
+		<div id="casts">
+			<div class="cast">
+				<img src="floting astronaut.webp">
+				<span class="name">Robert Downey jr.</span>
+				<span class="role-played">Iron man</span>
+			</div>	
+			<div class="cast">
+				<img src="floting astronaut.webp">
+				<span class="name">Robert Downey jr.</span>
+				<span class="role-played">Iron man</span>
+			</div>	
+			<div class="cast">
+				<img src="floting astronaut.webp">
+				<span class="name">Robert Downey jr.</span>
+				<span class="role-played">Iron man</span>
+			</div>	
+			<div class="cast">
+				<img src="floting astronaut.webp">
+				<span class="name">Robert Downey jr.</span>
+				<span class="role-played">Iron man</span>
+			</div>	
+			<div class="cast">
+				<img src="floting astronaut.webp">
+				<span class="name">Robert Downey jr.</span>
+				<span class="role-played">Iron man</span>
+			</div>
+		</div>
+		<div id="similar-films-container">
+			<div class="section-name">More Like this<span></span></div>
+			<div id="similar-films">
+			</div>
+		</div>
+	</div>
+	<template>
+		<div class="media-container">
+			<img src="">
+			<div class="little-details">
+				<div class="similar-film-name"></div>
+			</div>
+		</div>
+	</template>
+	<script type="text/javascript" src="full_details.js"></script>
+	<script type="text/javascript" src="..\menu.js"></script>
+
+</body>
+</html>

@@ -1,8 +1,5 @@
 window.onbeforeunload = function() {window.scrollTo(0, 0)}
 
-
-
-
 let trendingMoviesContainer = document.getElementById("trending-movies-container")
 // trendingMoviesContainer.style.height = '' + Math.round(trendingMoviesContainer.clientWidth/1.78) + 'px'
 
@@ -86,7 +83,7 @@ let key = "b44b2b9e1045ae57b5c211d94cc010d9"
 
 fetch(`https://api.themoviedb.org/3/trending/all/day?api_key=${key}`)
 .then(response => response.json())
-.then(response => {filterTrendingMovies(response.results); getTrendingMoviesDetails(media); console.log("who")})
+.then(response => {filterTrendingMovies(response.results); getTrendingMoviesDetails(media)})
 
 function filterTrendingMovies(list) {
 	let index = 0;
@@ -358,7 +355,7 @@ function show(element) {
 	let releaseYear = document.createElement("span")
 	let mediaGenres = document.createElement("div")
 	let genresList = []
-	let skeletonTexts = mediaContainers[currentIndex - 1].querySelectorAll(".skeleton-text")
+	let skeletonTexts = mediaContainers[currentIndex - 1].querySelectorAll(".skeleton")
 	name.id = "name"
 	littleDetails.id = "little-details" 
 	if (dataList[0].type == "movie") {

@@ -1,3 +1,24 @@
+let key = "b44b2b9e1045ae57b5c211d94cc010d9"
+
+let movieGenres = []
+let tvGenres = []
+
+fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${key}&language=en-US`)
+.then(res => res.json())
+.then(res => {movieGenres=res; console.log(movieGenres)})
+
+fetch(`https://api.themoviedb.org/3/genre/tv/list?api_key=${key}&language=en-US`)
+.then(res => res.json())
+.then(res => {tvGenres=res; console.log(tvGenres)})
+
+fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${key}&language=en-US&with_genres=28`)
+.then(res => res.json())
+.then(res => console.log(res))
+
+fetch(`https://api.themoviedb.org/3/discover/tv?api_key=${key}&language=en-US&with_genres=35`)
+.then(res => res.json())
+.then(res => console.log(res))
+
 let menuIcon = document.getElementById("mobile-menu")
 let menuBar = document.getElementById("menu-bar")
 let closeMenu = document.getElementById("close-menu")
@@ -42,7 +63,7 @@ function removeInlineStyles() {
 }
 
 let mobileSearchIcon = document.getElementById("mobile-search-trigger")
-let mobileSearchBar = document.getElementById("mobile-search-bar-container")
+let searchBar = document.getElementById("search-bar-container")
 let closeMobileSearchBtn = document.getElementById("close-search-bar")
 mobileSearchIcon.addEventListener("click", showMobileSearchBar)
 closeMobileSearchBtn.addEventListener("click", closeMobileSearchBar)
@@ -50,16 +71,9 @@ closeMobileSearchBtn.addEventListener("click", closeMobileSearchBar)
 let onScreen = false
 
 function showMobileSearchBar() {
-	if (!onScreen) {
-		mobileSearchBar.style.top = '5vh'
-		onScreen = true
-	}else {
-		mobileSearchBar.style.top = '0'
-		onScreen = false
-	}
-
+	searchBar.style.transform = 'scaleX(100%)'
 }
 
 function closeMobileSearchBar() {
-	mobileSearchBar.style.top = '-5px'
+	searchBar.style.transform = 'scaleX(0)'
 }

@@ -1,0 +1,162 @@
+body {
+	--main-bg-color: rgb(12, 12, 12);
+	position: relative;
+	margin: 0 0 0 15%;
+	width: 85%;
+	padding: 0;
+	font-family: 'Roboto', 'Open Sans', Segoe UI, sans-serif;
+	background: var(--main-bg-color);
+	font-size: 0.9em;
+}
+
+#header-text {
+	margin: 10px 0;
+	color: rgb(230, 230, 230);
+	font-weight: 500;
+}
+
+#search-results-container {
+	margin: 0 5%;
+	color: rgb(200, 200, 200);
+}
+
+.search-result {
+	width: 100%;
+	padding: 10px 10px;
+	margin-bottom: 15px;
+	display: flex;
+	align-items: flex-end;
+	background-color: rgb(22, 22, 22);
+	border-radius: 5px;
+}
+
+.search-result img {
+	margin-right: 1%;
+	width: 15%;
+	border-radius: 5px;
+}
+
+.result-details {
+	width: 25%;
+}
+
+.result-details a {
+	text-decoration: none;
+}
+
+.result-name {
+	margin-top: 0;
+	margin-bottom: 10px;
+	color: rgb(220, 220, 220);
+	font-weight: 500;
+}
+
+.media-type {
+	color: rgba(245, 93, 66, 0.8);
+}
+
+@media screen and (max-width: 1000px) {
+	body {
+		width: 100%;
+		margin: 0;
+	}
+
+	#site-header {
+		width: 100%;
+		margin-left: 0;
+	}
+
+	#mobile-menu {
+		display: block;
+	}
+
+	#close-menu {
+		display: block;
+	}
+
+	#menu-bar {
+		left: -100%;
+	}
+}
+
+
+@media screen and (max-width: 700px) {
+	#site-header {
+		padding: 0 5px;
+		height: 10vh;
+		min-height: 60px;
+	}
+
+	#menu-bar {
+		width: 40%;
+	}
+
+	#search-bar-container {
+		position: absolute;
+		left: 0;
+		top: 0;
+		height: 100%;
+		width: 100%;
+		border-radius: 0;
+		transform-origin: 100% 0;
+		transform: scaleX(0);
+		transition: 0.3s;
+	}
+
+	#search-bar-container #search-bar {
+		height: 80%;
+		font-size: 1.1em;
+	}
+
+	#mobile-search-trigger {
+		display: inline-block;	
+		color: rgba(245, 93, 66, 0.8);
+		background-color: inherit;
+		border: none;
+		font-size: 1.5rem;
+	}
+
+	#close-search-bar {
+		display: inline-block;
+		color: rgb(200, 200, 200);
+		font-size: 1.2em;
+		font-weight: bold;
+		text-align: center;
+	}
+
+	.search-result {
+		width: 100%;
+	}
+
+	.search-result img {
+		width: 25%;
+	}
+
+	.result-details {
+		width: 35%;
+	}
+
+}
+
+@media screen and (max-width: 400px) {
+	.search-result {
+		width: 100%;
+	}
+
+	.search-result img {
+		width: 40%;
+	}
+
+	.result-details {
+		width: 60%;
+	}
+
+	#site-name {
+		font-size: 1.3rem;
+		line-height: unset;
+	}
+
+	#search-results-container {
+		margin: 0;
+	}
+}

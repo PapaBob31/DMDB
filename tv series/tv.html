@@ -4,8 +4,8 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
 	<title>tvs</title>
+	<link rel="stylesheet" href="..\menu.css">
 	<link rel="stylesheet" href="..\style.css">
-	<link rel="stylesheet" href="..\mobile.css">
 	<link rel="stylesheet" href="style.css">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
@@ -15,7 +15,6 @@
 		<div style="display: flex">
 			<span class="material-icons-outlined" id="mobile-menu">menu</span>
 			<h2 id="site-name">DMDB</h2>
-			<!-- <span id="page-name">Tv series</span> -->
 		</div>
 		<select id="filter">
 			<option value="popular">Popular</option>
@@ -25,14 +24,10 @@
 		<form id="search-bar-container" action="search.html">
 			<button type="submit" id="search-icon" class="material-icons-outlined">search</button>
 			<input type="text" id="search-bar" placeholder="Search..">
+			<span class="material-icons-outlined" id="close-search-bar">close</span>
 		</form>
-		<button type="submit" id="mobile-search-trigger" class="material-icons-outlined">search</button>
+		<button id="mobile-search-trigger" class="material-icons-outlined">search</button>
 	</div>
-	<form id="mobile-search-bar-container" action="search.html">
-		<button type="submit" id="search-icon" class="material-icons-outlined">search</button>
-		<input type="text" id="search-bar" placeholder="Search..">
-		<span class="material-icons-outlined" id="close-search-bar">close</span>
-	</form>
 	<div id="menu-bar">
 		<span class="material-icons-outlined" id="close-menu">close</span>
 		<div id="menu-options">
@@ -71,7 +66,7 @@
 	<div id="series-container"></div>
 	<template>
 		<div class="media-container">
-			<div class="poster-img skeleton"></div>
+			<div class="poster-img"></div>
 			<div class="skeleton"></div>
 			<div class="skeleton"></div>
 			<div class="skeleton"></div>

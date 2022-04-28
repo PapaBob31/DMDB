@@ -38,9 +38,36 @@ function skeletonLoader(parentId, templateChild, max_no) {
 skeletonLoader("movies-container", "firstElementChild")
 
 let movieList = [{currentIndex: 1, currentPage: 1, endOfPages: false, max_length: undefined}]
+let options_is_displayed = false
 let currentValue = "popular"
-let selected = document.querySelector("select")
-selected.addEventListener("change", () => {if (selected.value != currentValue)fetchSelectedOption(selected.value); window.scrollTo(0, 0)})
+let filter = document.querySelector("#filter")
+filter.addEventListener("click", showOptions,)
+let filterOptionsContainer = filter.querySelector("div")
+let filterOptions = document.querySelectorAll("option")
+
+for (let i=0, f=filterOptions.length; i<f; i++) {
+	filterOptions[i].addEventListener("click", () => {
+		if (filterOptions[i].value != currentValue)fetchSelectedOption(filterOptions[i].value);
+		window.scrollTo(0, 0)
+	})
+}
+
+function showOptions() {
+	if (!options_is_displayed) {
+		options_is_displayed = true
+		filterOptionsContainer.style.transform = "scale(100%, 100%)"
+	}else {
+		filterOptionsContainer.style.transform = "scale(0, 0)"
+		options_is_displayed = false
+	}
+}
+
+function closeMenuBarOrOptions() {
+	if (options_is_displayed) {
+		filterOptionsContainer.style.transform = "scale(0, 0)"
+		options_is_displayed = false
+	}
+}
 
 function fetchSelectedOption(value) {
 	moviesContainer.innerHTML = ""
