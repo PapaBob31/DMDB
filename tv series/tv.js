@@ -3,6 +3,8 @@ window.onbeforeunload = function() {window.scrollTo(0, 0)}
 let key = "b44b2b9e1045ae57b5c211d94cc010d9"
 let seriesContainer = document.getElementById("series-container")
 let genresList = []
+let genre_page_link = "../genres/genre_result.html"
+let pageName = "tv-series page"
 
 function skeletonLoader(parentId, templateChild, max_no) {
 	let parentContainer = document.getElementById(parentId)
@@ -23,14 +25,19 @@ function skeletonLoader(parentId, templateChild, max_no) {
 	if (reachedEndOfContainer) {
 		let theEnd = document.querySelector("template").content.children[1].cloneNode(true)
 		skeletonFragment.appendChild(theEnd)
-		if ((no%5 != 0) && parentContainer.display.type == "flex") {
+		if (no>5) {
 			dummyContainersNo = no%5
-			for(let k=0; k<dummyContainersNo; k++) {
-				let dummyContainer = document.createElement("div")
-				dummyContainer.classList.add("media-container")
-				skeletonFragment.appendChild(dummyContainer)
-			}
+		}else {
+			dummyContainersNo = 5 - no 
 		}
+		dummyContainersNo -= 1
+		for (let k=0; k<dummyContainersNo; k++) {
+			let dummyContainer = document.createElement("div")
+			dummyContainer.style.minHeight = "0"
+			dummyContainer.classList.add("media-container")
+			skeletonFragment.appendChild(dummyContainer)
+		}
+		dummyContainersNo = undefined
 	}
 	parentContainer.appendChild(skeletonFragment)
 }

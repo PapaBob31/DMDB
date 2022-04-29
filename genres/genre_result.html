@@ -19,7 +19,7 @@
 			<span class="material-icons-outlined" id="mobile-menu">menu</span>
 			<h2 id="site-name">DMDB</h2>
 		</div>
-		<form id="search-bar-container" action="search.html">
+		<form id="search-bar-container" action="..\search\search.html">
 			<button type="submit" id="search-icon" class="material-icons-outlined">search</button>
 			<input type="text" id="search-bar" placeholder="Search..">
 			<span class="material-icons-outlined" id="close-search-bar">close</span>
@@ -29,40 +29,23 @@
 	<div id="menu-bar">
 		<div id="menu-options">
 			<span class="material-icons-outlined" id="close-menu">close</span>
-			<a href="index.html">HOME</a>
-			<a href="movies\movies.html">MOVIES</a>
-			<a href="tv series\tv.html">TV SERIES</a>
+			<a href="..\index.html">HOME</a>
+			<a href="movies.html">MOVIES</a>
+			<a href="..\tv series\tv.html">TV SERIES</a>
 			<a href="#">SAVED</a>
 			<a href="#">HELP AND COMPLAINTS</a>
 			<a href="">SETTINGS</a>
 			<a id="genres-link">GENRES</a>
 		</div>
 		<div id="genres">
-			<div>
-				<h2>
-					<span class="material-icons-round" id="back-arrow">arrow_back</span>
-					GENRES
-				</h2>
-				<a href="#" id="">Comedy</a>
-				<a href="#" id="">Sci-fi</a>
-				<a href="#" id="">Horror</a>
-				<a href="#" id="">Romance</a>
-				<a href="#" id="">Action</a>
-				<a href="#" id="">Thriller</a>
-				<a href="#" id="">Drama</a>
-				<a href="#" id="">Mystery</a>
-				<a href="#" id="">Crime</a>
-				<a href="#" id="">Animation</a>
-				<a href="#" id="">Adventure</a>
-				<a href="#" id="">Fantasy</a>
-				<a href="#" id="">Comedy-Romance</a>
-				<a href="#" id="">Action-Comedy</a>
-				<a href="#" id="">Superhero</a>
-			</div>
+			<h2>
+				<span class="material-icons-round" id="back-arrow">arrow_back</span>
+				GENRES
+			</h2>
 		</div>
 	</div>
 	<h2 id="header-text">Search Results for: </h2>
-	<div id="search-results-container"></div>
+	<div id="genre-results-container"></div>
 	<script type="text/javascript" src="genres.js"></script> 
 	<script type="text/javascript" src="..\menu.js"></script>
 </body>

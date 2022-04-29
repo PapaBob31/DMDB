@@ -1,4 +1,6 @@
 let key = "b44b2b9e1045ae57b5c211d94cc010d9"
+let genre_page_link = "../genres/genre_result.html"
+let pageName = "genre_result"
 let filmDetails;
 
 let trailerPoster = document.getElementById("film-trailer-poster")

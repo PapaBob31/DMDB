@@ -1,32 +1,44 @@
 let key = "b44b2b9e1045ae57b5c211d94cc010d9"
+let genre_page_link = ""
+let pageName = "genre_result"
 
-let form = document.getElementById("search-bar-container")
-let input = form.querySelector("input")
-form.addEventListener("submit", (e)=>{e.preventDefault(); search(input.value)})
-
-let resultsContainer = document.getElementById("search-results-container")
-function search(string) {
-	resultsContainer.innerHTML = ""
-	fetch(`https://api.themoviedb.org/3/search/movie?api_key=${key}&language=en-US&page=1&query=${string}`)
+let resultsContainer = document.getElementById("genre-results-container")
+resultsContainer.innerHTML = ""
+let data = JSON.parse(sessionStorage.getItem("data"))
+genreDetails = data.genre_id
+get(genreDetails)
+function get(genre) {
+	let tv_genre_id = ""
+	let movie_genre_id = ""
+	if (genreDetails.section != "movies page" && genreDetails.section != "tv-series page") {
+		for (let c=0,g=genreDetails.length; c<g; c++) {
+			tv_genre_id += genreDetails[c]
+			if (genreDetails[c] == ",") {
+				movie_genre_id = genreDetails.slice(genreDetails.indexOf(",")+1, g)
+				break
+			}
+		}
+	}
+	fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${key}&language=en-US&with_genres=${movie_genre_id}`)
 	.then(response => response.json())
 	.then(response => displaySearchResults(response, "Movie"))
 
-	fetch(`https://api.themoviedb.org/3/search/tv?api_key=${key}&language=en-US&page=1&query=${string}`)
+	fetch(`https://api.themoviedb.org/3/discover/tv?api_key=${key}&language=en-US&with_genres=${tv_genre_id}`)
 	.then(response => response.json())
 	.then(response => displaySearchResults(response, "Tv-series"))
 }
 
 let result = new DocumentFragment()
 let show = document.createElement("div")
-show.className = "search-result"
+show.className = "genre-result"
 let resultDetails = document.createElement("div")
-resultDetails.className = "result-details"
+resultDetails.className = "genre-details"
 let mediaType = document.createElement("div")
 mediaType.className = "media-type"
 let poster = document.createElement("img")
 let nameLink = document.createElement("a")
 let name = document.createElement("h2")
-name.className = "result-name"
+name.className = "genre-name"
 let releaseDate = document.createElement("div")
 nameLink.appendChild(name)
 show.appendChild(poster)

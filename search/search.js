@@ -1,10 +1,12 @@
 let key = "b44b2b9e1045ae57b5c211d94cc010d9"
+let genre_page_link = "../genres/genre_result.html"
+let pageName = "search page"
+let resultsContainer = document.getElementById("search-results-container")
 
 let form = document.getElementById("search-bar-container")
 let input = form.querySelector("input")
-form.addEventListener("submit", (e)=>{e.preventDefault(); search(input.value)})
+form.addEventListener("submit", ()=>{sessionStorage.setItem("query", input.value); console.log(input.value)})
 
-let resultsContainer = document.getElementById("search-results-container")
 function search(string) {
 	resultsContainer.innerHTML = ""
 	fetch(`https://api.themoviedb.org/3/search/movie?api_key=${key}&language=en-US&page=1&query=${string}`)
@@ -16,6 +18,7 @@ function search(string) {
 	.then(response => displaySearchResults(response, "Tv-series"))
 }
 
+search(sessionStorage.getItem("query"))
 let result = new DocumentFragment()
 let show = document.createElement("div")
 show.className = "search-result"

@@ -1,23 +1,79 @@
-let key = "b44b2b9e1045ae57b5c211d94cc010d9"
+let MovieGenres = []
+let TvGenres = []
+let fetchedMovieGenres = false
+let fetchedTvGenres = false
+let not_created_yet = true
+let genresContainer = document.getElementById("genres")
 
-let movieGenres = []
-let tvGenres = []
+let dummyGenresContainer = new DocumentFragment()
+
+function storeId(page_name, id) {
+	let data = {section: page_name, genre_id: id}
+	sessionStorage.setItem("data", JSON.stringify(data))
+}
+
+function createGenreLinks() {
+	let genres;
+	if (not_created_yet) {
+		if (pageName == "movies page"){
+			genres = MovieGenres
+		}else if (pageName == "tv-series page") {
+			genres = TvGenres
+		}else {
+			genres = mergeMovieAndTvGenres()
+		}
+		genres.forEach(result => {
+			let link = document.createElement("a")
+			link.id = result.id
+			link.textContent = result.name
+			link.href = genre_page_link
+			link.addEventListener("click", (event) => {storeId(pageName, event.target.id); console.log("sad")})
+			dummyGenresContainer.append(link)
+		})
+		genresContainer.append(dummyGenresContainer)
+		not_created_yet = false
+	}
+}
+
+function mergeMovieAndTvGenres() {
+	let result = []
+	for (let n=0,m=MovieGenres.length; n < m; n++) {
+		for (let j=0,t=TvGenres.length; j < t; j++) {
+			if (TvGenres[j].name.includes(MovieGenres[n].name)){
+				result.push({id:`${TvGenres[j].id},${MovieGenres[n].id}`, name: MovieGenres[n].name})
+				break
+			}else if (MovieGenres[n].name == "Science Fiction") {
+				if (TvGenres[n].name == "Sci-Fi & Fantasy") {
+					result.push({id:`${TvGenres[j].id},${MovieGenres[n].id}`, name: MovieGenres[n].name})
+				}
+			}
+			if (TvGenres[j] == TvGenres[j-1] ) {
+				result.push({id: MovieGenres[n].id, name: MovieGenres[n].name})
+			}
+		}
+	}
+	console.log(result)
+	not_created_yet = false
+	return result
+}
 
 fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${key}&language=en-US`)
 .then(res => res.json())
-.then(res => {movieGenres=res; console.log(movieGenres)})
+.then(res => {
+	MovieGenres=res.genres; fetchedMovieGenres = true;
+	if (fetchedTvGenres && fetchedMovieGenres) {
+		createGenreLinks()
+	}
+})
 
 fetch(`https://api.themoviedb.org/3/genre/tv/list?api_key=${key}&language=en-US`)
 .then(res => res.json())
-.then(res => {tvGenres=res; console.log(tvGenres)})
-
-fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${key}&language=en-US&with_genres=28`)
-.then(res => res.json())
-.then(res => console.log(res))
-
-fetch(`https://api.themoviedb.org/3/discover/tv?api_key=${key}&language=en-US&with_genres=35`)
-.then(res => res.json())
-.then(res => console.log(res))
+.then(res => {
+	TvGenres=res.genres; fetchedTvGenres = true;
+	if (fetchedTvGenres && fetchedMovieGenres) {
+		createGenreLinks()
+	}
+})
 
 let menuIcon = document.getElementById("mobile-menu")
 let menuBar = document.getElementById("menu-bar")
@@ -40,7 +96,6 @@ function hideMenu() {
 	}
 }
 
-let genresContainer = document.getElementById("genres")
 let genresLink = document.getElementById("genres-link")
 genresLink.addEventListener("click", showGenres)
 let backArrow = document.getElementById("back-arrow")
@@ -77,3 +132,4 @@ function showMobileSearchBar() {
 function closeMobileSearchBar() {
 	searchBar.style.transform = 'scaleX(0)'
 }
+

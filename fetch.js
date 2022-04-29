@@ -1,5 +1,7 @@
 window.onbeforeunload = function() {window.scrollTo(0, 0)}
-
+let key = "b44b2b9e1045ae57b5c211d94cc010d9"
+let genre_page_link = "genres/genre_result.html"
+let pageName = "Home"
 let trendingMoviesContainer = document.getElementById("trending-movies-container")
 // trendingMoviesContainer.style.height = '' + Math.round(trendingMoviesContainer.clientWidth/1.78) + 'px'
 
@@ -79,7 +81,6 @@ navRight.addEventListener("click", moveImagesRight)
 let trendingMovies = document.querySelectorAll(".trending-movie")
 let media = []
 let trendingMoviesDetails = []
-let key = "b44b2b9e1045ae57b5c211d94cc010d9"
 
 fetch(`https://api.themoviedb.org/3/trending/all/day?api_key=${key}`)
 .then(response => response.json())
@@ -223,13 +224,13 @@ skeletonLoader("recent-shows", "firstElementChild")
 fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${key}&language=en-US`)
 .then(res => res.json())
 .then(res => {
-	movieGenres=res; fetchtopMovies(); fetchRecentMovies(recentShows.moviesCurrentPage);
+	movieGenres=res.genres; fetchtopMovies(); fetchRecentMovies(recentShows.moviesCurrentPage);
 	fetchUpcomingMovies(upcomingMovies[0].currentPage);
 })
 
 fetch(`https://api.themoviedb.org/3/genre/tv/list?api_key=${key}&language=en-US`)
 .then(res => res.json())
-.then(res => {tvGenres=res; fetchTopTvSeries(); fetchRecentSeries(recentShows.seriesCurrentPage)})
+.then(res => {tvGenres=res.genres; fetchTopTvSeries(); fetchRecentSeries(recentShows.seriesCurrentPage)})
 
 function fetchtopMovies() {
 	fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${key}&page=1`)
@@ -360,20 +361,20 @@ function show(element) {
 	littleDetails.id = "little-details" 
 	if (dataList[0].type == "movie") {
 		name.textContent = mediaData.title
-		genresList = movieGenres.genres
+		genresList = movieGenres
 		releaseYear.textContent = mediaData.release_date.slice(0, 4)
 	}else if (dataList[0].type == "tv") {
 		name.textContent = mediaData.name
-		genresList = tvGenres.genres
+		genresList = tvGenres
 		releaseYear.textContent = "Since " + mediaData.first_air_date.slice(0, 4)
 	}else {
 		if (mediaData.hasOwnProperty("release_date")) {
 			name.textContent = mediaData.title
-			genresList = movieGenres.genres
+			genresList = movieGenres
 			releaseYear.textContent = mediaData.release_date.slice(0, 4)
 		}else {
 			name.textContent = mediaData.name
-			genresList = tvGenres.genres
+			genresList = tvGenres
 			releaseYear.textContent = "Since " + mediaData.first_air_date.slice(0, 4)
 		}
 	}

@@ -3,6 +3,15 @@ window.onbeforeunload = function() {window.scrollTo(0, 0)}
 let key = "b44b2b9e1045ae57b5c211d94cc010d9"
 let moviesContainer = document.getElementById("movies-container")
 let genresList = []
+let genre_page_link = "../genres/genre_result.html"
+let pageName = "movies page"
+
+let form = document.getElementById("search-bar-container")
+let input = form.querySelector("input")
+form.addEventListener("submit", () => {
+	let query = input.value
+	sessionStorage.setItem("query", query)
+})
 
 function skeletonLoader(parentId, templateChild, max_no) {
 	let parentContainer = document.getElementById(parentId)
@@ -23,14 +32,19 @@ function skeletonLoader(parentId, templateChild, max_no) {
 	if (reachedEndOfContainer) {
 		let theEnd = document.querySelector("template").content.children[1].cloneNode(true)
 		skeletonFragment.appendChild(theEnd)
-		if ((no%5 != 0) && parentContainer.display.type == "flex") {
+		if (no>5) {
 			dummyContainersNo = no%5
-			for(let k=0; k<dummyContainersNo; k++) {
-				let dummyContainer = document.createElement("div")
-				dummyContainer.classList.add("media-container")
-				skeletonFragment.appendChild(dummyContainer)
-			}
+		}else {
+			dummyContainersNo = 5 - no 
 		}
+		dummyContainersNo -= 1
+		for (let k=0; k<dummyContainersNo; k++) {
+			let dummyContainer = document.createElement("div")
+			dummyContainer.style.minHeight = "0"
+			dummyContainer.classList.add("media-container")
+			skeletonFragment.appendChild(dummyContainer)
+		}
+		dummyContainersNo = undefined
 	}
 	parentContainer.appendChild(skeletonFragment)
 }
@@ -87,7 +101,7 @@ fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${key}&language=en-
 
 function fetchPopularMovies(page) {
 	if (!movieList.endOfPages) {
-		fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${key}&page=1`)
+		fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${key}&page=${page}`)
 		.then(res => res.json())
 		.then(res => {
 			movieList[0].max_length = res.total_results;
