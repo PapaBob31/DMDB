@@ -1,3 +1,7 @@
+body {
+	font-family:  'Roboto', 'Segoe UI', 'Radio Canada', 'Open Sans', sans-serif;
+	font-size: 0.9em;
+}
 
 .skeleton {
 	--skeleton-bg-color: rgb(27, 27, 27);
@@ -81,10 +85,12 @@
 }
 
 #trending-movies-container {
-	margin: 60px 5% 0;
+	--container-width: 75vw;
+	margin: 60px auto 0;
 	display: flex;
 	position: relative;
-	width: 90%;
+	width: var(--container-width);
+	height: calc(var(--container-width) / 1.8);
 	overflow: hidden;
 	padding: 0;
 	border-radius: 10px
@@ -158,11 +164,11 @@
 	position: absolute;
 	left: 0;
 	bottom: 0;
-	height: 55%;
+	height: 45%;
 	width: 45%;
 	overflow-x: hidden;
 	background: rgba(10, 10, 10, 0.3);
-	border-radius: 0 10px 10px 0;
+	border-radius: 0 10px 0 0;
 }
 
 .media-name {
@@ -341,13 +347,15 @@
 	flex-grow: 0;
 	flex-shrink: 0;
 	min-height: 250px;
-	min-width: 190px;
 	border-radius: 10px;
+	border: 0px;
 }
 
 .sub-sections .media-container {
-	margin-right: 2%;
-	width: 19%;
+	--media-container-width: 14.5vw;
+	margin-right: 1vw;
+	width: var(--media-container-width);
+	min-width: 190px;
 }
 
 .poster-img {
@@ -355,12 +363,17 @@
 	width: 100%;
 	border-radius: 10px 10px 0 0;
 	min-height: 250px;
-	/*background: rgba(30, 30, 30, 0.6);*/
+	outline: none;
 	background-size: 100% 100%;
-	border: none;
+	border: 0px;
+}
+
+.sub-sections .poster-img {
+	height: calc(var(--media-container-width) * 1.5);
 }
 
 #recent-shows, #upcoming {
+	--film-container-width: 14.3vw;
 	display: none;
 	flex-wrap: wrap;
 	align-items: flex-start;
@@ -371,20 +384,28 @@
 
 #recent-shows .media-container {
 	margin-top: 20px;
-	width: 19%;
+	width: var(--film-container-width);
 }
 
 #upcoming .media-container {
 	margin-top: 20px;
-	width: 19%;
+	width: var(--film-container-width);
 }
 
-.media-container h2 {
+#recent-shows .poster-img {
+	height: calc(var(--film-container-width) * 1.5);
+}
+
+#upcoming .poster-img {
+	height: calc(var(--film-container-width) * 1.5);
+}
+
+.ending h2 {
 	text-align: center;
 	padding: 5px;
 }
 
-.media-container a {
+.ending a {
 	text-decoration: none;
 	text-align: center;
 	padding: 5px;
@@ -394,27 +415,99 @@
 	height: 300px;
 }
 
-#name {
-	padding: 0 5px;
-	font-weight: 500;
-	background: rgb(27, 27, 27);
+#upcoming .little-details{
+	height: calc(var(--film-container-width) * 0.2);
 }
 
-#little-details {
+#recent-shows .little-details{
+	height: calc(var(--film-container-width) * 0.2);
+}
+
+.sub-sections .little-details{
+	height: calc(var(--media-container-width) * 0.2);
+}
+
+.sub-sections .name{
+	height: calc(var(--media-container-width) * 0.2);
+}
+
+#recent-shows .name{
+	height: calc(var(--film-container-width) * 0.2);
+}
+
+#upcoming .name{
+	height: calc(var(--film-container-width) * 0.2);
+}
+
+#footer {
+	padding: 10px 5%;
+	color: rgb(220, 220, 220);
+	background-color: rgb(12, 12, 12);
+	font-size: 1em;
+}
+
+#footer #container {
+	display: flex;
+	justify-content: center;
+}
+
+#footer div {
+	padding: 0 5px;
+	text-align: center;
+	line-height: 2;
+}
+
+.name {
+	display: block;
+	width: 100%;
+	text-decoration: none;
+	padding: 5px 5px 0;
+	line-height: 1;
+	font-weight: 500;
+	color: inherit;
+	background: rgb(27, 27, 27);
+	min-height: 40px;
+}
+
+.little-details {
 	font-size: 0.9em;
 	color: rgb(180, 180, 180);
 	background: rgb(27, 27, 27);
 	border-radius: 0 0 10px 10px;
-	padding: 5px;
-	height: 40px;
+	padding: 0 5px 5px;
+	min-height: 40px;
 }
 
-#little-details span {
+.little-details span {
 	color: rgba(245, 93, 66, 0.8);
 }
 
-#little-details div {
+.little-details div {
 	display: inline;
+}
+
+@media screen and (max-width: 1000px) {
+	#trending-movies-container {
+		--container-width: 90vw;
+	}
+
+	#recent-shows .media-container {
+		--film-container-width: 20vw;
+	}
+
+	#upcoming .media-container {
+		--film-container-width: 20vw;
+	}
+}
+
+@media screen and (max-width: 800px) {
+	#recent-shows .media-container {
+		--film-container-width: 27vw;
+	}
+
+	#upcoming .media-container {
+		--film-container-width: 27vw;
+	}
 }
 
 @media screen and (max-width: 700px) {
@@ -432,8 +525,8 @@
 	}
 
 	#trending-movies-container {
-		margin: 10vh 0 0;
-		width: 100%;
+		margin: 65px 0 0;
+		--container-width: 100vw;
 		border-radius: 0;
 		padding: 15px 0;
 	}
@@ -477,9 +570,14 @@
 
 	#section-names {
 		padding: 0 15px;
+		top: 60px;
 	}
 
 	.sub-sections-wrapper {
+		padding: 0 15px;
+	}
+
+	#recent-shows, #upcoming {
 		padding: 0 15px;
 	}
 }
@@ -487,14 +585,6 @@
 @media screen and (max-width: 660px) {
 	#trending-movies-container {
 		max-height: 80vh;
-	}
-
-	#recent-shows .media-container {
-		width: 45%;
-	}
-
-	#upcoming .media-container {
-		width: 45%;
 	}
 }
 
@@ -504,21 +594,19 @@
 	}
 }
 
-@media screen and (max-width: 500px) {
-	#top-picks h3:last-child {
-
-	}
-
-	#details {
-		display: none;
-	}
-
+@media screen and (max-width: 550px) {
 	#recent-shows .media-container {
-		width: 48%;
+		--film-container-width: 43vw;
 	}
 
 	#upcoming .media-container {
-		width: 48%;
+		--film-container-width: 43vw;
+	}
+}
+
+@media screen and (max-width: 500px) {
+	#details {
+		display: none;
 	}
 
 	#section-names div {
@@ -530,30 +618,58 @@
 @media screen and (max-width: 450px) {
 	.sub-sections .media-container {
 		margin-right: 4%;
-		width: 21%;
+	}
+
+	#footer {
+		padding: 10px;
+	}
+
+	#footer #container {
+		display: block;
+		padding: 0px auto;
+	}
+
+	#container div {
+		display: inline-block;
 	}
 }
 
 @media screen and (max-width: 400px) {
 	#recent-shows .media-container {
-		width: 100%;
+		--film-container-width: 100%;
 	}
 
 	#upcoming .media-container {
-		width: 100%;
+		--film-container-width: 100%;
 	}
 
-	.media-container img{
-		max-height: 450px;
-	}
-
-	#name {
+	.name {
 		font-size: 1.1em;
 		padding: 5px 5px 0;
 		font-weight: 500;
 	}
 
-	#little-details {
+	.little-details {
 		font-size: 1em;
+	}
+
+	#recent-shows .name {
+		min-height: 30px;
+		height: 30px;
+	}
+
+	#upcoming .little-details {
+		min-height: 30px;
+		height: 30px;
+	}
+
+	#recent-shows .name {
+		min-height: 30px;
+		height: 30px;
+	}
+
+	#upcoming .little-details {
+		min-height: 30px;
+		height: 30px;
 	}
 }

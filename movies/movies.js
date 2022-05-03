@@ -6,13 +6,6 @@ let genresList = []
 let genre_page_link = "../genres/genre_result.html"
 let pageName = "movies page"
 
-let form = document.getElementById("search-bar-container")
-let input = form.querySelector("input")
-form.addEventListener("submit", () => {
-	let query = input.value
-	sessionStorage.setItem("query", query)
-})
-
 function skeletonLoader(parentId, templateChild, max_no) {
 	let parentContainer = document.getElementById(parentId)
 	let reachedEndOfContainer = false
@@ -53,31 +46,41 @@ skeletonLoader("movies-container", "firstElementChild")
 
 let movieList = [{currentIndex: 1, currentPage: 1, endOfPages: false, max_length: undefined}]
 let options_is_displayed = false
-let currentValue = "popular"
+let currentValue = document.querySelector("#current-value")
 let filter = document.querySelector("#filter")
 filter.addEventListener("click", showOptions,)
-let filterOptionsContainer = filter.querySelector("div")
+let filterOptionsContainer = filter.querySelector("#options")
 let filterOptions = document.querySelectorAll("option")
+let filterCovers = document.querySelectorAll(".filter-cover")
+
+for (let i=0,f=filterCovers.length; i<f; i++) {
+	filterCovers[i].addEventListener("click", showOptions)
+}
 
 for (let i=0, f=filterOptions.length; i<f; i++) {
 	filterOptions[i].addEventListener("click", () => {
-		if (filterOptions[i].value != currentValue)fetchSelectedOption(filterOptions[i].value);
+		console.log(currentValue.textContent)
+		if (filterOptions[i].textContent != currentValue.textContent){
+			currentValue.textContent = filterOptions[i].textContent
+			fetchSelectedOption(filterOptions[i].value)
+		}
 		window.scrollTo(0, 0)
 	})
 }
 
-function showOptions() {
-	if (!options_is_displayed) {
-		options_is_displayed = true
-		filterOptionsContainer.style.transform = "scale(100%, 100%)"
-	}else {
-		filterOptionsContainer.style.transform = "scale(0, 0)"
-		options_is_displayed = false
+function renderFilterCovers(display) {
+	for (let i=0,f=filterCovers.length; i<f; i++) {
+		filterCovers[i].style.display = display
 	}
 }
 
-function closeMenuBarOrOptions() {
-	if (options_is_displayed) {
+function showOptions() {
+	if (!options_is_displayed) {
+		renderFilterCovers("block")
+		filterOptionsContainer.style.transform = "scale(1, 1)"
+		options_is_displayed = true
+	}else {
+		renderFilterCovers("none")
 		filterOptionsContainer.style.transform = "scale(0, 0)"
 		options_is_displayed = false
 	}
@@ -87,7 +90,6 @@ function fetchSelectedOption(value) {
 	moviesContainer.innerHTML = ""
 	movieList = [{currentIndex: 1, currentPage: 1, endOfPages: false, max_length: undefined}]
 	skeletonLoader("movies-container", "firstElementChild")
-	currentValue = value
 	if (value == "popular") {
 		fetchPopularMovies(1)
 	}else if (value == "in-cinemas") {

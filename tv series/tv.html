@@ -12,15 +12,19 @@
 </head>
 <body>
 	<div id="site-header">
+		<div class="filter-cover"></div>
 		<div style="display: flex">
 			<span class="material-icons-outlined" id="mobile-menu">menu</span>
 			<h2 id="site-name">DMDB</h2>
 		</div>
-		<select id="filter">
-			<option value="popular">Popular</option>
-			<option value="currently-airing">On air</option>
-			<option value="top-rated">Top rated</option>
-		</select>
+		<div id="filter">
+			<div id="current-value">Popular</div>
+			<div id="options">
+				<option value="popular">Popular</option>
+				<option value="currently-airing">On air</option>
+				<option value="top-rated">Top rated</option>
+			</div>
+		</div>
 		<form id="search-bar-container" action="..\search\search.html">
 			<button type="submit" id="search-icon" class="material-icons-outlined">search</button>
 			<input type="text" id="search-bar" placeholder="Search..">
@@ -29,6 +33,7 @@
 		<button id="mobile-search-trigger" class="material-icons-outlined">search</button>
 	</div>
 	<div id="menu-bar">
+		<div class="filter-cover"></div>
 		<span class="material-icons-outlined" id="close-menu">close</span>
 		<div id="menu-options">
 			<a href="..\index.html">HOME</a>

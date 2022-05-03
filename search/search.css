@@ -60,70 +60,10 @@ body {
 		width: 100%;
 		margin: 0;
 	}
-
-	#site-header {
-		width: 100%;
-		margin-left: 0;
-	}
-
-	#mobile-menu {
-		display: block;
-	}
-
-	#close-menu {
-		display: block;
-	}
-
-	#menu-bar {
-		left: -100%;
-	}
 }
 
 
 @media screen and (max-width: 700px) {
-	#site-header {
-		padding: 0 5px;
-		height: 10vh;
-		min-height: 60px;
-	}
-
-	#menu-bar {
-		width: 40%;
-	}
-
-	#search-bar-container {
-		position: absolute;
-		left: 0;
-		top: 0;
-		height: 100%;
-		width: 100%;
-		border-radius: 0;
-		transform-origin: 100% 0;
-		transform: scaleX(0);
-		transition: 0.3s;
-	}
-
-	#search-bar-container #search-bar {
-		height: 80%;
-		font-size: 1.1em;
-	}
-
-	#mobile-search-trigger {
-		display: inline-block;	
-		color: rgba(245, 93, 66, 0.8);
-		background-color: inherit;
-		border: none;
-		font-size: 1.5rem;
-	}
-
-	#close-search-bar {
-		display: inline-block;
-		color: rgb(200, 200, 200);
-		font-size: 1.2em;
-		font-weight: bold;
-		text-align: center;
-	}
-
 	.search-result {
 		width: 100%;
 	}
@@ -149,11 +89,6 @@ body {
 
 	.result-details {
 		width: 60%;
-	}
-
-	#site-name {
-		font-size: 1.3rem;
-		line-height: unset;
 	}
 
 	#search-results-container {

@@ -11,15 +11,15 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
 </head>
 <body>
-	<!-- <div id="cover"></div> -->
 	<div id="site-header">
+		<div class="filter-cover"></div>
 		<div style="display: flex">
 			<span class="material-icons-outlined" id="mobile-menu">menu</span>
 			<h2 id="site-name">DMDB</h2>
 		</div>
 		<div id="filter">
-			Popular
-			<div>
+			<div id="current-value">Popular</div>
+			<div id="options">
 				<option value="popular">Popular</option>
 				<option value="in-cinemas">In Cinemas</option>
 				<option value="top-rated">Top rated</option>
@@ -33,6 +33,7 @@
 		<button id="mobile-search-trigger" class="material-icons-outlined">search</button>
 	</div>
 	<div id="menu-bar">
+		<div class="filter-cover"></div>
 		<span class="material-icons-outlined" id="close-menu">close</span>
 		<div id="menu-options">
 			<a href="..\index.html">HOME</a>

@@ -1,7 +1,3 @@
-html {
-	overflow-x: hidden;
-}
-
 * {
 	box-sizing: border-box;
 }
@@ -11,16 +7,15 @@ html, body {
 }
 
 body {
-	--main-bg-color: rgb(14, 14, 14);
+	--main-bg-color: rgb(12, 12, 12);
 	position: relative;
-	margin: 0 0 0 15%;
-	width: 85%;
-	padding: 0;
-	font-family: 'Roboto', 'Open Sans', Segoe UI, sans-serif;
+	padding: 0 0 0 15vw;
+	width: 100%;
+	margin: 0;
 	background: var(--main-bg-color);
 }
 
-.material-icons-outlined, .material-symbols-rounded {
+.material-icons-outlined, .material-symbols-rounded, a {
 	cursor: pointer;
 }
 
@@ -28,8 +23,8 @@ body {
 	position: fixed;
 	top: 0;
 	left: 0;
-	width: 85%;
-	margin-left: 15%;
+	width: 85vw;
+	margin-left: 15vw;
 	padding: 5px 5%;
 	background: rgb(25, 25, 25);
 	display: flex;
@@ -77,6 +72,10 @@ body {
 
 #mobile-search-trigger {
 	display: none;
+	color: rgba(245, 93, 66, 0.8);
+	background-color: inherit;
+	border: none;
+	font-size: 1.5rem;
 }
 
 #mobile-menu {
@@ -89,17 +88,22 @@ body {
 #close-menu {
 	display: none;
 	color: rgb(220, 220, 220);
+	width: 100%;
+	font-size: 1.3em;
+	text-align: right;
+	font-weight: 500;
 }
 
 #menu-bar {
+	font-family:  'Roboto', 'Segoe UI', 'Radio Canada', 'Open Sans', sans-serif;
+	font-size: 0.95em;
 	position: fixed;
 	top: 0;
 	left: 0;
-	width: 15%;
+	width: 15vw;
 	height: 100%;
 	z-index: 6;
 	background: rgb(30, 30, 30);
-	/*padding: 50px 10px 10px;*/
 	padding: 10px;
 	min-width: 200px;
 	transition: 0.6s;
@@ -136,7 +140,7 @@ body {
 	width: 100%;
 	height: 100vh;
 	z-index: 7;
-	background: rgb(40, 40, 40);
+	background: inherit;
 	transition: 0.5s;
 }
 
@@ -172,17 +176,17 @@ body {
 }
 
 
-@media screen and (min-width: 1001px) {
+@media screen and (max-width: 1200px) {
 	body {
 		width: unset;
-		margin-left: 200px;
+		padding: 0 0 0 200px;
 	}
 } 
 
 @media screen and (max-width: 1000px) {
 	body {
 		width: 100%;
-		margin: 0;
+		padding: 0;
 	}
 
 	#site-header {
@@ -201,25 +205,12 @@ body {
 	#menu-bar {
 		left: -100%;
 	}
-
-	.media-container {
-		width: 21%;
-	}
-
-	#recent-shows .media-container {
-		width: 19%;
-	}
-
-	#upcoming .media-container {
-		width: 19%;
-	}
 }
 
 @media screen and (max-width: 700px) {
 	#site-header {
 		padding: 0 5px;
-		height: 10vh;
-		min-height: 60px;
+		height: 60px;
 	}
 
 	#menu-bar {
@@ -233,29 +224,16 @@ body {
 		height: 100%;
 		width: 100%;
 		border-radius: 0;
-		transform-origin: 100% 0;
-		transform: scaleX(0);
+		-webkit-transform-origin: 100% 0;
+		-webkit-transform: scaleX(0);
 		transition: 0.3s;
 	}
 
 	#search-bar-container #search-bar {
 		height: 80%;
-		font-size:;
 	}
 
 	#mobile-search-trigger {
 		display: inline-block;	
-		color: rgba(245, 93, 66, 0.8);
-		background-color: inherit;
-		border: none;
-		font-size: 1.5rem;
-	}
-
-	#close-search-bar {
-		display: inline-block;
-		color: rgb(200, 200, 200);
-		font-size: 1.2em;
-		font-weight: bold;
-		text-align: center;
 	}
 }

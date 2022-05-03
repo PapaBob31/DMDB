@@ -32,13 +32,13 @@ let result = new DocumentFragment()
 let show = document.createElement("div")
 show.className = "genre-result"
 let resultDetails = document.createElement("div")
-resultDetails.className = "genre-details"
+resultDetails.className = "result-details"
 let mediaType = document.createElement("div")
 mediaType.className = "media-type"
 let poster = document.createElement("img")
 let nameLink = document.createElement("a")
 let name = document.createElement("h2")
-name.className = "genre-name"
+name.className = "result-name"
 let releaseDate = document.createElement("div")
 nameLink.appendChild(name)
 show.appendChild(poster)

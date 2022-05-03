@@ -5,6 +5,13 @@ let fetchedTvGenres = false
 let not_created_yet = true
 let genresContainer = document.getElementById("genres")
 
+let form = document.getElementById("search-bar-container")
+let input = form.querySelector("input")
+form.addEventListener("submit", () => {
+	let query = input.value
+	sessionStorage.setItem("query", query)
+})
+
 let dummyGenresContainer = new DocumentFragment()
 
 function storeId(page_name, id) {
@@ -52,7 +59,6 @@ function mergeMovieAndTvGenres() {
 			}
 		}
 	}
-	console.log(result)
 	not_created_yet = false
 	return result
 }
@@ -126,10 +132,10 @@ closeMobileSearchBtn.addEventListener("click", closeMobileSearchBar)
 let onScreen = false
 
 function showMobileSearchBar() {
-	searchBar.style.transform = 'scaleX(100%)'
+	searchBar.style.webkitTransform = 'scaleX(1)'
 }
 
 function closeMobileSearchBar() {
-	searchBar.style.transform = 'scaleX(0)'
+	searchBar.style.webkitTransform = 'scaleX(0)'
 }
 

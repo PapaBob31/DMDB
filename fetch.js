@@ -138,7 +138,6 @@ function updateTrendingMovies(details, i) {
 	let mediaType = document.createElement("div")
 	let mediaDetails = trendingMovies[i].querySelector(".details")
 	trendingMovies[i].insertBefore(trendingMoviePoster.cloneNode(true), mediaDetails)
-	if (i == 1) trendingMoviesContainer.style.height = "unset"
 	if (details[i].original_name) {
 		mediaName.textContent = details[i].name
 		releaseDate.textContent = `first episode date: ${details[i].first_air_date}`
@@ -334,6 +333,11 @@ moviePoster.style.width = "100%"
 moviePoster.classList.add("poster-img")
 let movieDetails = new DocumentFragment()
 
+function storeFilmId(filmId) {
+	let id = filmId
+	sessionStorage.setItem("filmId", id)
+}
+
 function show(element) {
 	let dataList = undefined
 	scrollObserver.unobserve(element)
@@ -351,14 +355,17 @@ function show(element) {
 	let poster = mediaContainers[currentIndex - 1].querySelector(".poster-img")
 	moviePoster.src = `https://image.tmdb.org/t/p/w342${mediaData.poster_path}`
 	poster.classList.remove("skeleton")
-	let name = document.createElement("div")
+	let name = document.createElement("a")
 	let littleDetails = document.createElement("div")
 	let releaseYear = document.createElement("span")
 	let mediaGenres = document.createElement("div")
 	let genresList = []
 	let skeletonTexts = mediaContainers[currentIndex - 1].querySelectorAll(".skeleton")
-	name.id = "name"
-	littleDetails.id = "little-details" 
+	name.classList.add("name")
+	name.id = mediaData.id
+	name.href = "film_full_details/full_details.html"
+	name.addEventListener("click", () => {storeFilmId(name.id)})
+	littleDetails.classList.add("little-details") 
 	if (dataList[0].type == "movie") {
 		name.textContent = mediaData.title
 		genresList = movieGenres
@@ -382,12 +389,14 @@ function show(element) {
 	for (let n=0; n < mediaData.genre_ids.length; n++) {
 		for (let e=0; e < genresList.length; e++) {
 			if (mediaData.genre_ids[n] == genresList[e].id) {
-				if (mediaData.genre_ids[n] != mediaData.genre_ids[mediaData.genre_ids.length-1]) {
-					mediaGenres.textContent += genresList[e].name + ', '
-					break
-				}else {
-					mediaGenres.textContent += genresList[e].name
-					break
+				if (mediaGenres.textContent.length < 38) {
+					if (mediaData.genre_ids[n] != mediaData.genre_ids[mediaData.genre_ids.length-1]) {
+						mediaGenres.textContent += genresList[e].name + ', '
+						break
+					}else {
+						mediaGenres.textContent += genresList[e].name
+						break
+					}
 				}
 			}
 		}

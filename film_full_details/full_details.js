@@ -2,6 +2,7 @@ let key = "b44b2b9e1045ae57b5c211d94cc010d9"
 let genre_page_link = "../genres/genre_result.html"
 let pageName = "genre_result"
 let filmDetails;
+let filmId = sessionStorage.getItem("filmId")
 
 let trailerPoster = document.getElementById("film-trailer-poster")
 let playLink = document.getElementById("play_link")
@@ -29,10 +30,8 @@ let runTime = rrr.querySelectorAll("div")[2]
 let myRating = userRatings.querySelectorAll("h2")[0]
 let totalReviews = userRatings.querySelectorAll("h2")[1]
 let filmGenres = document.getElementById("film-genres")
-filmGenres.innerHTML = ""
 
 let castWrapper = document.getElementById("casts")
-castWrapper.innerHTML = ""
 let cast_temp_container = new DocumentFragment()
 let cast_container = document.createElement("div")
 let cast_img = document.createElement("img")
@@ -52,17 +51,14 @@ let name = film.querySelector(".similar-film-name")
 let similarFilmsList;
 let similarFilmsContainer = document.getElementById("similar-films");
 
-fetch(`https://api.themoviedb.org/3/movie/299536?api_key=${key}&language=en-US&append_to_response=videos,credits,similar,recommendations`)
+fetch(`https://api.themoviedb.org/3/movie/${filmId}?api_key=${key}&language=en-US&append_to_response=videos,credits,similar,recommendations`)
 .then(response => response.json())
 .then(response => {
 	filmDetails = response; sort();
 	window.addEventListener("resize", adjustSynopsisLength);
-	let moreSynopsis = document.getElementById("more");
-	moreSynopsis.addEventListener("click", showAllSynopsis);
-	console.log("wxf")
 })
 
-fetch(`https://api.themoviedb.org/3/movie/299536/recommendations?api_key=${key}&language=en-US`)
+fetch(`https://api.themoviedb.org/3/movie/${filmId}/recommendations?api_key=${key}&language=en-US`)
 .then(response => response.json())
 .then(response => {similarFilmsList = response; displaySimilarMovies(); similarFilmsContainer.appendChild(dummyContainer)})
 
@@ -115,6 +111,10 @@ function adjustSynopsisLength() {
 		}else{
 		synopsis.innerHTML = `<h2>Synopsis:</h2>${filmDetails.overview.slice(0, 280)}...<span id="more" style="color: lightblue;">More</span>`
 		}
+		let moreSynopsis = document.getElementById("more");
+		moreSynopsis.addEventListener("click", showAllSynopsis);
+	}else {
+		synopsis.innerHTML = "<h2>Synopsis:</h2>" + filmDetails.overview
 	}
 }
 

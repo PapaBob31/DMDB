@@ -2,18 +2,49 @@ body {
 	background: rgb(18, 18, 18);
 }
 
+.filter-cover {
+	display: none;
+	width: 100%;
+	height: 100vh;
+	background-color: lightblue;
+	opacity: 0.2;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 9;
+}
+
 #filter {
-	background: rgb(60, 60, 60);
+	background: rgb(40, 40, 40);
 	width: 120px;
 	padding: 5px;
-	outline: none;
-	border: none;
-	z-index: 10;
 	color: rgb(220, 220, 220);
+	border-radius: 3px;
+	position: relative;
+	cursor: pointer;
+}
+
+#filter #options {
+	position: absolute;
+	left: 0;
+	width: 100%;
+	margin-top: 10px;
+	transform: scale(0, 0);
+	border-radius: 5px;
+	background: rgb(40, 40, 40);
+	transition: .05s;
+	transform-origin: 0 0;
+	z-index: 100;
+}
+
+option {
+	cursor: pointer;
+	padding: 5px;
 }
 
 #series-container {
-	margin-top: 50px;
+	--film-container-width: 14.3vw;
+	margin-top: 60px;
 	padding: 0 5%;
 	display: flex;
 	flex-wrap: wrap;
@@ -34,6 +65,13 @@ body {
 
 	#series-container .media-container {
 		width: 19%;
+	}
+
+}
+
+@media screen and (max-width: 700px) {
+	#series-container {
+		margin-top: 70px;
 	}
 
 }

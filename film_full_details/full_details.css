@@ -1,4 +1,5 @@
 body {
+	font-family:   'Radio Canada', 'Roboto', 'Segoe UI', 'Open Sans', sans-serif;
 	--sections-background: rgb(22, 22, 22);
 	font-size: 1em;
 	color: rgb(220, 220, 220);
@@ -175,11 +176,15 @@ iframe {
 	background: rgba(245, 93, 66, 0.8);
 }
 
-#casts {
+#cast-container {
 	width: 100%;
 	padding: 10px 5%;
-	display: flex;
 	background-color: var(--sections-background);
+}
+
+#casts {
+	width: 100%;
+	display: flex;
 	overflow: auto;
 }
 
@@ -231,7 +236,7 @@ iframe {
 	margin-top: 10px;
 	padding: 10px 5%;
 	width: 100%;
-	overflow: auto;
+	overflow: hidden;
 	background-color: var(--sections-background);
 }
 
@@ -240,10 +245,17 @@ iframe {
 }
 
 #similar-films {
+	width: 100%;
+	overflow: auto;
 	display: flex;
+	align-items: flex-start;
 }
 
 .similar-film-name {
+	color: rgb(180, 180, 180);
+	background: rgb(35, 35, 35);
+	border-radius: 0 0 10px 10px;
+	padding: 5px;
 	font-weight: normal;
 }
 
@@ -261,15 +273,18 @@ iframe {
 }
 
 .media-container {
+	/*--film-container-width: 14vh;
+	height: calc(var(--film-container-width) * 1.5);*/
+
 	width: 17%;
 	background-color: rgb(30, 30, 30);
 	color: rgb(220, 220, 220);
 	flex-grow: 0;
 	flex-shrink: 0;
-	min-height: 250px;
-	min-width: 160px;
+	min-width: 170px;
 	border-radius: 10px;
 	margin-right: 20px;
+	margin-bottom: 10px;
 }
 
 .media-container img {
@@ -280,11 +295,7 @@ iframe {
 }
 
 .little-details {
-	color: rgb(180, 180, 180);
-	background: rgb(35, 35, 35);
-	border-radius: 0 0 10px 10px;
-	padding: 5px;
-	height: 40px;
+	
 }
 
 @media screen and (max-width: 400px) {
@@ -348,4 +359,8 @@ iframe {
 	#user-reviews-nd-ratings div{
 		width: unset;
 	}
+
+	.media-container {
+	margin-right: 15px;
+}
 }

@@ -45,15 +45,50 @@ function skeletonLoader(parentId, templateChild, max_no) {
 skeletonLoader("series-container", "firstElementChild", 20)
 
 let tvList = [{currentIndex: 1, currentPage: 1, endOfPages: false, max_length: undefined}]
-let currentValue = "popular"
-let selected = document.querySelector("select")
-selected.addEventListener("change", () => {if (selected.value != currentValue)fetchSelectedOption(selected.value); window.scrollTo(0, 0)})
+let options_is_displayed = false
+let currentValue = document.querySelector("#current-value")
+let filter = document.querySelector("#filter")
+filter.addEventListener("click", showOptions,)
+let filterOptionsContainer = filter.querySelector("#options")
+let filterOptions = document.querySelectorAll("option")
+let filterCovers = document.querySelectorAll(".filter-cover")
+
+for (let i=0,f=filterCovers.length; i<f; i++) {
+	filterCovers[i].addEventListener("click", showOptions)
+}
+
+for (let i=0, f=filterOptions.length; i<f; i++) {
+	filterOptions[i].addEventListener("click", () => {
+		if (filterOptions[i].textContent != currentValue.textContent){
+			currentValue.textContent = filterOptions[i].textContent
+			fetchSelectedOption(filterOptions[i].value)
+		}
+		window.scrollTo(0, 0)
+	})
+}
+
+function renderFilterCovers(display) {
+	for (let i=0,f=filterCovers.length; i<f; i++) {
+		filterCovers[i].style.display = display
+	}
+}
+
+function showOptions() {
+	if (!options_is_displayed) {
+		renderFilterCovers("block")
+		filterOptionsContainer.style.transform = "scale(1, 1)"
+		options_is_displayed = true
+	}else {
+		renderFilterCovers("none")
+		filterOptionsContainer.style.transform = "scale(0, 0)"
+		options_is_displayed = false
+	}
+}
 
 function fetchSelectedOption(value) {
 	seriesContainer.innerHTML = ""
 	tvList = [{currentIndex: 1, currentPage: 1, endOfPages: false, max_length: undefined}]
 	skeletonLoader("series-container", "firstElementChild", 20)
-	currentValue = value
 	if (value == "popular") {
 		fetchPopularSeries(1)
 	}else if (value == "currently-airing") {
