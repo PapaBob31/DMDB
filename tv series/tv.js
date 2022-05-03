@@ -150,9 +150,13 @@ let scrollObserver = new IntersectionObserver(entries => {
 }, {threshold: 0.25})
 
 let moviePoster = document.createElement("img")
-moviePoster.style.width = "100%"
 moviePoster.classList.add("poster-img")
 let movieDetails = new DocumentFragment()
+
+function storeFilmId(filmId) {
+	let id = filmId
+	sessionStorage.setItem("filmId", id)
+}
 
 function show(element) {
 	let dataList = tvList
@@ -161,17 +165,17 @@ function show(element) {
 	let mediaContainers = parentContainer.querySelectorAll(".media-container")
 	let currentIndex = dataList[0].currentIndex
 	let mediaData = dataList[currentIndex]
-	let poster = mediaContainers[currentIndex - 1].querySelector(".poster-img")
+	let posterContainer = mediaContainers[currentIndex - 1].querySelector(".poster-img-container")
 	moviePoster.src = `https://image.tmdb.org/t/p/w342${mediaData.poster_path}`
-	poster.classList.remove("skeleton")
 	let name = document.createElement("div")
 	let littleDetails = document.createElement("div")
 	let releaseYear = document.createElement("span")
 	let mediaGenres = document.createElement("div")
 	let skeletonTexts = mediaContainers[currentIndex - 1].querySelectorAll(".skeleton")
-	name.id = "name"
-	littleDetails.id = "little-details" 
-	name.textContent = mediaData.name
+	name.classList.add("name")
+	name.id = mediaData.id
+	name.href = "../film_full_details/full_details.html"
+	name.addEventListener("click", () => {storeFilmId(name.id)})
 	releaseYear.textContent = "Since " + mediaData.first_air_date.slice(0, 4)
 	mediaGenres.textContent = " | "
 	for (let n=0; n < mediaData.genre_ids.length; n++) {
@@ -192,8 +196,7 @@ function show(element) {
 	for (let l=0; l<skeletonTexts.length; l++) {
 		mediaContainers[currentIndex - 1].removeChild(skeletonTexts[l])
 	}
-	mediaContainers[currentIndex - 1].removeChild(poster)
-	movieDetails.appendChild(moviePoster.cloneNode(true))
+	posterContainer.appendChild(moviePoster.cloneNode(true))
 	movieDetails.appendChild(name)
 	movieDetails.appendChild(littleDetails)
 	mediaContainers[currentIndex - 1].appendChild(movieDetails)

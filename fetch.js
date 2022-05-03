@@ -3,7 +3,6 @@ let key = "b44b2b9e1045ae57b5c211d94cc010d9"
 let genre_page_link = "genres/genre_result.html"
 let pageName = "Home"
 let trendingMoviesContainer = document.getElementById("trending-movies-container")
-// trendingMoviesContainer.style.height = '' + Math.round(trendingMoviesContainer.clientWidth/1.78) + 'px'
 
 function skeletonLoader(parentId, templateChild, max_no) {
 	let parentContainer = document.getElementById(parentId)
@@ -84,7 +83,7 @@ let trendingMoviesDetails = []
 
 fetch(`https://api.themoviedb.org/3/trending/all/day?api_key=${key}`)
 .then(response => response.json())
-.then(response => {filterTrendingMovies(response.results); getTrendingMoviesDetails(media)})
+.then(response => {console.log(response); filterTrendingMovies(response.results); getTrendingMoviesDetails(media)})
 
 function filterTrendingMovies(list) {
 	let index = 0;
@@ -92,7 +91,7 @@ function filterTrendingMovies(list) {
 	for (let i = 0, l=list.length; i < l; i++) {
 		let medium = {}
 		if (index < trendingMovies.length) {
-			if (list[i].vote_average >= 7.8) {
+			if (list[i].vote_average >= 7) {
 				if (list[i].hasOwnProperty("first_air_date")) {
 					releaseDate = list[i].first_air_date
 					medium.type = "tv"
@@ -127,6 +126,7 @@ function getTrendingMoviesDetails(mediaList) {
 let trendingMoviePoster = document.createElement("img")
 
 function updateTrendingMovies(details, i) {
+	console.log("ah")
 	let posterLink = `https://image.tmdb.org/t/p/w1280${details[i].backdrop_path}`
 	trendingMoviePoster.src = posterLink
 	let mediaName = trendingMovies[i].querySelector(".media-name")
@@ -329,7 +329,6 @@ function observeChildren(parentId, no) {
 }
 
 let moviePoster = document.createElement("img")
-moviePoster.style.width = "100%"
 moviePoster.classList.add("poster-img")
 let movieDetails = new DocumentFragment()
 
@@ -352,9 +351,8 @@ function show(element) {
 	let mediaContainers = parentContainer.querySelectorAll(".media-container")
 	let currentIndex = dataList[0].currentIndex
 	let mediaData = dataList[currentIndex]
-	let poster = mediaContainers[currentIndex - 1].querySelector(".poster-img")
+	let posterContainer = mediaContainers[currentIndex - 1].querySelector(".poster-img-container")
 	moviePoster.src = `https://image.tmdb.org/t/p/w342${mediaData.poster_path}`
-	poster.classList.remove("skeleton")
 	let name = document.createElement("a")
 	let littleDetails = document.createElement("div")
 	let releaseYear = document.createElement("span")
@@ -406,8 +404,7 @@ function show(element) {
 	for (let l=0; l<skeletonTexts.length; l++) {
 		mediaContainers[currentIndex - 1].removeChild(skeletonTexts[l])
 	}
-	mediaContainers[currentIndex - 1].removeChild(poster)
-	movieDetails.appendChild(moviePoster.cloneNode(true))
+	posterContainer.appendChild(moviePoster.cloneNode(true))
 	movieDetails.appendChild(name)
 	movieDetails.appendChild(littleDetails)
 	mediaContainers[currentIndex - 1].appendChild(movieDetails)

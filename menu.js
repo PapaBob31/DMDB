@@ -3,7 +3,7 @@ let TvGenres = []
 let fetchedMovieGenres = false
 let fetchedTvGenres = false
 let not_created_yet = true
-let genresContainer = document.getElementById("genres")
+let genresContainer = document.getElementById("genres").querySelector("div")
 
 let form = document.getElementById("search-bar-container")
 let input = form.querySelector("input")
@@ -34,7 +34,7 @@ function createGenreLinks() {
 			link.id = result.id
 			link.textContent = result.name
 			link.href = genre_page_link
-			link.addEventListener("click", (event) => {storeId(pageName, event.target.id); console.log("sad")})
+			link.addEventListener("click", (event) => {storeId(pageName, event.target.id)})
 			dummyGenresContainer.append(link)
 		})
 		genresContainer.append(dummyGenresContainer)

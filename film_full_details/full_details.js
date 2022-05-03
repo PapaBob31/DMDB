@@ -82,6 +82,7 @@ function sort() {
 	let cast = filmDetails.credits.cast
 	for (let i=0, c=cast.length; i<c; i++) {
 		cast_img.src = `https://image.tmdb.org/t/p/w342${cast[i].profile_path}`
+		cast_img.load = "lazy"
 		cast_name.textContent = cast[i].name
 		if (cast[i].character.length > 15) {
 			cast_role.textContent = cast[i].character.slice(0, 13) + ".."

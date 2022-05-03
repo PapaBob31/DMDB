@@ -16,10 +16,11 @@ body {
 }
 
 #film-trailer-container {
+	--trailer-width: 75vw;
 	position: relative;
-	width: 90%;
-	height: 400px;
-	margin: 60px 5% 0;
+	width: var(--trailer-width);
+	height: calc(var(--trailer-width) * 0.57);
+	margin: 60px auto 0;
 }
 
 iframe {
@@ -219,7 +220,7 @@ iframe {
 .cast span {
 	display: block;
 /*	text-align: center;*/
-}
+} 
 
 .name {
 	font-weight: 400;
@@ -298,22 +299,26 @@ iframe {
 	
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 1000px) {
 	#film-trailer-container {
-		width: 100%;
-		margin: 60px 0 0;
+		--trailer-width: 90vw;
+	}
+}
+
+@media screen and (max-width: 700px) {
+	#user-reviews-nd-ratings {
+		padding: 5px 0 0;
+		width: 60%;
+		display: flex;
+		justify-content: space-between;
 	}
 
-	#small-img {
-		display: none;
+	#user-reviews-nd-ratings div{
+		width: unset;
 	}
 
-	#name-nd-film-type-wrapper {
-		padding: 10px 15px;
-	}
-
-	#film-name {
-		font-weight: 1.2em;
+	.media-container {
+		margin-right: 15px;
 	}
 }
 
@@ -324,6 +329,7 @@ iframe {
 
 	#film-trailer-container {
 		width: 100%;
+		height: calc(100vw * 0.57);
 		margin: 60px 0 0;
 	}
 
@@ -340,27 +346,33 @@ iframe {
 
 	#user-reviews-nd-ratings {
 		width: 100%;
-		display: block;
 	}
 
 	#user-reviews-nd-ratings-wrapper .details {
-		width: 45%;
+		width: 55%;
 		border-bottom: 1px solid rgb(60, 60, 60);
 	}
 }
 
-@media screen and (max-width: 700px), {
+@media screen and (max-width: 550px) {
 	#user-reviews-nd-ratings {
-		width: 60%;
-		display: flex;
-		justify-content: space-between;
+		width: 100%;
 	}
-
-	#user-reviews-nd-ratings div{
-		width: unset;
-	}
-
-	.media-container {
-	margin-right: 15px;
 }
+
+@media screen and (max-width: 500px) {
+	#user-reviews-nd-ratings-wrapper .details {
+		width: 100%;
+		border-bottom: 1px solid rgb(60, 60, 60);
+	}
+}
+
+@media screen and (max-width: 400px) {
+	#name-nd-film-type-wrapper {
+		padding: 10px 15px;
+	}
+
+	#film-name {
+		font-weight: 1.2em;
+	}
 }

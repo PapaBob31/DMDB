@@ -26,7 +26,7 @@ body {
 	width: 85vw;
 	margin-left: 15vw;
 	padding: 5px 5%;
-	background: rgb(25, 25, 25);
+	background: rgb(22, 22, 22);
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -45,13 +45,13 @@ body {
 	border-radius: 10px;
 	width: 40%;
 	padding: 3px;
-	background-color: rgb(35, 35, 35);
+	background-color: rgb(33, 33, 33);
 }
 
 #search-icon {
 	width: 10%;	
 	color: rgba(245, 93, 66, 0.8);
-	background-color: rgb(35, 35, 35);
+	background-color: inherit;
 	border: none;
 	font-size: 1.5rem;
 }
@@ -62,12 +62,17 @@ body {
 	outline: none;
 	border: none;
 	color: rgb(200, 200, 200);
-	background-color: rgb(35, 35, 35);
+	background-color: inherit;
 	padding: 0;
 }
 
 #close-search-bar {
 	display: none;
+	color: rgb(220, 220, 220);
+	width: 100%;
+	font-size: 1.3em;
+	text-align: right;
+	font-weight: 500;
 }
 
 #mobile-search-trigger {
@@ -89,7 +94,7 @@ body {
 	display: none;
 	color: rgb(220, 220, 220);
 	width: 100%;
-	font-size: 1.3em;
+	font-size: 1.5em;
 	text-align: right;
 	font-weight: 500;
 }
@@ -138,18 +143,21 @@ body {
 	margin-top: 10px;
 	text-decoration: none;
 	width: 100%;
-	height: 100vh;
+	height: 90vh;
 	z-index: 7;
 	background: inherit;
 	transition: 0.5s;
 }
 
 #genres div {
-	transition: 0.5s;
+	width: 100%;
+	height: 90vh;
+	overflow-y: auto;
 }
 
 #genres a {
 	display: block;
+	margin-top: 3%;
 	padding: 5px 30px;
 	text-decoration: none;
 	color: rgb(200, 200, 200);
@@ -174,7 +182,6 @@ body {
 	left: 5px;
 	cursor: pointer;
 }
-
 
 @media screen and (max-width: 1200px) {
 	body {
@@ -224,9 +231,13 @@ body {
 		height: 100%;
 		width: 100%;
 		border-radius: 0;
-		-webkit-transform-origin: 100% 0;
-		-webkit-transform: scaleX(0);
+		transform-origin: 100% 0;
+		transform: scaleX(0);
 		transition: 0.3s;
+	}
+
+	#close-search-bar {
+		display: inline-block;
 	}
 
 	#search-bar-container #search-bar {
