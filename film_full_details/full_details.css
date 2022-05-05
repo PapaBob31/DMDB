@@ -3,7 +3,7 @@ body {
 	--sections-background: rgb(22, 22, 22);
 	font-size: 1em;
 	color: rgb(220, 220, 220);
-	font-weight: 300;
+	font-weight: 300;5
 }
 
 .material-icons-outlined, .material-symbols-rounded {
@@ -19,8 +19,9 @@ body {
 	--trailer-width: 75vw;
 	position: relative;
 	width: var(--trailer-width);
-	height: calc(var(--trailer-width) * 0.57);
+	height: calc(var(--trailer-width) * 0.5);
 	margin: 60px auto 0;
+	background-color: rgb(18, 18, 18);
 }
 
 iframe {
@@ -131,9 +132,18 @@ iframe {
 }
 
 #small-img {
-	width: 30%;
+	overflow: hidden;
+	width: 18%;
+	min-height: 220px;
 	min-width: 150px;
 	margin-right: 20px;
+	background: rgb(25, 25, 25);
+}
+
+#small-img img {
+	width: calc(100% + 2px);
+	height: calc(100% + 2px);
+	margin: -1px;
 }
 
 #synopsis-nd-poster {
@@ -296,7 +306,7 @@ iframe {
 }
 
 .little-details {
-	
+	min-height: 35px;	
 }
 
 @media screen and (max-width: 1000px) {

@@ -2,7 +2,7 @@ let key = "b44b2b9e1045ae57b5c211d94cc010d9"
 let genre_page_link = "../genres/genre_result.html"
 let pageName = "genre_result"
 let filmDetails;
-let filmId = sessionStorage.getItem("filmId")
+let filmData = JSON.parse(sessionStorage.getItem("filmData"))
 
 let trailerPoster = document.getElementById("film-trailer-poster")
 let playLink = document.getElementById("play_link")
@@ -19,9 +19,9 @@ function loadTrailer(){
 }
 
 let filmName = document.getElementById("film-name")
-let filmType = document.getElementById("film-type")
+let film_type = document.getElementById("film-type")
 let userRatings = document.getElementById("user-reviews-nd-ratings")
-let poster = document.getElementById("small-img")
+let posterContainer = document.getElementById("small-img")
 let synopsis = document.getElementById("synopsis")
 let rrr = document.getElementById("rrr")
 let certification = rrr.querySelectorAll("div")[0]
@@ -29,6 +29,7 @@ let releaseDate = rrr.querySelectorAll("div")[1]
 let runTime = rrr.querySelectorAll("div")[2]
 let myRating = userRatings.querySelectorAll("h2")[0]
 let totalReviews = userRatings.querySelectorAll("h2")[1]
+let popularity = userRatings.querySelectorAll("h2")[2]
 let filmGenres = document.getElementById("film-genres")
 
 let castWrapper = document.getElementById("casts")
@@ -51,26 +52,44 @@ let name = film.querySelector(".similar-film-name")
 let similarFilmsList;
 let similarFilmsContainer = document.getElementById("similar-films");
 
-fetch(`https://api.themoviedb.org/3/movie/${filmId}?api_key=${key}&language=en-US&append_to_response=videos,credits,similar,recommendations`)
-.then(response => response.json())
-.then(response => {
-	filmDetails = response; sort();
-	window.addEventListener("resize", adjustSynopsisLength);
-})
-
-fetch(`https://api.themoviedb.org/3/movie/${filmId}/recommendations?api_key=${key}&language=en-US`)
-.then(response => response.json())
-.then(response => {similarFilmsList = response; displaySimilarMovies(); similarFilmsContainer.appendChild(dummyContainer)})
+if (filmData.filmType == "movie") {
+	film_type.textContent = "Movie"
+	fetch(`https://api.themoviedb.org/3/movie/${filmData.filmId}?api_key=${key}&language=en-US
+		&append_to_response=videos,credits,similar,recommendations`)
+	.then(response => response.json())
+	.then(response => {
+		filmDetails = response; sort();
+		window.addEventListener("resize", adjustSynopsisLength);
+	})
+}else {
+	film_type.textContent = "Tv Series"
+	fetch(`https://api.themoviedb.org/3/tv/${filmData.filmId}?api_key=${key}&language=en-US
+		&append_to_response=videos,credits,similar,recommendations,release_dates`)
+	.then(response => response.json())
+	.then(response => {
+		filmDetails = response; sort();
+		window.addEventListener("resize", adjustSynopsisLength);
+	})
+}
 
 function sort() {
 	trailerPoster.src = `https://image.tmdb.org/t/p/w1280${filmDetails.backdrop_path}`
 	playLink.addEventListener("click", loadTrailer)
 
-	filmName.textContent = filmDetails.title
-	releaseDate.textContent = "Release Date: " + filmDetails.release_date
-	runTime.textContent = "Run time: " + filmDetails.runtime + " mins"
+	if (filmData.filmType == "movie") {
+		filmName.textContent = filmDetails.title
+		releaseDate.textContent = "Release Date: " + filmDetails.release_date
+		runTime.textContent = "Run time: " + filmDetails.runtime + " mins"
+		similarFilmsList = filmDetails.recommendations;
+	}else {
+		filmName.textContent = filmDetails.name
+		releaseDate.textContent = "First air date: " + filmDetails.first_air_date
+		runTime.textContent = "episode Run time: " + filmDetails.episode_run_time + " mins"
+		similarFilmsList = filmDetails.similar;
+	}
 	myRating.textContent = filmDetails.vote_average * 10 + "%"
 	totalReviews.textContent = filmDetails.vote_count
+	popularity.textContent = Math.round(filmDetails.popularity/100)
 
 	filmDetails.genres.forEach(genre => {
 		let div = document.createElement("div")
@@ -78,7 +97,9 @@ function sort() {
 		filmGenres.appendChild(div)
 	})
 	adjustSynopsisLength()
+	let poster = document.createElement("img")
 	poster.src = `https://image.tmdb.org/t/p/w342${filmDetails.poster_path}`
+	posterContainer.appendChild(poster)
 	let cast = filmDetails.credits.cast
 	for (let i=0, c=cast.length; i<c; i++) {
 		cast_img.src = `https://image.tmdb.org/t/p/w342${cast[i].profile_path}`
@@ -93,16 +114,18 @@ function sort() {
 		}
 	}
 	castWrapper.appendChild(cast_temp_container)
+	displaySimilarMovies()
 }
 
 function displaySimilarMovies() {
 	for (let i=0, s=similarFilmsList.results.length; i<s; i++){
-		similarMoviePoster.src = `https://image.tmdb.org/t/p/w342${similarFilmsList.results[i].poster_path}`
+		similarMoviePoster.src = `https://image.tmdb.org/t/p/w300${similarFilmsList.results[i].poster_path}`
 		if (similarFilmsList.results[i].hasOwnProperty("release_date")) {
 			name.textContent = similarFilmsList.results[i].title
 		}else name.textContent = similarFilmsList.results[i].name
 		dummyContainer.appendChild(film.cloneNode(true))
 	}
+	similarFilmsContainer.appendChild(dummyContainer)
 }
 
 function adjustSynopsisLength() {
@@ -111,9 +134,9 @@ function adjustSynopsisLength() {
 			synopsis.innerHTML = "<h2>Synopsis:</h2>" + filmDetails.overview
 		}else{
 		synopsis.innerHTML = `<h2>Synopsis:</h2>${filmDetails.overview.slice(0, 280)}...<span id="more" style="color: lightblue;">More</span>`
-		}
 		let moreSynopsis = document.getElementById("more");
 		moreSynopsis.addEventListener("click", showAllSynopsis);
+		}
 	}else {
 		synopsis.innerHTML = "<h2>Synopsis:</h2>" + filmDetails.overview
 	}

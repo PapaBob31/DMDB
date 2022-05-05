@@ -85,12 +85,14 @@ body {
 }
 
 #trending-movies-container {
+	box-sizing: content-box;
 	--container-width: 75vw;
 	margin: 60px auto 0;
 	display: flex;
 	position: relative;
 	width: var(--container-width);
 	height: calc(var(--container-width) / 1.8);
+	min-height: 250px;
 	overflow: hidden;
 	padding: 0;
 	border-radius: 10px
@@ -159,6 +161,7 @@ body {
 }
 
 .details {
+	display: inline-block;
 	padding: 5px 10px;
 	color: rgb(230, 230, 230);
 	position: absolute;
@@ -375,6 +378,8 @@ body {
 }
 
 .sub-sections .poster-img-container {
+	min-width: 190px;
+	min-height: 285px;
 	width: var(--media-container-width);
 	height: calc(var(--media-container-width) * 1.5);
 }
@@ -554,7 +559,7 @@ body {
 
 	.details {
 		position: absolute;
-		height: 50px;
+		height: unset;
 		bottom: 0;
 		width: 100%;
 		border-radius: 0;

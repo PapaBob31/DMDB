@@ -1,10 +1,11 @@
 window.onbeforeunload = function() {window.scrollTo(0, 0)}
+
 let key = "b44b2b9e1045ae57b5c211d94cc010d9"
 let genre_page_link = "genres/genre_result.html"
 let pageName = "Home"
 let trendingMoviesContainer = document.getElementById("trending-movies-container")
 
-function skeletonLoader(parentId, templateChild, max_no) {
+function skeletonLoader(parentId, templateChild, max_no) { //displays elements skeleton while content loads
 	let parentContainer = document.getElementById(parentId)
 	let reachedEndOfContainer = false
 	let no = 20
@@ -25,6 +26,7 @@ function skeletonLoader(parentId, templateChild, max_no) {
 		skeletonFragment.appendChild(theEnd)
 		if (no>5) {
 			dummyContainersNo = no%5
+			dummyContainersNo = 5 - dummyContainersNo 
 		}else {
 			dummyContainersNo = 5 - no 
 		}
@@ -126,7 +128,6 @@ function getTrendingMoviesDetails(mediaList) {
 let trendingMoviePoster = document.createElement("img")
 
 function updateTrendingMovies(details, i) {
-	console.log("ah")
 	let posterLink = `https://image.tmdb.org/t/p/w1280${details[i].backdrop_path}`
 	trendingMoviePoster.src = posterLink
 	let mediaName = trendingMovies[i].querySelector(".media-name")
@@ -217,7 +218,7 @@ let upcomingMovies = [{currentIndex: 1, type: "movie", targetContainerId: "upcom
 
 skeletonLoader("top-movies", "firstElementChild")
 skeletonLoader("top-series", "firstElementChild")
-skeletonLoader("upcoming", "firstElementChild")
+skeletonLoader("upcoming", "firstElementChild", 17)
 skeletonLoader("recent-shows", "firstElementChild")
 
 fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${key}&language=en-US`)
@@ -332,9 +333,9 @@ let moviePoster = document.createElement("img")
 moviePoster.classList.add("poster-img")
 let movieDetails = new DocumentFragment()
 
-function storeFilmId(filmId) {
-	let id = filmId
-	sessionStorage.setItem("filmId", id)
+function storeFilmId(filmId, filmType) {
+	let filmData = {"filmId": filmId, "filmType": filmType}
+	sessionStorage.setItem("filmData", JSON.stringify(filmData))
 }
 
 function show(element) {
@@ -362,7 +363,7 @@ function show(element) {
 	name.classList.add("name")
 	name.id = mediaData.id
 	name.href = "film_full_details/full_details.html"
-	name.addEventListener("click", () => {storeFilmId(name.id)})
+	name.addEventListener("click", () => {storeFilmId(name.id, dataList[0].type)})
 	littleDetails.classList.add("little-details") 
 	if (dataList[0].type == "movie") {
 		name.textContent = mediaData.title

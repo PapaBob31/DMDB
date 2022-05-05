@@ -3,7 +3,7 @@ let TvGenres = []
 let fetchedMovieGenres = false
 let fetchedTvGenres = false
 let not_created_yet = true
-let genresContainer = document.getElementById("genres").querySelector("div")
+let genresContainer = document.getElementById("genres")
 
 let form = document.getElementById("search-bar-container")
 let input = form.querySelector("input")
@@ -37,7 +37,7 @@ function createGenreLinks() {
 			link.addEventListener("click", (event) => {storeId(pageName, event.target.id)})
 			dummyGenresContainer.append(link)
 		})
-		genresContainer.append(dummyGenresContainer)
+		genresContainer.querySelector("div").append(dummyGenresContainer)
 		not_created_yet = false
 	}
 }
@@ -81,23 +81,30 @@ fetch(`https://api.themoviedb.org/3/genre/tv/list?api_key=${key}&language=en-US`
 	}
 })
 
+let body = document.querySelector("body")
+let pageCover = document.getElementById("page-cover")
 let menuIcon = document.getElementById("mobile-menu")
 let menuBar = document.getElementById("menu-bar")
 let closeMenu = document.getElementById("close-menu")
 let menuOnscreen = false
 menuIcon.addEventListener("click", showMenu)
 closeMenu.addEventListener("click", hideMenu)
+pageCover.addEventListener("click", hideMenu)
 
 function showMenu() {
 	if (!menuOnscreen) {
 		menuBar.style.left = "0"
+		pageCover.style.width = "100%"
+		body.style.overflow = "hidden"
 		menuOnscreen = true
 	}
 }
 
 function hideMenu() {
 	if (menuOnscreen) {
-		menuBar.style.left = `-${menuBar.offsetWidth+10}px`
+		menuBar.style.left = `-200px`
+		pageCover.style.width = "0"
+		body.removeAttribute('style')
 		menuOnscreen = false
 	}
 }
@@ -120,6 +127,9 @@ window.addEventListener('resize', removeInlineStyles)
 function removeInlineStyles() {
 	if (window.innerWidth > 1000) {
 		menuBar.removeAttribute('style')
+		pageCover.removeAttribute('style')
+		body.removeAttribute('style')
+		searchBar.removeAttribute('style')
 	}
 }
 

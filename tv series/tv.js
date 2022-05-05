@@ -27,6 +27,7 @@ function skeletonLoader(parentId, templateChild, max_no) {
 		skeletonFragment.appendChild(theEnd)
 		if (no>5) {
 			dummyContainersNo = no%5
+			dummyContainersNo = 5 - dummyContainersNo 
 		}else {
 			dummyContainersNo = 5 - no 
 		}
@@ -42,7 +43,7 @@ function skeletonLoader(parentId, templateChild, max_no) {
 	parentContainer.appendChild(skeletonFragment)
 }
 
-skeletonLoader("series-container", "firstElementChild", 20)
+skeletonLoader("series-container", "firstElementChild")
 
 let tvList = [{currentIndex: 1, currentPage: 1, endOfPages: false, max_length: undefined}]
 let options_is_displayed = false
@@ -60,6 +61,9 @@ for (let i=0,f=filterCovers.length; i<f; i++) {
 for (let i=0, f=filterOptions.length; i<f; i++) {
 	filterOptions[i].addEventListener("click", () => {
 		if (filterOptions[i].textContent != currentValue.textContent){
+			let currentOption = filter.querySelector("#current-option")
+			currentOption.removeAttribute("id")
+			filterOptions[i].id = "current-option"
 			currentValue.textContent = filterOptions[i].textContent
 			fetchSelectedOption(filterOptions[i].value)
 		}
@@ -79,9 +83,11 @@ function showOptions() {
 		filterOptionsContainer.style.transform = "scale(1, 1)"
 		options_is_displayed = true
 	}else {
-		renderFilterCovers("none")
-		filterOptionsContainer.style.transform = "scale(0, 0)"
-		options_is_displayed = false
+		setTimeout(()=>{
+			renderFilterCovers("none")
+			filterOptionsContainer.style.transform = "scaleY(0)"
+			options_is_displayed = false
+		}, 200)
 	}
 }
 
@@ -211,4 +217,3 @@ function show(element) {
 	}
 	dataList[0].currentIndex += 1
 }
-
