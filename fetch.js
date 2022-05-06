@@ -4,6 +4,8 @@ let key = "b44b2b9e1045ae57b5c211d94cc010d9"
 let genre_page_link = "genres/genre_result.html"
 let pageName = "Home"
 let trendingMoviesContainer = document.getElementById("trending-movies-container")
+let touch_start;
+let touch_end;
 
 function skeletonLoader(parentId, templateChild, max_no) { //displays elements skeleton while content loads
 	let parentContainer = document.getElementById(parentId)
@@ -56,7 +58,12 @@ function moveImagesLeft() {
 	if (vel != -200) {
 		vel -= 100
 		for (let i=0; i<trendingMovies.length; i++) {
-			trendingMovies[i].style.transform = `translateX(${vel}%)`
+			trendingMovies[i].style.cssText = `
+			-webkit-transform: translateX(${vel}%);
+			-moz-transform: translateX(${vel}%);
+			-o-transform: translateX(${vel}%);
+			-ms-transform: translateX(${vel}%);
+			transform: translateX(${vel}%);`
 		}
 		status[statusIndex].removeAttribute("id")
 		statusIndex += 1
@@ -68,7 +75,11 @@ function moveImagesRight() {
 	if (vel != 0) {
 		vel += 100
 		for (let i=0; i<trendingMovies.length; i++) {
-			trendingMovies[i].style.transform = `translateX(${vel}%)`
+			trendingMovies[i].style.cssText = `
+			-webkit-transform: translateX(${vel}%);-moz-transform: translateX(${vel}%);
+			-o-transform: translateX(${vel}%);
+			-ms-transform: translateX(${vel}%);
+			transform: translateX(${vel}%);`
 		}
 		status[statusIndex].removeAttribute("id")
 		statusIndex -= 1
@@ -78,6 +89,21 @@ function moveImagesRight() {
 
 navLeft.addEventListener("click", moveImagesLeft)
 navRight.addEventListener("click", moveImagesRight)
+trendingMoviesContainer.addEventListener('touchstart', event => {
+	touch_start = event.changedTouches[0].screenX
+})
+trendingMoviesContainer.addEventListener('touchend', event => {
+	touch_end = event.changedTouches[0].screenX
+	determineDirection()
+})
+
+function determineDirection() {
+	if (touch_end > touch_start) {
+		moveImagesRight()
+	}else if (touch_start > touch_end) {
+		moveImagesLeft()
+	}
+}
 
 let trendingMovies = document.querySelectorAll(".trending-movie")
 let media = []
@@ -85,7 +111,7 @@ let trendingMoviesDetails = []
 
 fetch(`https://api.themoviedb.org/3/trending/all/day?api_key=${key}`)
 .then(response => response.json())
-.then(response => {console.log(response); filterTrendingMovies(response.results); getTrendingMoviesDetails(media)})
+.then(response => {filterTrendingMovies(response.results); getTrendingMoviesDetails(media)})
 
 function filterTrendingMovies(list) {
 	let index = 0;
@@ -177,7 +203,7 @@ function trimText(text) {
 }
 
 let sectionNamesContainer = document.getElementById("section-names")
-let sectionNames = Array.from(sectionNamesContainer.querySelectorAll("div"))
+let sectionNames = Array.from(sectionNamesContainer.querySelectorAll("a"))
 let sections = document.querySelectorAll('.sections')
 sections = Array.from(sections)
 
@@ -218,7 +244,7 @@ let upcomingMovies = [{currentIndex: 1, type: "movie", targetContainerId: "upcom
 
 skeletonLoader("top-movies", "firstElementChild")
 skeletonLoader("top-series", "firstElementChild")
-skeletonLoader("upcoming", "firstElementChild", 17)
+skeletonLoader("upcoming", "firstElementChild")
 skeletonLoader("recent-shows", "firstElementChild")
 
 fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${key}&language=en-US`)
@@ -363,23 +389,26 @@ function show(element) {
 	name.classList.add("name")
 	name.id = mediaData.id
 	name.href = "film_full_details/full_details.html"
-	name.addEventListener("click", () => {storeFilmId(name.id, dataList[0].type)})
 	littleDetails.classList.add("little-details") 
 	if (dataList[0].type == "movie") {
 		name.textContent = mediaData.title
+		name.addEventListener("click", () => {storeFilmId(name.id, "movie")})
 		genresList = movieGenres
 		releaseYear.textContent = mediaData.release_date.slice(0, 4)
 	}else if (dataList[0].type == "tv") {
 		name.textContent = mediaData.name
+		name.addEventListener("click", () => {storeFilmId(name.id, "tv")})
 		genresList = tvGenres
 		releaseYear.textContent = "Since " + mediaData.first_air_date.slice(0, 4)
 	}else {
 		if (mediaData.hasOwnProperty("release_date")) {
 			name.textContent = mediaData.title
+			name.addEventListener("click", () => {storeFilmId(name.id, "movie")})
 			genresList = movieGenres
 			releaseYear.textContent = mediaData.release_date.slice(0, 4)
 		}else {
 			name.textContent = mediaData.name
+			name.addEventListener("click", () => {storeFilmId(name.id, "tv")})
 			genresList = tvGenres
 			releaseYear.textContent = "Since " + mediaData.first_air_date.slice(0, 4)
 		}

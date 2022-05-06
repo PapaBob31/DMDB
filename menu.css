@@ -17,6 +17,8 @@ body {
 
 .material-icons-outlined, .material-symbols-rounded, a {
 	cursor: pointer;
+	-webkit-tap-highlight-color: transparent;
+	outline: none;
 }
 
 #site-header {
@@ -69,10 +71,11 @@ body {
 #close-search-bar {
 	display: none;
 	color: rgb(220, 220, 220);
-	width: 5%;
-	font-size: 1.3em;
+	padding: 3px;
+	font-size: 1.4em;
 	text-align: right;
 	font-weight: 500;
+	height: 50%;
 }
 
 #mobile-search-trigger {
@@ -93,7 +96,7 @@ body {
 #close-menu {
 	display: none;
 	color: rgb(220, 220, 220);
-	width: 100%;
+	float: right;
 	font-size: 1.5em;
 	text-align: right;
 	font-weight: 500;
@@ -165,6 +168,20 @@ body {
 	overflow-y: auto;
 }
 
+#genres div::-webkit-scrollbar {
+	width: 10px;
+}
+
+#genres div::-webkit-scrollbar-track {
+	background: rgb(20, 20, 20);
+}
+
+#genres div::-webkit-scrollbar-thumb {
+	background: rgb(50, 50, 50);
+	border-radius: 3px;
+}
+
+
 #genres a {
 	display: block;
 	margin-top: 3%;
@@ -216,7 +233,7 @@ body {
 	}
 
 	#close-menu {
-		display: block;
+		display: inline-block;
 	}
 
 	#menu-bar {
@@ -238,6 +255,14 @@ body {
 		height: 100%;
 		width: 100%;
 		border-radius: 0;
+		-webkit-transform-origin: 100% 0;
+		-webkit-transform: scaleX(0);
+		-moz-transform-origin: 100% 0;
+		-moz-transform: scaleX(0);
+		-o-transform-origin: 100% 0;
+		-o-transform: scaleX(0);
+		-ms-transform-origin: 100% 0;
+		-ms-transform: scaleX(0);
 		transform-origin: 100% 0;
 		transform: scaleX(0);
 		transition: 0.3s;
@@ -249,6 +274,8 @@ body {
 
 	#search-bar-container #search-bar {
 		height: 80%;
+		padding: 0 5px;
+		background-color: rgb(30, 30, 30);
 	}
 
 	#mobile-search-trigger {

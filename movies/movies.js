@@ -64,7 +64,8 @@ for (let i=0, f=filterOptions.length; i<f; i++) {
 			let currentOption = filter.querySelector("#current-option")
 			currentOption.removeAttribute("id")
 			filterOptions[i].id = "current-option"
-			currentValue.textContent = filterOptions[i].textContent
+			currentValue.innerHTML = `${filterOptions[i].textContent}
+			<span class="material-icons-outlined">arrow_drop_down</span>`
 			fetchSelectedOption(filterOptions[i].value)
 		}
 		window.scrollTo(0, 0)
@@ -175,9 +176,9 @@ let moviePoster = document.createElement("img")
 moviePoster.classList.add("poster-img")
 let movieDetails = new DocumentFragment()
 
-function storeFilmId(filmId) {
-	let id = filmId
-	sessionStorage.setItem("filmId", id)
+function storeFilmId(filmId, filmType) {
+	let filmData = {"filmId": filmId, "filmType": filmType}
+	sessionStorage.setItem("filmData", JSON.stringify(filmData))
 }
 
 function show(element) {
@@ -189,7 +190,7 @@ function show(element) {
 	let mediaData = dataList[currentIndex]
 	let posterContainer = mediaContainers[currentIndex - 1].querySelector(".poster-img-container")
 	moviePoster.src = `https://image.tmdb.org/t/p/w342${mediaData.poster_path}`
-	let name = document.createElement("div")
+	let name = document.createElement("a")
 	let littleDetails = document.createElement("div")
 	let releaseYear = document.createElement("span")
 	let mediaGenres = document.createElement("div")
@@ -197,7 +198,7 @@ function show(element) {
 	name.classList.add("name")
 	name.id = mediaData.id
 	name.href = "../film_full_details/full_details.html"
-	name.addEventListener("click", () => {storeFilmId(name.id)})
+	name.addEventListener("click", () => {storeFilmId(name.id, "movie")})
 	littleDetails.classList.add("little-details") 
 	name.textContent = mediaData.title
 	releaseYear.textContent = mediaData.release_date.slice(0, 4)

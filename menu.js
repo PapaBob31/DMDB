@@ -142,10 +142,20 @@ closeMobileSearchBtn.addEventListener("click", closeMobileSearchBar)
 let onScreen = false
 
 function showMobileSearchBar() {
-	searchBar.style.webkitTransform = 'scaleX(1)'
+	searchBar.style.cssText = `
+	-webkit-transform: scaleX(1);
+	-moz-transform: scaleX(1);
+	-o-transform: scaleX(1);
+	-ms-transform: scaleX(1);
+	transform: scaleX(1);`
 }
 
 function closeMobileSearchBar() {
-	searchBar.style.webkitTransform = 'scaleX(0)'
+	searchBar.style.cssText = `
+	-webkit-transform: scaleX(0);
+	-moz-transform: scaleX(0);
+	-o-transform: scaleX(0);
+	-ms-transform: scaleX(0);
+	transform: scaleX(0);`
 }
 

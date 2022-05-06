@@ -1,9 +1,9 @@
 body {
 	font-family:   'Radio Canada', 'Roboto', 'Segoe UI', 'Open Sans', sans-serif;
-	--sections-background: rgb(22, 22, 22);
+	--sections-background: rgb(18, 18, 18);
 	font-size: 1em;
 	color: rgb(220, 220, 220);
-	font-weight: 300;5
+	font-weight: 300;
 }
 
 .material-icons-outlined, .material-symbols-rounded {
@@ -12,7 +12,7 @@ body {
 
 #film-details-container {
 	margin-top: 10px;
-	background-color: rgb(18, 18, 18);
+	background-color: rgb(14, 14, 14);
 }
 
 #film-trailer-container {
@@ -21,7 +21,7 @@ body {
 	width: var(--trailer-width);
 	height: calc(var(--trailer-width) * 0.5);
 	margin: 60px auto 0;
-	background-color: rgb(18, 18, 18);
+	background-color: rgb(14, 14, 14);
 }
 
 iframe {
@@ -263,7 +263,10 @@ iframe {
 }
 
 .similar-film-name {
-	color: rgb(180, 180, 180);
+	display: block;
+	width: 100%;
+	text-decoration: none;
+	color: rgb(190, 190, 190);
 	background: rgb(35, 35, 35);
 	border-radius: 0 0 10px 10px;
 	padding: 5px;

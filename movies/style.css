@@ -38,6 +38,10 @@ body {
 	z-index: 10;
 }
 
+#current-value .material-icons-outlined {
+	float: right;
+}
+
 option {
 	cursor: pointer;
 	padding: 5px;
@@ -130,7 +134,7 @@ option {
 	padding: 5px 5px 0;
 	line-height: 1;
 	font-weight: 500;
-	color: rgb(2);
+	color: rgb(220, 220, 220);
 	background: rgb(27, 27, 27);
 }
 

@@ -21,11 +21,11 @@ function get(genre) {
 	}
 	fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${key}&language=en-US&with_genres=${movie_genre_id}`)
 	.then(response => response.json())
-	.then(response => displaySearchResults(response, "Movie"))
+	.then(response => displaySearchResults(response, "movie"))
 
 	fetch(`https://api.themoviedb.org/3/discover/tv?api_key=${key}&language=en-US&with_genres=${tv_genre_id}`)
 	.then(response => response.json())
-	.then(response => displaySearchResults(response, "Tv-series"))
+	.then(response => displaySearchResults(response, "tv"))
 }
 
 let result = new DocumentFragment()
@@ -36,30 +36,42 @@ resultDetails.className = "result-details"
 let mediaType = document.createElement("div")
 mediaType.className = "media-type"
 let poster = document.createElement("img")
-let nameLink = document.createElement("a")
-let name = document.createElement("h2")
+poster.loading = "lazy"
+let name = document.createElement("a")
+name.href = "../film_full_details/full_details.html"
 name.className = "result-name"
 let releaseDate = document.createElement("div")
-nameLink.appendChild(name)
 show.appendChild(poster)
-resultDetails.appendChild(nameLink)
+resultDetails.appendChild(name)
 resultDetails.appendChild(mediaType)
 resultDetails.appendChild(releaseDate)
 show.appendChild(resultDetails)
 result.appendChild(show)
+let dummyResultContainer = new DocumentFragment()
+
+function storeFilmId(filmId, filmType) {
+	let filmData = {"filmId": filmId, "filmType": filmType}
+	sessionStorage.setItem("filmData", JSON.stringify(filmData))
+}
 
 function displaySearchResults(response, type) {
 	for (let i = 0; i < response.results.length; i++) {
-		if (type == "Tv-series") {
+		if (type == "tv") {
 			name.textContent = response.results[i].name
 			releaseDate.textContent = "first-air-date: " + response.results[i].first_air_date
-			mediaType.textContent = type
+			mediaType.textContent = "Tv-series"
+			name.id = response.results[i].id
 		}else {
 			name.textContent = response.results[i].title
 			releaseDate.textContent = "Release date: " + response.results[i].release_date
-			mediaType.textContent = type
+			mediaType.textContent = "Movie"
+			name.id = response.results[i].id
 		}
 		poster.src = `https://image.tmdb.org/t/p/w342${response.results[i].poster_path}`
-		resultsContainer.appendChild(result.cloneNode(true))
+		let resultNode = result.cloneNode(true)
+		let resultName = resultNode.querySelector(".result-name")
+		resultName.addEventListener("click", () => {storeFilmId(resultName.id, type)})
+		dummyResultContainer.appendChild(resultNode)
 	}
+	resultsContainer.appendChild(dummyResultContainer)
 }

@@ -27,6 +27,8 @@ let rrr = document.getElementById("rrr")
 let certification = rrr.querySelectorAll("div")[0]
 let releaseDate = rrr.querySelectorAll("div")[1]
 let runTime = rrr.querySelectorAll("div")[2]
+let status = rrr.querySelectorAll("div")[3]
+let no_of_seasons = rrr.querySelectorAll("div")[4]
 let myRating = userRatings.querySelectorAll("h2")[0]
 let totalReviews = userRatings.querySelectorAll("h2")[1]
 let popularity = userRatings.querySelectorAll("h2")[2]
@@ -55,7 +57,7 @@ let similarFilmsContainer = document.getElementById("similar-films");
 if (filmData.filmType == "movie") {
 	film_type.textContent = "Movie"
 	fetch(`https://api.themoviedb.org/3/movie/${filmData.filmId}?api_key=${key}&language=en-US
-		&append_to_response=videos,credits,similar,recommendations`)
+		&append_to_response=videos,credits,recommendations`)
 	.then(response => response.json())
 	.then(response => {
 		filmDetails = response; sort();
@@ -64,7 +66,7 @@ if (filmData.filmType == "movie") {
 }else {
 	film_type.textContent = "Tv Series"
 	fetch(`https://api.themoviedb.org/3/tv/${filmData.filmId}?api_key=${key}&language=en-US
-		&append_to_response=videos,credits,similar,recommendations,release_dates`)
+		&append_to_response=videos,credits,recommendations`)
 	.then(response => response.json())
 	.then(response => {
 		filmDetails = response; sort();
@@ -80,17 +82,18 @@ function sort() {
 		filmName.textContent = filmDetails.title
 		releaseDate.textContent = "Release Date: " + filmDetails.release_date
 		runTime.textContent = "Run time: " + filmDetails.runtime + " mins"
-		similarFilmsList = filmDetails.recommendations;
+		status.textContent = "Status: " + filmDetails.status	
 	}else {
 		filmName.textContent = filmDetails.name
 		releaseDate.textContent = "First air date: " + filmDetails.first_air_date
-		runTime.textContent = "episode Run time: " + filmDetails.episode_run_time + " mins"
-		similarFilmsList = filmDetails.similar;
+		runTime.textContent = "Episode Run time: " + filmDetails.episode_run_time + " mins"
+		status.textContent = "Status: " + filmDetails.status
+		no_of_seasons.textContent = "No of Seasons: " + filmDetails.seasons.length
+		no_of_seasons.removeAttribute("style")
 	}
 	myRating.textContent = filmDetails.vote_average * 10 + "%"
 	totalReviews.textContent = filmDetails.vote_count
 	popularity.textContent = Math.round(filmDetails.popularity/100)
-
 	filmDetails.genres.forEach(genre => {
 		let div = document.createElement("div")
 		div.textContent = genre.name
@@ -103,7 +106,7 @@ function sort() {
 	let cast = filmDetails.credits.cast
 	for (let i=0, c=cast.length; i<c; i++) {
 		cast_img.src = `https://image.tmdb.org/t/p/w342${cast[i].profile_path}`
-		cast_img.load = "lazy"
+		cast_img.loading = "lazy"
 		cast_name.textContent = cast[i].name
 		if (cast[i].character.length > 15) {
 			cast_role.textContent = cast[i].character.slice(0, 13) + ".."
@@ -114,16 +117,32 @@ function sort() {
 		}
 	}
 	castWrapper.appendChild(cast_temp_container)
+	similarFilmsList = filmDetails.recommendations;
 	displaySimilarMovies()
 }
 
+function storeFilmId(filmId, filmType) {
+	let filmData = {"filmId": filmId, "filmType": filmType}
+	sessionStorage.setItem("filmData", JSON.stringify(filmData))
+}
+
 function displaySimilarMovies() {
+	let type;
 	for (let i=0, s=similarFilmsList.results.length; i<s; i++){
 		similarMoviePoster.src = `https://image.tmdb.org/t/p/w300${similarFilmsList.results[i].poster_path}`
 		if (similarFilmsList.results[i].hasOwnProperty("release_date")) {
 			name.textContent = similarFilmsList.results[i].title
-		}else name.textContent = similarFilmsList.results[i].name
-		dummyContainer.appendChild(film.cloneNode(true))
+			type = "movie"
+			name.id = similarFilmsList.results[i].id
+		}else {
+			name.textContent = similarFilmsList.results[i].name
+			type = "tv"
+			name.id = similarFilmsList.results[i].id
+		}
+		let resultNode = film.cloneNode(true)
+		let resultName = resultNode.querySelector(".similar-film-name")
+		resultName.addEventListener("click", () => {storeFilmId(resultName.id, type)})
+		dummyContainer.appendChild(resultNode)
 	}
 	similarFilmsContainer.appendChild(dummyContainer)
 }
