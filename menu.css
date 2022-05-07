@@ -7,18 +7,20 @@ html, body {
 }
 
 body {
-	--main-bg-color: rgb(12, 12, 12);
 	position: relative;
 	padding: 0 0 0 15vw;
 	width: 100%;
 	margin: 0;
-	background: var(--main-bg-color);
 }
 
 .material-icons-outlined, .material-symbols-rounded, a {
 	cursor: pointer;
 	-webkit-tap-highlight-color: transparent;
 	outline: none;
+}
+
+a:active {
+	text-decoration: underline;
 }
 
 #site-header {

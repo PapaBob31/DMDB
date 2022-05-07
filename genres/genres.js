@@ -1,31 +1,51 @@
 let key = "b44b2b9e1045ae57b5c211d94cc010d9"
 let genre_page_link = ""
+// global variable to be used in genres.js file
 let pageName = "genre_result"
 
 let resultsContainer = document.getElementById("genre-results-container")
 resultsContainer.innerHTML = ""
-let data = JSON.parse(sessionStorage.getItem("data"))
-genreDetails = data.genre_id
-get(genreDetails)
-function get(genre) {
+// Get data stored in sessionStorage by clicked genres
+let data = JSON.parse(sessionStorage.getItem("data")) 
+getFilmsWith(data.genre_id)
+
+function getFilmsWith(genre) {
 	let tv_genre_id = ""
 	let movie_genre_id = ""
-	if (genreDetails.section != "movies page" && genreDetails.section != "tv-series page") {
-		for (let c=0,g=genreDetails.length; c<g; c++) {
-			tv_genre_id += genreDetails[c]
-			if (genreDetails[c] == ",") {
-				movie_genre_id = genreDetails.slice(genreDetails.indexOf(",")+1, g)
+	if (data.section != "movies page" && data.section != "tv-series page") {
+		// Pages apart from movies page and tv-series page have merged tv and movie genres seperated with a comma
+		// So they have to be sepaerated first
+		for (let c=0,g=genre.length; c<g; c++) {
+			tv_genre_id += genre[c]
+			if (genre[c] == ",") {
+				movie_genre_id = genre.slice(genre.indexOf(",")+1, g)
 				break
 			}
 		}
+		fetchFilmsById(movie_genre_id, "movies page");
+		fetchFilmsById(tv_genre_id, "tv-series page");
+	}else if (data.section == "movies page") {
+		movie_genre_id = genre
+		fetchFilmsById(movie_genre_id, "movies page")
+	}else {
+		tv_genre_id = genre
+		fetchFilmsById(tv_genre_id, "tv-series page")
 	}
-	fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${key}&language=en-US&with_genres=${movie_genre_id}`)
-	.then(response => response.json())
-	.then(response => displaySearchResults(response, "movie"))
+}
 
-	fetch(`https://api.themoviedb.org/3/discover/tv?api_key=${key}&language=en-US&with_genres=${tv_genre_id}`)
-	.then(response => response.json())
-	.then(response => displaySearchResults(response, "tv"))
+function fetchFilmsById(id, requestSection) {
+	if (requestSection == "movies page") {
+		fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${key}&language=en-US&with_genres=${id}`)
+		.then(response => response.json())
+		.then(response => displaySearchResults(response, "movie"))
+	}
+
+	if (requestSection == "tv-series page") {
+		console.log("hbh")
+		fetch(`https://api.themoviedb.org/3/discover/tv?api_key=${key}&language=en-US&with_genres=${id}`)
+		.then(response => response.json())
+		.then(response => displaySearchResults(response, "tv"))
+	}
 }
 
 let result = new DocumentFragment()
@@ -49,6 +69,12 @@ show.appendChild(resultDetails)
 result.appendChild(show)
 let dummyResultContainer = new DocumentFragment()
 
+/** Function that stores film details for destination page when film link is clicked bcos all this website 
+*	can actually do is make requests to an external api (no actual server side), clicked film details will 
+*	be stored in sessionStorage and loaded when destination page (e.g full_details page) is reached
+*	@param {string}filmId 		id of film clicked, will be used in destination page
+*	@param {string}filmType 	type of film clicked, will be used in destination page
+*/
 function storeFilmId(filmId, filmType) {
 	let filmData = {"filmId": filmId, "filmType": filmType}
 	sessionStorage.setItem("filmData", JSON.stringify(filmData))

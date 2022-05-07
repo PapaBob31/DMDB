@@ -12,7 +12,7 @@ function loadTrailer(){
 	playLink.style.display = "none";
 	trailerPoster.style.display = "none"
 	filmDetails.videos.results.forEach(video => {
-		if (video.name == "Official Trailer") {
+		if (video.type == "Trailer") {
 			trailer.src = `https://www.youtube.com/embed/${video.key}`
 		}
 	})
@@ -105,7 +105,7 @@ function sort() {
 	posterContainer.appendChild(poster)
 	let cast = filmDetails.credits.cast
 	for (let i=0, c=cast.length; i<c; i++) {
-		cast_img.src = `https://image.tmdb.org/t/p/w342${cast[i].profile_path}`
+		cast_img.src = `https://image.tmdb.org/t/p/w185${cast[i].profile_path}`
 		cast_img.loading = "lazy"
 		cast_name.textContent = cast[i].name
 		if (cast[i].character.length > 15) {
@@ -128,23 +128,27 @@ function storeFilmId(filmId, filmType) {
 
 function displaySimilarMovies() {
 	let type;
-	for (let i=0, s=similarFilmsList.results.length; i<s; i++){
-		similarMoviePoster.src = `https://image.tmdb.org/t/p/w300${similarFilmsList.results[i].poster_path}`
-		if (similarFilmsList.results[i].hasOwnProperty("release_date")) {
-			name.textContent = similarFilmsList.results[i].title
-			type = "movie"
-			name.id = similarFilmsList.results[i].id
-		}else {
-			name.textContent = similarFilmsList.results[i].name
-			type = "tv"
-			name.id = similarFilmsList.results[i].id
+	if (similarFilmsList.length > 0) {
+		for (let i=0, s=similarFilmsList.results.length; i<s; i++){
+			similarMoviePoster.src = `https://image.tmdb.org/t/p/w300${similarFilmsList.results[i].poster_path}`
+			if (similarFilmsList.results[i].hasOwnProperty("release_date")) {
+				name.textContent = similarFilmsList.results[i].title
+				type = "movie"
+				name.id = similarFilmsList.results[i].id
+			}else {
+				name.textContent = similarFilmsList.results[i].name
+				type = "tv"
+				name.id = similarFilmsList.results[i].id
+			}
+			let resultNode = film.cloneNode(true)
+			let resultName = resultNode.querySelector(".similar-film-name")
+			resultName.addEventListener("click", () => {storeFilmId(resultName.id, type)})
+			dummyContainer.appendChild(resultNode)
 		}
-		let resultNode = film.cloneNode(true)
-		let resultName = resultNode.querySelector(".similar-film-name")
-		resultName.addEventListener("click", () => {storeFilmId(resultName.id, type)})
-		dummyContainer.appendChild(resultNode)
+		similarFilmsContainer.appendChild(dummyContainer)
+	}else{
+		similarFilmsContainer.innerHTML = "<h2>Not available yet</h2>"
 	}
-	similarFilmsContainer.appendChild(dummyContainer)
 }
 
 function adjustSynopsisLength() {

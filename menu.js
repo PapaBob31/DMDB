@@ -1,12 +1,18 @@
-let MovieGenres = []
-let TvGenres = []
-let fetchedMovieGenres = false
-let fetchedTvGenres = false
+/*
+This javascript file is needed for two parts that are available on all the pages on the website
+The Menu bar and site header
+*/
+
+let movieGenresList = []
+let tvGenresList = []
+let fetchedMovieGenresList = false
+let fetchedTvGenresList = false
 let not_created_yet = true
 let genresContainer = document.getElementById("genres")
 
 let form = document.getElementById("search-bar-container")
 let input = form.querySelector("input")
+// Stores search query in sessionStorage to be used by search page when it loads
 form.addEventListener("submit", () => {
 	let query = input.value
 	sessionStorage.setItem("query", query)
@@ -14,6 +20,12 @@ form.addEventListener("submit", () => {
 
 let dummyGenresContainer = new DocumentFragment()
 
+/** Function that stores film details for destination page when film link is clicked bcos all this website 
+*	can actually do is make requests to an external api (no actual server side), clicked film details will 
+*	be stored in sessionStorage and loaded when destination page (e.g genres.html) is reached
+*	@param {string}pageName		pageName of genre clicked, will be used in destination page
+*	@param {string}id			id of the genre clicked, will be used in destination page
+*/
 function storeId(page_name, id) {
 	let data = {section: page_name, genre_id: id}
 	sessionStorage.setItem("data", JSON.stringify(data))
@@ -23,11 +35,11 @@ function createGenreLinks() {
 	let genres;
 	if (not_created_yet) {
 		if (pageName == "movies page"){
-			genres = MovieGenres
+			genres = movieGenresList
 		}else if (pageName == "tv-series page") {
-			genres = TvGenres
+			genres = tvGenresList
 		}else {
-			genres = mergeMovieAndTvGenres()
+			genres = mergeMovieAndtvGenresList()
 		}
 		genres.forEach(result => {
 			let link = document.createElement("a")
@@ -42,20 +54,20 @@ function createGenreLinks() {
 	}
 }
 
-function mergeMovieAndTvGenres() {
+function mergeMovieAndtvGenresList() {
 	let result = []
-	for (let n=0,m=MovieGenres.length; n < m; n++) {
-		for (let j=0,t=TvGenres.length; j < t; j++) {
-			if (TvGenres[j].name.includes(MovieGenres[n].name)){
-				result.push({id:`${TvGenres[j].id},${MovieGenres[n].id}`, name: MovieGenres[n].name})
+	for (let n=0,m=movieGenresList.length; n < m; n++) {
+		for (let j=0,t=tvGenresList.length; j < t; j++) {
+			if (tvGenresList[j].name.includes(movieGenresList[n].name)){
+				result.push({id:`${tvGenresList[j].id},${movieGenresList[n].id}`, name: movieGenresList[n].name})
 				break
-			}else if (MovieGenres[n].name == "Science Fiction") {
-				if (TvGenres[n].name == "Sci-Fi & Fantasy") {
-					result.push({id:`${TvGenres[j].id},${MovieGenres[n].id}`, name: MovieGenres[n].name})
+			}else if (movieGenresList[n].name == "Science Fiction") {
+				if (tvGenresList[n].name == "Sci-Fi & Fantasy") {
+					result.push({id:`${tvGenresList[j].id},${movieGenresList[n].id}`, name: movieGenresList[n].name})
 				}
 			}
-			if (TvGenres[j] == TvGenres[j-1] ) {
-				result.push({id: MovieGenres[n].id, name: MovieGenres[n].name})
+			if (tvGenresList[j] == tvGenresList[j-1] ) {
+				result.push({id: movieGenresList[n].id, name: movieGenresList[n].name})
 			}
 		}
 	}
@@ -63,20 +75,22 @@ function mergeMovieAndTvGenres() {
 	return result
 }
 
+// Fetch all the currently available genres for movies from the api bcos this list is constantly changing
 fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${key}&language=en-US`)
 .then(res => res.json())
 .then(res => {
-	MovieGenres=res.genres; fetchedMovieGenres = true;
-	if (fetchedTvGenres && fetchedMovieGenres) {
+	movieGenresList=res.genres; fetchedMovieGenresList = true;
+	if (fetchedTvGenresList && fetchedMovieGenresList) {
 		createGenreLinks()
 	}
 })
 
+// Fetch all the currently available genres for tvs from the api bcos this list is constantly changing
 fetch(`https://api.themoviedb.org/3/genre/tv/list?api_key=${key}&language=en-US`)
 .then(res => res.json())
 .then(res => {
-	TvGenres=res.genres; fetchedTvGenres = true;
-	if (fetchedTvGenres && fetchedMovieGenres) {
+	tvGenresList=res.genres; fetchedTvGenresList = true;
+	if (fetchedTvGenresList && fetchedMovieGenresList) {
 		createGenreLinks()
 	}
 })
@@ -91,6 +105,7 @@ menuIcon.addEventListener("click", showMenu)
 closeMenu.addEventListener("click", hideMenu)
 pageCover.addEventListener("click", hideMenu)
 
+// For devices with small screen-width
 function showMenu() {
 	if (!menuOnscreen) {
 		menuBar.style.left = "0"
@@ -100,6 +115,7 @@ function showMenu() {
 	}
 }
 
+// For devices with small screen-width
 function hideMenu() {
 	if (menuOnscreen) {
 		menuBar.style.left = `-200px`
@@ -138,9 +154,9 @@ let searchBar = document.getElementById("search-bar-container")
 let closeMobileSearchBtn = document.getElementById("close-search-bar")
 mobileSearchIcon.addEventListener("click", showMobileSearchBar)
 closeMobileSearchBtn.addEventListener("click", closeMobileSearchBar)
-
 let onScreen = false
 
+// For devices with small screen-width
 function showMobileSearchBar() {
 	searchBar.style.cssText = `
 	-webkit-transform: scaleX(1);
@@ -150,6 +166,7 @@ function showMobileSearchBar() {
 	transform: scaleX(1);`
 }
 
+// For devices with small screen-width
 function closeMobileSearchBar() {
 	searchBar.style.cssText = `
 	-webkit-transform: scaleX(0);

@@ -1,6 +1,7 @@
 body {
 	font-family:  'Roboto', 'Segoe UI', 'Radio Canada', 'Open Sans', sans-serif;
 	font-size: 0.9em;
+	background-color: rgb(12, 12, 12);
 }
 
 .skeleton {
@@ -56,6 +57,12 @@ body {
 	max-height: 15px;
 	min-height: 7px;
 	height: 0.03%;
+	background-color: var(--skeleton-bg-color);
+}
+
+.skeleton .full-details-link {
+	height: 1.7em;
+	width: 30%;
 	background-color: var(--skeleton-bg-color);
 }
 
@@ -177,7 +184,6 @@ body {
 	position: absolute;
 	left: 0;
 	bottom: 0;
-	max-height: 55%;
 	width: 45%;
 	overflow-x: hidden;
 	background: rgba(10, 10, 10, 0.3);
@@ -185,6 +191,10 @@ body {
 }
 
 .media-name {
+	display: block;
+	font-size: 2em;
+	text-decoration: none;
+	color: inherit;
 	width: 100%;
 	font-weight: 500;
 	margin-top: 0;
@@ -216,7 +226,7 @@ body {
 	margin-right: 5px;
 }
 
-.links-inside-trending-container {
+.full-details-link {
 	display: inline-block;
 	text-align: center;
 	font-size: 1.3em;
@@ -501,7 +511,7 @@ body {
 	background: rgb(27, 27, 27);
 	border-radius: 0 0 10px 10px;
 	padding: 0 5px 5px;
-	min-height: 40px;
+	min-height: 50px;
 }
 
 .little-details span {
@@ -595,7 +605,7 @@ body {
 		display: none;
 	}
 
-	.links-inside-trending-container {
+	.full-details-link {
 		display: none;
 		margin-top: -20px;
 		font-size: 1.1em;

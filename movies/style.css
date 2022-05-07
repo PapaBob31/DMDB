@@ -23,6 +23,8 @@ body {
 	border-radius: 3px;
 	position: relative;
 	cursor: pointer;
+	-webkit-tap-highlight-color: transparent;
+	outline: none;
 }
 
 #filter #options {
@@ -30,12 +32,15 @@ body {
 	position: absolute;
 	left: 0;
 	width: 100%;
-	margin-top: 10px;
+	margin-top: 15%;
 	transform: scaleY(0);
 	border-radius: 5px;
 	background-color: inherit;
 	transform-origin: 0 0;
 	z-index: 10;
+	cursor: pointer;
+	-webkit-tap-highlight-color: transparent;
+	outline: none;
 }
 
 #current-value .material-icons-outlined {
@@ -44,6 +49,8 @@ body {
 
 option {
 	cursor: pointer;
+	-webkit-tap-highlight-color: transparent;
+	outline: none;
 	padding: 5px;
 }
 

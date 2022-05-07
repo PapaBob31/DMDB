@@ -4,6 +4,7 @@ body {
 	font-size: 1em;
 	color: rgb(220, 220, 220);
 	font-weight: 300;
+	background-color: rgb(12, 12, 12);
 }
 
 .material-icons-outlined, .material-symbols-rounded {
@@ -115,9 +116,10 @@ iframe {
 
 #film-genres {
 	display: flex;
+	flex-wrap: wrap;
 	align-items: center;
 	width: 100%;
-	padding: 15px 5% 5px;
+	padding: 15px 5% 10px;
 	margin-bottom: 10px;
 	background-color: var(--sections-background);
 }
@@ -127,6 +129,7 @@ iframe {
 	padding: 5px;
 	background-color: rgba(245, 93, 66, 0.8);
 	margin-right: 10px;
+	margin-bottom: 5px;
 	border-radius: 5px;
 	font-size: 1.1em;
 }
@@ -262,15 +265,10 @@ iframe {
 	align-items: flex-start;
 }
 
-.similar-film-name {
-	display: block;
-	width: 100%;
-	text-decoration: none;
-	color: rgb(190, 190, 190);
-	background: rgb(35, 35, 35);
-	border-radius: 0 0 10px 10px;
-	padding: 5px;
-	font-weight: normal;
+#similar-films h2 {
+	font-weight: 400;
+	font-size: 1.3em;
+	margin: 0 0 5px;
 }
 
 #similar-films::-webkit-scrollbar {
@@ -287,15 +285,13 @@ iframe {
 }
 
 .media-container {
-	/*--film-container-width: 14vh;
-	height: calc(var(--film-container-width) * 1.5);*/
-
-	width: 17%;
+	--img-width: 14vw;
+	width: var(--img-width);
+	min-width: 170px;
 	background-color: rgb(30, 30, 30);
 	color: rgb(220, 220, 220);
 	flex-grow: 0;
 	flex-shrink: 0;
-	min-width: 170px;
 	border-radius: 10px;
 	margin-right: 20px;
 	margin-bottom: 10px;
@@ -303,13 +299,25 @@ iframe {
 
 .media-container img {
 	width: 100%;
-	height: auto;
+	min-height: 250px;
+	height: calc(var(--img-width) * 1.5);
 	display: block;
 	border-radius: 10px 10px 0 0;
 }
 
-.little-details {
-	min-height: 35px;	
+.similar-film-name {
+	display: block;
+	width: 100%;
+	height: calc(var(--img-width) * 0.25);
+	line-height: 1.1;
+	overflow: hidden;
+	min-height: 50px;
+	text-decoration: none;
+	color: rgb(190, 190, 190);
+	background: rgb(35, 35, 35);
+	border-radius: 0 0 10px 10px;
+	padding: 5px;
+	font-weight: normal;
 }
 
 @media screen and (max-width: 1000px) {
@@ -381,11 +389,19 @@ iframe {
 }
 
 @media screen and (max-width: 400px) {
-	#name-nd-film-type-wrapper {
-		padding: 10px 15px;
+	#name-nd-film-type-wrapper, #synopsis-nd-poster, #section-name-container, #cast-container, #similar-films-container {
+		padding: 10px;
 	}
 
 	#film-name {
 		font-weight: 1.2em;
+	}
+
+	#user-reviews-nd-ratings-wrapper {
+		padding: 0 10px;
+	}
+
+	#film-genres {
+		padding: 15px 10px 10px;
 	}
 }
