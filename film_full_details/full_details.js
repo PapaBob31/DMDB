@@ -117,7 +117,7 @@ function sort() {
 		}
 	}
 	castWrapper.appendChild(cast_temp_container)
-	similarFilmsList = filmDetails.recommendations;
+	similarFilmsList = filmDetails.recommendations.results;
 	displaySimilarMovies()
 }
 
@@ -129,16 +129,16 @@ function storeFilmId(filmId, filmType) {
 function displaySimilarMovies() {
 	let type;
 	if (similarFilmsList.length > 0) {
-		for (let i=0, s=similarFilmsList.results.length; i<s; i++){
-			similarMoviePoster.src = `https://image.tmdb.org/t/p/w300${similarFilmsList.results[i].poster_path}`
-			if (similarFilmsList.results[i].hasOwnProperty("release_date")) {
-				name.textContent = similarFilmsList.results[i].title
+		for (let i=0, s=similarFilmsList.length; i<s; i++){
+			similarMoviePoster.src = `https://image.tmdb.org/t/p/w300${similarFilmsList[i].poster_path}`
+			if (similarFilmsList[i].hasOwnProperty("release_date")) {
+				name.textContent = similarFilmsList[i].title
 				type = "movie"
-				name.id = similarFilmsList.results[i].id
+				name.id = similarFilmsList[i].id
 			}else {
-				name.textContent = similarFilmsList.results[i].name
+				name.textContent = similarFilmsList[i].name
 				type = "tv"
-				name.id = similarFilmsList.results[i].id
+				name.id = similarFilmsList[i].id
 			}
 			let resultNode = film.cloneNode(true)
 			let resultName = resultNode.querySelector(".similar-film-name")
