@@ -20,6 +20,12 @@ body {
 	color: rgb(200, 200, 200);
 }
 
+#no-result {
+	text-align: center;
+	font-weight: 500;
+	color: white;
+}
+
 .search-result {
 	width: 100%;
 	padding: 10px 10px;

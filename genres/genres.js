@@ -7,7 +7,13 @@ let resultsContainer = document.getElementById("genre-results-container")
 resultsContainer.innerHTML = ""
 // Get data stored in sessionStorage by clicked genres
 let data = JSON.parse(sessionStorage.getItem("data")) 
-getFilmsWith(data.genre_id)
+let noResult = document.getElementById('no-result') // Element that displays the text 'No result found'
+
+if (data) {
+	getFilmsWith(data.genre_id)
+}else {
+	noResult.classList.remove('d-none')
+}
 
 function getFilmsWith(genre) {
 	let tv_genre_id = ""
@@ -39,7 +45,6 @@ function fetchFilmsById(id, requestSection) {
 		.then(response => response.json())
 		.then(response => displaySearchResults(response, "movie"))
 	}
-
 	if (requestSection == "tv-series page") {
 		console.log("hbh")
 		fetch(`https://api.themoviedb.org/3/discover/tv?api_key=${key}&language=en-US&with_genres=${id}`)
@@ -56,7 +61,6 @@ resultDetails.className = "result-details"
 let mediaType = document.createElement("div")
 mediaType.className = "media-type"
 let poster = document.createElement("img")
-poster.loading = "lazy"
 let name = document.createElement("a")
 name.href = "../film_full_details/full_details.html"
 name.className = "result-name"
@@ -69,11 +73,11 @@ show.appendChild(resultDetails)
 result.appendChild(show)
 let dummyResultContainer = new DocumentFragment()
 
-/** Function that stores film details for destination page when film link is clicked bcos all this website 
-*	can actually do is make requests to an external api (no actual server side), clicked film details will 
-*	be stored in sessionStorage and loaded when destination page (e.g full_details page) is reached
-*	@param {string}filmId 		id of film clicked, will be used in destination page
-*	@param {string}filmType 	type of film clicked, will be used in destination page
+/** Function that stores film details for full_details page when film link is clicked bcos all this website 
+*	can actually do is make requests to an external api (no actual server side). Clicked film details will 
+*	be stored in sessionStorage and loaded when full_details page is loaded.
+*	@param {string}filmId: id of the clicked movie link, will be used when making request to the api when the page is loaded
+*	@param {string}filmType: could be movie or tv series, will also be used when making request to the api when the page is loaded
 */
 function storeFilmId(filmId, filmType) {
 	let filmData = {"filmId": filmId, "filmType": filmType}
@@ -94,6 +98,7 @@ function displaySearchResults(response, type) {
 			name.id = response.results[i].id
 		}
 		poster.src = `https://image.tmdb.org/t/p/w342${response.results[i].poster_path}`
+		poster.loading = "lazy"
 		let resultNode = result.cloneNode(true)
 		let resultName = resultNode.querySelector(".result-name")
 		resultName.addEventListener("click", () => {storeFilmId(resultName.id, type)})

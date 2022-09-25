@@ -1,14 +1,15 @@
+let windowWidth = window.innerWidth
+
 let key = "b44b2b9e1045ae57b5c211d94cc010d9"
 let genre_page_link = "../genres/genre_result.html"
 let pageName = "genre_result"
-let filmDetails;
 let filmData = JSON.parse(sessionStorage.getItem("filmData"))
 
 let trailerPoster = document.getElementById("film-trailer-poster")
 let playLink = document.getElementById("play_link")
 let trailer = document.querySelector("iframe")
 
-function loadTrailer(){
+function loadTrailer(filmDetails){
 	playLink.style.display = "none";
 	trailerPoster.style.display = "none"
 	filmDetails.videos.results.forEach(video => {
@@ -51,33 +52,50 @@ let dummyContainer = new DocumentFragment()
 let film = document.querySelector("template").content.firstElementChild
 let similarMoviePoster = film.querySelector("img")
 let name = film.querySelector(".similar-film-name")
-let similarFilmsList;
 let similarFilmsContainer = document.getElementById("similar-films");
 
-if (filmData.filmType == "movie") {
-	film_type.textContent = "Movie"
-	fetch(`https://api.themoviedb.org/3/movie/${filmData.filmId}?api_key=${key}&language=en-US
-		&append_to_response=videos,credits,recommendations`)
-	.then(response => response.json())
-	.then(response => {
-		filmDetails = response; sort();
-		window.addEventListener("resize", adjustSynopsisLength);
-	})
-}else {
-	film_type.textContent = "Tv Series"
-	fetch(`https://api.themoviedb.org/3/tv/${filmData.filmId}?api_key=${key}&language=en-US
-		&append_to_response=videos,credits,recommendations`)
-	.then(response => response.json())
-	.then(response => {
-		filmDetails = response; sort();
-		window.addEventListener("resize", adjustSynopsisLength);
-	})
+if (filmData) {
+	if (filmData.filmType == "movie") {
+		film_type.textContent = "Movie"
+		fetch(`https://api.themoviedb.org/3/movie/${filmData.filmId}?api_key=${key}&language=en-US
+			&append_to_response=videos,credits,recommendations`)
+		.then(response => response.json())
+		.then(response => {
+			displayFilmDetails(response);
+			window.addEventListener("resize", checkAndAdjustSynopsisLength);
+		})
+	}else {
+		film_type.textContent = "Tv Series"
+		fetch(`https://api.themoviedb.org/3/tv/${filmData.filmId}?api_key=${key}&language=en-US
+			&append_to_response=videos,credits,recommendations`)
+		.then(response => response.json())
+		.then(response => {
+			displayFilmDetails(response);
+			window.addEventListener("resize", checkAndAdjustSynopsisLength);
+		})
+	}
+}else{ // If no film data was found in sessionStorage
+	showNoRequestedFilm()
 }
 
-function sort() {
-	trailerPoster.src = `https://image.tmdb.org/t/p/w1280${filmDetails.backdrop_path}`
-	playLink.addEventListener("click", loadTrailer)
+function showNoRequestedFilm() {
+	let filmSection = document.getElementById('film-section')
+	let noRequest = document.getElementById('no-request')
+	filmSection.classList.add('d-none')
+	noRequest.classList.remove('d-none')
+}
 
+function checkAndAdjustSynopsisLength(){
+	// Checks to see if the window's width changed 
+	if (window.innerWidth != windowWidth) {
+		adjustSynopsisLength
+		windowWidth = window.innerWidth
+	}
+}
+
+function displayFilmDetails(filmDetails) {
+	trailerPoster.src = `https://image.tmdb.org/t/p/w1280${filmDetails.backdrop_path}`
+	playLink.addEventListener("click", function(){loadTrailer(filmDetails)})
 	if (filmData.filmType == "movie") {
 		filmName.textContent = filmDetails.title
 		releaseDate.textContent = "Release Date: " + filmDetails.release_date
@@ -91,7 +109,23 @@ function sort() {
 		no_of_seasons.textContent = "No of Seasons: " + filmDetails.seasons.length
 		no_of_seasons.removeAttribute("style")
 	}
-	myRating.textContent = filmDetails.vote_average * 10 + "%"
+	displayRatingsAndViews(filmDetails)
+	let poster = document.createElement("img") // The small poster beside synopsis on largeer screens
+	poster.src = `https://image.tmdb.org/t/p/w342${filmDetails.poster_path}`
+	posterContainer.appendChild(poster)
+	adjustSynopsisLength(filmDetails)
+	displayCast(filmDetails)
+	let similarFilmsList = filmDetails.recommendations.results;
+	displaySimilarMovies(similarFilmsList)
+}
+
+function displayRatingsAndViews(filmDetails) {
+	if (parseInt(filmDetails.vote_average).length > 5) {
+		let string = (filmDetails.vote_average * 10).toFixed(2)
+		myRating.textContent = string + "%"
+	}else {
+		myRating.textContent = filmDetails.vote_average * 10 + "%"
+	}
 	totalReviews.textContent = filmDetails.vote_count
 	popularity.textContent = Math.round(filmDetails.popularity/100)
 	filmDetails.genres.forEach(genre => {
@@ -99,10 +133,9 @@ function sort() {
 		div.textContent = genre.name
 		filmGenres.appendChild(div)
 	})
-	adjustSynopsisLength()
-	let poster = document.createElement("img")
-	poster.src = `https://image.tmdb.org/t/p/w342${filmDetails.poster_path}`
-	posterContainer.appendChild(poster)
+}
+
+function displayCast(filmDetails) {
 	let cast = filmDetails.credits.cast
 	for (let i=0, c=cast.length; i<c; i++) {
 		cast_img.src = `https://image.tmdb.org/t/p/w185${cast[i].profile_path}`
@@ -117,16 +150,20 @@ function sort() {
 		}
 	}
 	castWrapper.appendChild(cast_temp_container)
-	similarFilmsList = filmDetails.recommendations.results;
-	displaySimilarMovies()
 }
 
+/** Function that stores film details for full_details page when film link is clicked bcos all this website 
+*	can actually do is make requests to an external api (no actual server side). Clicked film details will 
+*	be stored in sessionStorage and loaded when full_details page is loaded or reloaded.
+*	@param {string}filmId: id of the clicked movie link,  will be used when making request to the api when the page is loaded
+*	@param {string}filmType: could be movie or tv series, will also be used when making request to the api when the page is loaded
+*/
 function storeFilmId(filmId, filmType) {
 	let filmData = {"filmId": filmId, "filmType": filmType}
 	sessionStorage.setItem("filmData", JSON.stringify(filmData))
 }
 
-function displaySimilarMovies() {
+function displaySimilarMovies(similarFilmsList) {
 	let type;
 	if (similarFilmsList.length > 0) {
 		for (let i=0, s=similarFilmsList.length; i<s; i++){
@@ -151,14 +188,15 @@ function displaySimilarMovies() {
 	}
 }
 
-function adjustSynopsisLength() {
+function adjustSynopsisLength(filmDetails) {
+	// Some film's synopsis is usually too long so it needs to be truncated on smaller screens to keep the UI intact.
 	if (filmDetails.overview.length > 280) {
 		if (window.innerWidth > 500) {
 			synopsis.innerHTML = "<h2>Synopsis:</h2>" + filmDetails.overview
 		}else{
-		synopsis.innerHTML = `<h2>Synopsis:</h2>${filmDetails.overview.slice(0, 280)}...<span id="more" style="color: lightblue;">More</span>`
-		let moreSynopsis = document.getElementById("more");
-		moreSynopsis.addEventListener("click", showAllSynopsis);
+			synopsis.innerHTML = `<h2>Synopsis:</h2>${filmDetails.overview.slice(0, 280)}...<span id="more" style="color: lightblue;">More</span>`
+			let moreSynopsis = document.getElementById("more");
+			moreSynopsis.addEventListener("click", showAllSynopsis);
 		}
 	}else {
 		synopsis.innerHTML = "<h2>Synopsis:</h2>" + filmDetails.overview

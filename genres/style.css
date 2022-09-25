@@ -15,6 +15,13 @@ body {
 	font-weight: 500;
 }
 
+#no-result {
+	text-align: center;
+	font-weight: 500;
+	color: white;
+}
+
+
 #genre-results-container {
 	margin: 55px 5% 0;
 	color: rgb(200, 200, 200);

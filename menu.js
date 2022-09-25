@@ -21,7 +21,7 @@ form.addEventListener("submit", () => {
 let dummyGenresContainer = new DocumentFragment()
 
 /** Function that stores film details for destination page when film link is clicked bcos all this website 
-*	can actually do is make requests to an external api (no actual server side), clicked film details will 
+*	can actually do is make requests to an external api (no actual server side). Clicked film details will 
 *	be stored in sessionStorage and loaded when destination page (e.g genres.html) is reached
 *	@param {string}pageName		pageName of genre clicked, will be used in destination page
 *	@param {string}id			id of the genre clicked, will be used in destination page
@@ -118,7 +118,7 @@ function showMenu() {
 // For devices with small screen-width
 function hideMenu() {
 	if (menuOnscreen) {
-		menuBar.style.left = `-200px`
+		menuBar.style.left = `-250px`
 		pageCover.style.width = "0"
 		body.removeAttribute('style')
 		menuOnscreen = false

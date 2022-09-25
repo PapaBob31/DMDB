@@ -11,6 +11,13 @@ body {
 	cursor: pointer;
 }
 
+#no-request {
+	font-weight: 500;
+	color: white;
+	text-align: center;
+	margin-top: 60px;
+}
+
 #film-details-container {
 	margin-top: 10px;
 	background-color: rgb(14, 14, 14);
@@ -311,7 +318,7 @@ iframe {
 	height: calc(var(--img-width) * 0.25);
 	line-height: 1.1;
 	overflow: hidden;
-	min-height: 50px;
+	min-height: 70px;
 	text-decoration: none;
 	color: rgb(190, 190, 190);
 	background: rgb(35, 35, 35);

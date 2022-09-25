@@ -4,6 +4,7 @@
 	<meta charset="utf-8">
 	<meta name="theme-color" content="rgb(30, 30, 30)">
 	<meta name="viewport" content="width=device-width">
+	<title>Film full details</title>
 	<link rel="stylesheet" href="..\menu.css">
 	<link rel="stylesheet" href="full_details.css">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
@@ -47,59 +48,62 @@
 			<div></div>
 		</div>
 	</div>
-	<div id="film-trailer-container">
-		<iframe></iframe>
-		<img id="film-trailer-poster">
-		<div class="material-symbols-rounded" id="play_link">play_circle</div>
-	</div> 
-	<div id="film-details-container">
-		<div id="name-nd-film-type-wrapper">
-			<h1 id="film-name"></h1>
-			<span id="film-type"></span>
-		</div>
-		<div id="user-reviews-nd-ratings-wrapper">
-			<div id="rrr">
-				<div class="details"></div>
-				<div class="details"></div>
-				<div class="details"></div>
-				<div class="details"></div>
-				<div class="details" style="display: none"></div>
+	<section id="film-section">
+		<div id="film-trailer-container">
+			<iframe></iframe>
+			<img id="film-trailer-poster">
+			<div class="material-symbols-rounded" id="play_link">play_circle</div>
+		</div> 
+		<div id="film-details-container">
+			<div id="name-nd-film-type-wrapper">
+				<h1 id="film-name"></h1>
+				<span id="film-type"></span>
 			</div>
-			<div id="user-reviews-nd-ratings">
-				<div>
-					<h2></h2>
-					<span>My Rating</span>
+			<div id="user-reviews-nd-ratings-wrapper">
+				<div id="rrr">
+					<div class="details"></div>
+					<div class="details"></div>
+					<div class="details"></div>
+					<div class="details"></div>
+					<div class="details" style="display: none"></div>
 				</div>
-				<div>
-					<h2></h2>
-					<span>User review(s)</span>
+				<div id="user-reviews-nd-ratings">
+					<div>
+						<h2></h2>
+						<span>My Rating</span>
+					</div>
+					<div>
+						<h2></h2>
+						<span>User review(s)</span>
+					</div>
+					<div>
+						<h2></h2>
+						<span>Popularity</span>
+					</div>
 				</div>
-				<div>
-					<h2></h2>
-					<span>Popularity</span>
+			</div>
+			<div id="film-genres"></div>
+			<div id="synopsis-nd-poster">
+				<div id="small-img">
+					
+				</div>
+				<div id="synopsis">
+					<h2>Synopsis:</h2>
 				</div>
 			</div>
-		</div>
-		<div id="film-genres"></div>
-		<div id="synopsis-nd-poster">
-			<div id="small-img">
-				
+			<div id="section-name-container">
+				<div class="section-name" style="background-color: inherit;">Casts<span></span></div>
 			</div>
-			<div id="synopsis">
-				<h2>Synopsis:</h2>
+			<div id="cast-container">
+				<div id="casts"></div>
+			</div>
+			<div id="similar-films-container">
+				<div class="section-name">More Like this<span></span></div>
+				<div id="similar-films"></div>
 			</div>
 		</div>
-		<div id="section-name-container">
-			<div class="section-name" style="background-color: inherit;">Casts<span></span></div>
-		</div>
-		<div id="cast-container">
-			<div id="casts"></div>
-		</div>
-		<div id="similar-films-container">
-			<div class="section-name">More Like this<span></span></div>
-			<div id="similar-films"></div>
-		</div>
-	</div>
+	</section>
+	<h2 id="no-request" class="d-none">The Resource you requested for was not found.</h2>
 	<template>
 		<div class="media-container">
 			<img src="" loading="lazy">

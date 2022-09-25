@@ -200,11 +200,11 @@ let moviePoster = document.createElement("img")
 moviePoster.classList.add("poster-img")
 let movieDetails = new DocumentFragment()
 
-/** Function that stores film details for destination page when film link is clicked bcos all this website 
-*	can actually do is make requests to an external api (no actual server side), clicked film details will 
-*	be stored in sessionStorage and loaded when destination page (e.g full_details page) is reached
-*	@param {string}filmId 		id of film clicked, will be used in destination page
-*	@param {string}filmType 	type of film clicked, will be used in destination page
+/** Function that stores film details for full_details page when film link is clicked bcos all this website 
+*	can actually do is make requests to an external api (no actual server side). Clicked film details will 
+*	be stored in sessionStorage and loaded when full_details page is loaded.
+*	@param {string}filmId: id of the clicked movie link, will be used when making request to the api when the page is loaded
+*	@param {string}filmType: could be movie or tv series, will also be used when making request to the api when the page is loaded
 */
 function storeFilmId(filmId, filmType) {
 	let filmData = {"filmId": filmId, "filmType": filmType}

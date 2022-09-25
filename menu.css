@@ -19,6 +19,10 @@ body {
 	outline: none;
 }
 
+.d-none {
+	display: none;
+}
+
 a:active {
 	text-decoration: underline;
 }
@@ -41,7 +45,7 @@ a:active {
 	display: inline;
 	margin: 0 10px 0 0;
 	color: rgb(230, 230, 230);
-    line-height: 18px;
+  line-height: 18px;
 }
 
 #search-bar-container {
@@ -239,8 +243,8 @@ a:active {
 	}
 
 	#menu-bar {
-		width: 200px;
-		left: -200px;
+		width: 250px;
+		left: -250px;
 	}
 }
 
