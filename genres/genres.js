@@ -4,7 +4,6 @@ let genre_page_link = ""
 let pageName = "genre_result"
 
 let resultsContainer = document.getElementById("genre-results-container")
-resultsContainer.innerHTML = ""
 // Get data stored in sessionStorage by clicked genres
 let data = JSON.parse(sessionStorage.getItem("data")) 
 let noResult = document.getElementById('no-result') // Element that displays the text 'No result found'
@@ -14,7 +13,7 @@ if (data) {
 }else {
 	noResult.classList.remove('d-none')
 }
-
+s
 function getFilmsWith(genre) {
 	let tv_genre_id = ""
 	let movie_genre_id = ""

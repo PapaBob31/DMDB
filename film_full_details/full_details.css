@@ -83,6 +83,7 @@ iframe {
 #film-type {
 	display: block;
 	color: rgba(245, 93, 66, 0.8);
+	text-align: center;
 	font-size: 1.1em;
 	padding: 3px 5px;
 	border-radius: 10px;
@@ -167,6 +168,10 @@ iframe {
 	margin: 0 0 10px;
 	font-weight: normal;
 	color: rgb(200, 200, 200);
+}
+
+#more {
+	cursor: pointer;
 }
 
 #section-name-container {

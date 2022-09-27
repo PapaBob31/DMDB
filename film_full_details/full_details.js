@@ -9,7 +9,7 @@ let trailerPoster = document.getElementById("film-trailer-poster")
 let playLink = document.getElementById("play_link")
 let trailer = document.querySelector("iframe")
 
-function loadTrailer(filmDetails){
+function loadTrailer(){
 	playLink.style.display = "none";
 	trailerPoster.style.display = "none"
 	filmDetails.videos.results.forEach(video => {
@@ -19,6 +19,7 @@ function loadTrailer(filmDetails){
 	})
 }
 
+let filmDetails;
 let filmName = document.getElementById("film-name")
 let film_type = document.getElementById("film-type")
 let userRatings = document.getElementById("user-reviews-nd-ratings")
@@ -61,8 +62,9 @@ if (filmData) {
 			&append_to_response=videos,credits,recommendations`)
 		.then(response => response.json())
 		.then(response => {
+			filmDetails = response
 			displayFilmDetails(response);
-			window.addEventListener("resize", checkAndAdjustSynopsisLength);
+			window.addEventListener("resize", checkAndAdjustSynopsisLength)
 		})
 	}else {
 		film_type.textContent = "Tv Series"
@@ -70,8 +72,9 @@ if (filmData) {
 			&append_to_response=videos,credits,recommendations`)
 		.then(response => response.json())
 		.then(response => {
-			displayFilmDetails(response);
-			window.addEventListener("resize", checkAndAdjustSynopsisLength);
+			filmDetails = response
+			displayFilmDetails();
+			window.addEventListener("resize", checkAndAdjustSynopsisLength)
 		})
 	}
 }else{ // If no film data was found in sessionStorage
@@ -88,14 +91,14 @@ function showNoRequestedFilm() {
 function checkAndAdjustSynopsisLength(){
 	// Checks to see if the window's width changed 
 	if (window.innerWidth != windowWidth) {
-		adjustSynopsisLength
+		adjustSynopsisLength()
 		windowWidth = window.innerWidth
 	}
 }
 
-function displayFilmDetails(filmDetails) {
+function displayFilmDetails() {
 	trailerPoster.src = `https://image.tmdb.org/t/p/w1280${filmDetails.backdrop_path}`
-	playLink.addEventListener("click", function(){loadTrailer(filmDetails)})
+	playLink.addEventListener("click", function(){loadTrailer()})
 	if (filmData.filmType == "movie") {
 		filmName.textContent = filmDetails.title
 		releaseDate.textContent = "Release Date: " + filmDetails.release_date
@@ -109,22 +112,22 @@ function displayFilmDetails(filmDetails) {
 		no_of_seasons.textContent = "No of Seasons: " + filmDetails.seasons.length
 		no_of_seasons.removeAttribute("style")
 	}
-	displayRatingsAndViews(filmDetails)
+	displayRatingsAndViews()
 	let poster = document.createElement("img") // The small poster beside synopsis on largeer screens
 	poster.src = `https://image.tmdb.org/t/p/w342${filmDetails.poster_path}`
 	posterContainer.appendChild(poster)
-	adjustSynopsisLength(filmDetails)
-	displayCast(filmDetails)
+	adjustSynopsisLength()
+	displayCast()
 	let similarFilmsList = filmDetails.recommendations.results;
 	displaySimilarMovies(similarFilmsList)
 }
 
-function displayRatingsAndViews(filmDetails) {
-	if (parseInt(filmDetails.vote_average).length > 5) {
-		let string = (filmDetails.vote_average * 10).toFixed(2)
-		myRating.textContent = string + "%"
+function displayRatingsAndViews() {
+	filmDetails.vote_average = filmDetails.vote_average * 10
+	if (filmDetails.vote_average.toString().length > 5) {
+		myRating.textContent = filmDetails.vote_average.toFixed(2) + "%"
 	}else {
-		myRating.textContent = filmDetails.vote_average * 10 + "%"
+		myRating.textContent = filmDetails.vote_average + "%"
 	}
 	totalReviews.textContent = filmDetails.vote_count
 	popularity.textContent = Math.round(filmDetails.popularity/100)
@@ -135,7 +138,7 @@ function displayRatingsAndViews(filmDetails) {
 	})
 }
 
-function displayCast(filmDetails) {
+function displayCast() {
 	let cast = filmDetails.credits.cast
 	for (let i=0, c=cast.length; i<c; i++) {
 		cast_img.src = `https://image.tmdb.org/t/p/w185${cast[i].profile_path}`
@@ -188,7 +191,7 @@ function displaySimilarMovies(similarFilmsList) {
 	}
 }
 
-function adjustSynopsisLength(filmDetails) {
+function adjustSynopsisLength() {
 	// Some film's synopsis is usually too long so it needs to be truncated on smaller screens to keep the UI intact.
 	if (filmDetails.overview.length > 280) {
 		if (window.innerWidth > 500) {
