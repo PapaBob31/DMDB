@@ -13,7 +13,7 @@ if (data) {
 }else {
 	noResult.classList.remove('d-none')
 }
-s
+
 function getFilmsWith(genre) {
 	let tv_genre_id = ""
 	let movie_genre_id = ""
@@ -45,7 +45,6 @@ function fetchFilmsById(id, requestSection) {
 		.then(response => displaySearchResults(response, "movie"))
 	}
 	if (requestSection == "tv-series page") {
-		console.log("hbh")
 		fetch(`https://api.themoviedb.org/3/discover/tv?api_key=${key}&language=en-US&with_genres=${id}`)
 		.then(response => response.json())
 		.then(response => displaySearchResults(response, "tv"))
