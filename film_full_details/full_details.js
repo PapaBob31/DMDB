@@ -2,12 +2,23 @@ let windowWidth = window.innerWidth
 
 let key = "b44b2b9e1045ae57b5c211d94cc010d9"
 let genre_page_link = "../genres/genre_result.html"
-let pageName = "genre_result"
-let filmData = JSON.parse(sessionStorage.getItem("filmData"))
+let filmData = get_film_data()
+let pageName = "all"
 
 let trailerPoster = document.getElementById("film-trailer-poster")
 let playLink = document.getElementById("play_link")
 let trailer = document.querySelector("iframe")
+
+function get_film_data() {
+	let data = {filmId: "", filmType: ""}
+	let url_params = new URLSearchParams(window.location.search)
+	data.filmId = url_params.get("id")
+	data.filmType = url_params.get("type")
+	if (!data.filmId || !data.filmType){
+		showNoRequestedFilm()
+	}
+	return data
+}
 
 function loadTrailer(){
 	playLink.style.display = "none";
@@ -55,37 +66,36 @@ let similarMoviePoster = film.querySelector("img")
 let name = film.querySelector(".similar-film-name")
 let similarFilmsContainer = document.getElementById("similar-films");
 
-if (filmData) {
-	if (filmData.filmType == "movie") {
-		film_type.textContent = "Movie"
-		fetch(`https://api.themoviedb.org/3/movie/${filmData.filmId}?api_key=${key}&language=en-US
-			&append_to_response=videos,credits,recommendations`)
-		.then(response => response.json())
-		.then(response => {
-			filmDetails = response
-			displayFilmDetails(response);
-			window.addEventListener("resize", checkAndAdjustSynopsisLength)
-		})
-	}else {
-		film_type.textContent = "Tv Series"
-		fetch(`https://api.themoviedb.org/3/tv/${filmData.filmId}?api_key=${key}&language=en-US
-			&append_to_response=videos,credits,recommendations`)
-		.then(response => response.json())
-		.then(response => {
-			filmDetails = response
-			displayFilmDetails();
-			window.addEventListener("resize", checkAndAdjustSynopsisLength)
-		})
-	}
-}else{ // If no film data was found in sessionStorage
+if (filmData.filmType == "movie") {
+	film_type.textContent = "Movie"
+	fetch(`https://api.themoviedb.org/3/movie/${filmData.filmId}?api_key=${key}&language=en-US
+		&append_to_response=videos,credits,recommendations`)
+	.then(response => response.json())
+	.then(response => {
+		filmDetails = response
+		displayFilmDetails();
+		window.addEventListener("resize", checkAndAdjustSynopsisLength)
+	})
+	.catch(err => showNoRequestedFilm())
+}else if (filmData.filmType == "tv") {
+	film_type.textContent = "Tv Series"
+	fetch(`https://api.themoviedb.org/3/tv/${filmData.filmId}?api_key=${key}&language=en-US
+		&append_to_response=videos,credits,recommendations`)
+	.then(response => response.json())
+	.then(response => {
+		filmDetails = response
+		displayFilmDetails();
+		window.addEventListener("resize", checkAndAdjustSynopsisLength)
+	})
+	.catch(err => showNoRequestedFilm())
+}else{
 	showNoRequestedFilm()
 }
 
 function showNoRequestedFilm() {
-	let filmSection = document.getElementById('film-section')
 	let noRequest = document.getElementById('no-request')
-	filmSection.classList.add('d-none')
 	noRequest.classList.remove('d-none')
+	throw "Invalid request!"
 }
 
 function checkAndAdjustSynopsisLength(){
@@ -96,7 +106,9 @@ function checkAndAdjustSynopsisLength(){
 	}
 }
 
+let filmSection = document.getElementById('film-section')
 function displayFilmDetails() {
+	filmSection.classList.remove('d-none')
 	trailerPoster.src = `https://image.tmdb.org/t/p/w1280${filmDetails.backdrop_path}`
 	playLink.addEventListener("click", function(){loadTrailer()})
 	if (filmData.filmType == "movie") {
@@ -155,16 +167,6 @@ function displayCast() {
 	castWrapper.appendChild(cast_temp_container)
 }
 
-/** Function that stores film details for full_details page when film link is clicked bcos all this website 
-*	can actually do is make requests to an external api (no actual server side). Clicked film details will 
-*	be stored in sessionStorage and loaded when full_details page is loaded or reloaded.
-*	@param {string}filmId: id of the clicked movie link,  will be used when making request to the api when the page is loaded
-*	@param {string}filmType: could be movie or tv series, will also be used when making request to the api when the page is loaded
-*/
-function storeFilmId(filmId, filmType) {
-	let filmData = {"filmId": filmId, "filmType": filmType}
-	sessionStorage.setItem("filmData", JSON.stringify(filmData))
-}
 
 function displaySimilarMovies(similarFilmsList) {
 	let type;
@@ -182,7 +184,7 @@ function displaySimilarMovies(similarFilmsList) {
 			}
 			let resultNode = film.cloneNode(true)
 			let resultName = resultNode.querySelector(".similar-film-name")
-			resultName.addEventListener("click", () => {storeFilmId(resultName.id, type)})
+			resultName.href = `?id=${name.id}&type=${type}`
 			dummyContainer.appendChild(resultNode)
 		}
 		similarFilmsContainer.appendChild(dummyContainer)

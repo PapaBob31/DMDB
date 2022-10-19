@@ -20,33 +20,21 @@ form.addEventListener("submit", () => {
 
 let dummyGenresContainer = new DocumentFragment()
 
-/** Function that stores film details for destination page when film link is clicked bcos all this website 
-*	can actually do is make requests to an external api (no actual server side). Clicked film details will 
-*	be stored in sessionStorage and loaded when destination page (e.g genres.html) is reached
-*	@param {string}pageName		pageName of genre clicked, will be used in destination page
-*	@param {string}id			id of the genre clicked, will be used in destination page
-*/
-function storeId(page_name, id) {
-	let data = {section: page_name, genre_id: id}
-	sessionStorage.setItem("data", JSON.stringify(data))
-}
 
 function createGenreLinks() {
 	let genres;
 	if (not_created_yet) {
-		if (pageName == "movies page"){
+		if (pageName == "movies"){
 			genres = movieGenresList
-		}else if (pageName == "tv-series page") {
+		}else if (pageName == "tv-series") {
 			genres = tvGenresList
 		}else {
 			genres = mergeMovieAndtvGenresList()
 		}
 		genres.forEach(result => {
 			let link = document.createElement("a")
-			link.id = result.id
 			link.textContent = result.name
-			link.href = genre_page_link
-			link.addEventListener("click", (event) => {storeId(pageName, event.target.id)})
+			link.href = genre_page_link + `?id=${result.id}&section=${pageName}`
 			dummyGenresContainer.append(link)
 		})
 		genresContainer.querySelector("div").append(dummyGenresContainer)

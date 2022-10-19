@@ -3,7 +3,7 @@ window.onbeforeunload = function() {window.scrollTo(0, 0)}
 let key = "b44b2b9e1045ae57b5c211d94cc010d9"
 let genre_page_link = "genres/genre_result.html"
 // global variable to be used in genres.js file
-let pageName = "Home"
+let pageName = "all"
 let trendingMoviesContainer = document.getElementById("trending-movies-container")
 let touch_start;
 let touch_end;
@@ -184,8 +184,6 @@ function updateTrendingMovies(details, i) {
 	let posterLink = `https://image.tmdb.org/t/p/w1280${details[i].backdrop_path}`
 	trendingMoviePoster.src = posterLink
 	let mediaName = trendingMovies[i].querySelector(".media-name")
-	mediaName.id = details[i].id
-	mediaName.href = "film_full_details/full_details.html"
 	let genres = trendingMovies[i].querySelector(".trending-genres")
 	let overview = trendingMovies[i].querySelector(".overview")
 	let releaseDateandType = trendingMovies[i].querySelector(".media-type-nd-release-date")
@@ -193,22 +191,20 @@ function updateTrendingMovies(details, i) {
 	let mediaType = document.createElement("div")
 	let mediaDetails = trendingMovies[i].querySelector(".details")
 	let fullDetailsLink = trendingMovies[i].querySelector(".full-details-link")
-	fullDetailsLink.id = details[i].id
-	fullDetailsLink.href = "film_full_details/full_details.html"
 	fullDetailsLink.textContent = "Full details"
 	trendingMovies[i].insertBefore(trendingMoviePoster.cloneNode(true), mediaDetails)
 	if (details[i].original_name) {
-		mediaName.textContent = details[i].name 
-		mediaName.addEventListener("click", () => {storeFilmId(mediaName.id, "tv")})
-		fullDetailsLink.addEventListener("click", () => {storeFilmId(fullDetailsLink.id, "tv")})
+		mediaName.textContent = details[i].name
+		mediaName.href = `film_full_details/full_details.html?id=${details[i].id}&type=tv`
+		fullDetailsLink.href = `film_full_details/full_details.html?id=${details[i].id}&type=tv`
 		releaseDate.textContent = `first episode date: ${details[i].first_air_date}`
 		mediaType.textContent = "Tv Series"
 		releaseDateandType.appendChild(releaseDate)
 		releaseDateandType.appendChild(mediaType)
 	}else {
 		mediaName.textContent = details[i].title
-		mediaName.addEventListener("click", () => {storeFilmId(mediaName.id, "movie")})
-		fullDetailsLink.addEventListener("click", () => {storeFilmId(fullDetailsLink.id, "movie")})
+		mediaName.href = `film_full_details/full_details.html?id=${details[i].id}&type=movie`
+		fullDetailsLink.href = `film_full_details/full_details.html?id=${details[i].id}&type=movie`
 		releaseDate.textContent = `Release date: ${details[i].release_date}`
 		mediaType.textContent = "Movie"
 		releaseDateandType.appendChild(releaseDate)
@@ -406,17 +402,6 @@ function observeChildren(parentId, no) {
 	}
 }
 
-/** Function that stores film details for destination page when film link is clicked bcos all this website 
-*	can actually do is make requests to an external api (no actual server side), clicked film details will 
-*	be stored in sessionStorage and loaded when destination page (e.g full_details page) is reached
-*	@param {string}filmId 		id of film clicked, will be used in destination page
-*	@param {string}filmType 	type of film clicked, will be used in destination page
-*/
-function storeFilmId(filmId, filmType) {
-	let filmData = {"filmId": filmId, "filmType": filmType}
-	sessionStorage.setItem("filmData", JSON.stringify(filmData))
-}
-
 let moviePoster = document.createElement("img")
 moviePoster.classList.add("poster-img")
 let movieDetails = new DocumentFragment()
@@ -446,16 +431,15 @@ function displayFilm(film) {
 	let skeletonTexts = mediaContainer[currentIndex - 1].querySelectorAll(".skeleton")
 	name.classList.add("name")
 	name.id = mediaData.id
-	name.href = "film_full_details/full_details.html"
 	littleDetails.classList.add("little-details") 
 	if (mediaData.hasOwnProperty("release_date")) {
 		name.textContent = mediaData.title
-		name.addEventListener("click", () => {storeFilmId(name.id, "movie")})
+		name.href = `film_full_details/full_details.html?id=${name.id}&type=movie`
 		genresList = movieGenres
 		releaseYear.textContent = mediaData.release_date.slice(0, 4)
 	}else {
 		name.textContent = mediaData.name
-		name.addEventListener("click", () => {storeFilmId(name.id, "tv")})
+		name.href = `film_full_details/full_details.html?id=${name.id}&type=tv`
 		genresList = tvGenres
 		releaseYear.textContent = "Since " + mediaData.first_air_date.slice(0, 4)
 	}

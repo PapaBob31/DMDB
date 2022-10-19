@@ -5,7 +5,7 @@ let seriesContainer = document.getElementById("series-container")
 let genresList = []
 let genre_page_link = "../genres/genre_result.html"
 // global variable to be used in genres.js file
-let pageName = "tv-series page"
+let pageName = "tv-series"
 
 /** Function that displays elements skeleton while content loads
 * @param {int}max_no	 Total no of content received from the api
@@ -200,17 +200,6 @@ let moviePoster = document.createElement("img")
 moviePoster.classList.add("poster-img")
 let movieDetails = new DocumentFragment()
 
-/** Function that stores film details for full_details page when film link is clicked bcos all this website 
-*	can actually do is make requests to an external api (no actual server side). Clicked film details will 
-*	be stored in sessionStorage and loaded when full_details page is loaded.
-*	@param {string}filmId: id of the clicked movie link, will be used when making request to the api when the page is loaded
-*	@param {string}filmType: could be movie or tv series, will also be used when making request to the api when the page is loaded
-*/
-function storeFilmId(filmId, filmType) {
-	let filmData = {"filmId": filmId, "filmType": filmType}
-	sessionStorage.setItem("filmData", JSON.stringify(filmData))
-}
-
 // Function that loads Element(film) content once the element is on screen
 function displayFilm(film) {
 	let dataList = tvList
@@ -227,9 +216,7 @@ function displayFilm(film) {
 	let mediaGenres = document.createElement("div")
 	let skeletonTexts = mediaContainers[currentIndex - 1].querySelectorAll(".skeleton")
 	name.classList.add("name")
-	name.id = mediaData.id
-	name.href = "../film_full_details/full_details.html"
-	name.addEventListener("click", () => {storeFilmId(name.id,  "tv")})
+	name.href = `../film_full_details/full_details.html?id=${mediaData.id}&type=tv`
 	littleDetails.classList.add("little-details") 
 	name.textContent = mediaData.name
 	releaseYear.textContent = "Since " + mediaData.first_air_date.slice(0, 4)
